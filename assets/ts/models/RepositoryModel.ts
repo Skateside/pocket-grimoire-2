@@ -13,7 +13,8 @@ import {
 } from "../utilities/objects";
 import {
     fetchFromCache,
-    fetchFromStorage
+    fetchFromStorage,
+    updateStorage
 } from "../utilities/storage";
 import Model from "./Model";
 
@@ -102,31 +103,78 @@ export default class RepositoryModel extends Model<{
 
     }
 
-    // serialise() {
-    //     // return JSON.stringify();
-    //     // Loop through homebrew and augmentations
-    // }
-
     lookup(locale: string) {
 
         return Promise.all([
-            fetchFromCache<IRole[]>(`./assets/data/${locale}.json`)
-                .then((roles) => {
-                    roles.forEach((role) => this.addOfficialRole(role));
-                }),
-            fetchFromStorage("homebrew").then((homebrews) => {
-                homebrews.forEach((homebrew) => this.addHomebrewRole(homebrew));
-            })
-        ]);
+            fetchFromCache<IRole[]>(`./assets/data/${locale}.json`),
+            fetchFromStorage("repository")
+        ]).then(([
+            roles,
+            repository
+        ]) => {
+
+            this.setRoles(roles);
+            this.setRepositoryInfo(repository);
+
+        });
 
     }
 
-    findRoleIndex(search: Partial<IRole>): number {
+    setRoles(roles: IRole[]) {
+        roles.forEach((role) => this.addOfficialRole(role));
+    }
+
+    // loadRepository(repository: (Partial<IData> & Pick<IData, "role" | "inScript" | "inPlay">)[]) {
+    setRepositoryInfo(repository: Partial<IData>[]) {
+
+        repository.forEach((repoInfo) => {
+
+            if (repoInfo.origin === "homebrew") {
+                this.addHomebrewRole(repoInfo.role);
+            } else if (repoInfo.origin === "augment") {
+                this.addHomebrewRole(repoInfo.augment);
+            }
+
+            const data = this.findData({ id: repoInfo.role.id });
+            data.inScript = repoInfo.inScript;
+            data.inPlay = repoInfo.inPlay;
+
+        });
+
+    }
+
+    updateStorage() {
+
+        const repository = this.repository.map((data) => {
+
+            const repoInfo: Record<string, any> = {
+                role: {
+                    id: data.role.id
+                },
+                inScript: data.inScript,
+                inPlay: data.inPlay
+            };
+
+            if (data.origin === "augment") {
+                repoInfo.augment = data.augment;
+            } else if (data.origin === "homebrew") {
+                repoInfo.role = data.role;
+            }
+
+            return repoInfo;
+
+        });
+
+        updateStorage("repository", repository);
+
+    }
+
+    findDataIndex(search: Partial<IRole>): number {
         return this.repository.findIndex(({ role }) => matches(search, role));
     }
 
-    findRole(search: Partial<IRole>): IData | undefined {
-        return this.repository[this.findRoleIndex(search)];
+    findData(search: Partial<IRole>): IData | undefined {
+        return this.repository[this.findDataIndex(search)];
     }
 
     addOfficialRole(role: IRole) {
@@ -140,7 +188,7 @@ export default class RepositoryModel extends Model<{
         } = role;
         let index = (
             id
-            ? this.findRoleIndex({ id })
+            ? this.findDataIndex({ id })
             : repository.length
         );
 
@@ -158,7 +206,7 @@ export default class RepositoryModel extends Model<{
             repository
         } = this;
         const constructor = this.constructor as typeof RepositoryModel;
-        const index = this.findRoleIndex({ id: role.id });
+        const index = this.findDataIndex({ id: role.id });
 
         // Patch for the American spelling of "traveller".
         if ((role as any).team === "traveler") {
@@ -246,7 +294,7 @@ export default class RepositoryModel extends Model<{
 
         script.forEach(({ id }) => {
 
-            const data = this.findRole({ id });
+            const data = this.findData({ id });
 
             if (!data) {
                 return;

@@ -103,7 +103,14 @@ export default class RepositoryModel extends Model<{
 
     }
 
-    lookup(locale: string) {
+    constructor() {
+
+        super();
+        this.repository = [];
+
+    }
+
+    load(locale: string) {
 
         return Promise.all([
             fetchFromCache<IRole[]>(`./assets/data/${locale}.json`),
@@ -143,7 +150,7 @@ export default class RepositoryModel extends Model<{
 
     }
 
-    updateStorage() {
+    save() {
 
         const repository = this.repository.map((data) => {
 

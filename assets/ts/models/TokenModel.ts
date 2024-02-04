@@ -11,6 +11,14 @@ export default class TokenModel extends Model {
     protected roles: IRoleToken[];
     protected reminders: IReminderToken[];
 
+    constructor() {
+
+        super();
+        this.roles = [];
+        this.reminders = [];
+
+    }
+
     static enwrapRole(role: IRole): IRoleToken {
 
         return {

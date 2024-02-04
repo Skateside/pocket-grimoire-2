@@ -12,6 +12,13 @@ export default class InfoModel extends Model<{
 
     protected infos: IInfoData[] = [];
 
+    constructor() {
+
+        super();
+        this.infos = [];
+
+    }
+
     addOfficialInfo(text: string, colour: IColours = "blue") {
 
         this.infos.push({
@@ -53,8 +60,22 @@ export default class InfoModel extends Model<{
 
     getInfos() {
 
+        const {
+            infos
+        } = this;
+
+        // NOTE: this is probably only needed during development.
+        if (!infos.length) {
+
+            return {
+                official: [],
+                homebrew: []
+            }
+
+        }
+
         return Object.groupBy(
-            this.infos.map((info, index) => ({ ...info, index })),
+            infos.map((info, index) => ({ ...info, index })),
             ({ type }) => type
         );
 

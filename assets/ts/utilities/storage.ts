@@ -9,9 +9,15 @@ const STORAGE_KEY = "pg";// "pocket-grimoire";
 
 function read(): IStorage {
 
+    let storage = {};
+
+    if (Object.hasOwn(window.localStorage, STORAGE_KEY)) {
+        storage = JSON.parse(window.localStorage.getItem(STORAGE_KEY));
+    }
+
     return {
         ...deepClone(defaults),
-        ...(JSON.parse(window.localStorage.getItem(STORAGE_KEY) || "") || {})
+        ...storage
     };
 
 }

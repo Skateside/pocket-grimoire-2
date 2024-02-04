@@ -1,0 +1,2188 @@
+[
+    {
+        "id": "acrobat",
+        "name": "Acrobat",
+        "ability": "Each night*, if either good living neighbour is drunk or poisoned, you die.",
+        "firstNightReminder": "",
+        "otherNightReminder": "If a good living neighbour is drunk or poisoned, the Acrobat player dies.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead"
+        ]
+    },
+    {
+        "id": "alchemist",
+        "name": "Alchemist",
+        "ability": "You have a not-in-play Minion ability.",
+        "firstNightReminder": "Show the Alchemist a not-in-play Minion token",
+        "otherNightReminder": "",
+        "remindersGlobal": [
+            "Is the Alchemist"
+        ],
+        "reminders": []
+    },
+    {
+        "id": "alhadikhia",
+        "name": "Al-Hadikhia",
+        "ability": "Each night*, choose 3 players (all players learn who): each silently chooses to live or die, but if all live, all die.",
+        "firstNightReminder": "",
+        "otherNightReminder": "The Al-Hadikhia chooses 3 players. Announce the first player, wake them to nod yes to live or shake head no to die, kill or resurrect accordingly, then put to sleep and announce the next player. If all 3 are alive after this, all 3 die.",
+        "remindersGlobal": [],
+        "reminders": [
+            "1",
+            "2",
+            "3",
+            "Chose death",
+            "Chose life"
+        ]
+    },
+    {
+        "id": "amnesiac",
+        "name": "Amnesiac",
+        "ability": "You do not know what your ability is. Each day, privately guess what it is: you learn how accurate you are.",
+        "firstNightReminder": "Decide the Amnesiac's entire ability. If the Amnesiac's ability causes them to wake tonight: Wake the Amnesiac and run their ability.",
+        "otherNightReminder": "If the Amnesiac's ability causes them to wake tonight: Wake the Amnesiac and run their ability.",
+        "remindersGlobal": [],
+        "reminders": [
+            "?"
+        ]
+    },
+    {
+        "id": "angel",
+        "name": "Angel",
+        "ability": "Something bad might happen to whoever is most responsible for the death of a new player.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Protect",
+            "Something Bad"
+        ]
+    },
+    {
+        "id": "apprentice",
+        "name": "Apprentice",
+        "ability": "On your 1st night, you gain a Townsfolk ability (if good), or a Minion ability (if evil).",
+        "firstNightReminder": "Show the Apprentice the 'You are' card, then a Townsfolk or Minion token. In the Grimoire, replace the Apprentice token with that character token, and put the Apprentice's 'Is the Apprentice' reminder by that character token.",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Is the Apprentice"
+        ]
+    },
+    {
+        "id": "artist",
+        "name": "Artist",
+        "ability": "Once per game, during the day, privately ask the Storyteller any yes/no question.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "No ability"
+        ]
+    },
+    {
+        "id": "assassin",
+        "name": "Assassin",
+        "ability": "Once per game, at night*, choose a player: they die, even if for some reason they could not.",
+        "firstNightReminder": "",
+        "otherNightReminder": "If the Assassin has not yet used their ability: The Assassin either shows the 'no' head signal, or points to a player. That player dies.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead",
+            "No ability"
+        ]
+    },
+    {
+        "id": "atheist",
+        "name": "Atheist",
+        "ability": "The Storyteller can break the game rules & if executed, good wins, even if you are dead. [No evil characters]",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "balloonist",
+        "name": "Balloonist",
+        "ability": "Each night, you learn 1 player of each character type, until there are no more types to learn. [+1 Outsider]",
+        "firstNightReminder": "Choose a character type. Point to a player whose character is of that type. Place the Balloonist's Seen reminder next to that character.",
+        "otherNightReminder": "Choose a character type that does not yet have a Seen reminder next to a character of that type. Point to a player whose character is of that type, if there are any. Place the Balloonist's Seen reminder next to that character.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Seen Townsfolk",
+            "Seen Outsider",
+            "Seen Minion",
+            "Seen Demon",
+            "Seen Traveller"
+        ]
+    },
+    {
+        "id": "banxian",
+        "name": "半仙",
+        "ability": "任何在夜晚使用自身能力选择你的其他玩家，会改为选中另一名邪恶玩家作为替代。",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "barber",
+        "name": "Barber",
+        "ability": "If you died today or tonight, the Demon may choose 2 players (not another Demon) to swap characters.",
+        "firstNightReminder": "",
+        "otherNightReminder": "If the Barber died today: Wake the Demon. Show the 'This character selected you' card, then Barber token. The Demon either shows a 'no' head signal, or points to 2 players. If they chose players: Swap the character tokens. Wake each player. Show 'You are', then their new character token.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Haircuts tonight"
+        ]
+    },
+    {
+        "id": "barista",
+        "name": "Barista",
+        "ability": "Each night, until dusk, 1) a player becomes sober, healthy and gets true info, or 2) their ability works twice. They learn which.",
+        "firstNightReminder": "Choose a player, wake them and tell them which Barista power is affecting them. Treat them accordingly (sober/healthy/true info or activate their ability twice).",
+        "otherNightReminder": "Choose a player, wake them and tell them which Barista power is affecting them. Treat them accordingly (sober/healthy/true info or activate their ability twice).",
+        "remindersGlobal": [],
+        "reminders": [
+            "Sober & Healthy",
+            "Ability twice"
+        ]
+    },
+    {
+        "id": "baron",
+        "name": "Baron",
+        "ability": "There are extra Outsiders in play. [+2 Outsiders]",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "beggar",
+        "name": "Beggar",
+        "ability": "You must use a vote token to vote. Dead players may choose to give you theirs. If so, you learn their alignment.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "bianlianshi",
+        "name": "变脸师",
+        "ability": "每个白天，如果你“疯狂”地证明自己是一个善良角色（与之前不同），你会在当晚获得那个角色的能力，直到下个黄昏。",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [
+            "是变脸师"
+        ],
+        "reminders": [
+            "疯狂"
+        ]
+    },
+    {
+        "id": "bishop",
+        "name": "Bishop",
+        "ability": "Only the Storyteller can nominate. At least 1 opposite player must be nominated each day.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Nominate good",
+            "Nominate evil"
+        ]
+    },
+    {
+        "id": "bonecollector",
+        "name": "Bone Collector",
+        "ability": "Once per game, at night, choose a dead player: they regain their ability until dusk.",
+        "firstNightReminder": "",
+        "otherNightReminder": "The Bone Collector either shakes their head no or points at any dead player. If they pointed at any dead player, put the Bone Collector's 'Has Ability' reminder by the chosen player's character token. (They may need to be woken tonight to use it.)",
+        "remindersGlobal": [],
+        "reminders": [
+            "No ability",
+            "Has ability"
+        ]
+    },
+    {
+        "id": "boomdandy",
+        "name": "Boomdandy",
+        "ability": "If you are executed, all but 3 players die. 1 minute later, the player with the most players pointing at them dies.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "bootlegger",
+        "name": "Bootlegger",
+        "ability": "This script has homebrew characters or rules.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "bountyhunter",
+        "name": "Bounty Hunter",
+        "ability": "You start knowing 1 evil player. If the player you know dies, you learn another evil player tonight. [1 Townsfolk is evil]",
+        "firstNightReminder": "Point to 1 evil player. Wake the townsfolk who is evil and show them the 'You are' card and the thumbs down evil sign.",
+        "otherNightReminder": "If the known evil player has died, point to another evil player. ",
+        "remindersGlobal": [],
+        "reminders": [
+            "Known"
+        ]
+    },
+    {
+        "id": "buddhist",
+        "name": "Buddhist",
+        "ability": "For the first 2 minutes of each day, veteran players may not talk.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "bureaucrat",
+        "name": "Bureaucrat",
+        "ability": "Each night, choose a player (not yourself): their vote counts as 3 votes tomorrow.",
+        "firstNightReminder": "The Bureaucrat points to a player. Put the Bureaucrat's '3 votes' reminder by the chosen player's character token.",
+        "otherNightReminder": "The Bureaucrat points to a player. Put the Bureaucrat's '3 votes' reminder by the chosen player's character token.",
+        "remindersGlobal": [],
+        "reminders": [
+            "3 votes"
+        ]
+    },
+    {
+        "id": "butcher",
+        "name": "Butcher",
+        "ability": "Each day, after the 1st execution, you may nominate again.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "butler",
+        "name": "Butler",
+        "ability": "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too.",
+        "firstNightReminder": "The Butler points to a player. Mark that player as 'Master'.",
+        "otherNightReminder": "The Butler points to a player. Mark that player as 'Master'.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Master"
+        ]
+    },
+    {
+        "id": "cannibal",
+        "name": "Cannibal",
+        "ability": "You have the ability of the recently killed executee. If they are evil, you are poisoned until a good player dies by execution.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Poisoned",
+            "Died today"
+        ]
+    },
+    {
+        "id": "cerenovus",
+        "name": "Cerenovus",
+        "ability": "Each night, choose a player & a good character: they are \"mad\" they are this character tomorrow, or might be executed.",
+        "firstNightReminder": "The Cerenovus points to a player, then to a character on their sheet. Wake that player. Show the 'This character selected you' card, then the Cerenovus token. Show the selected character token. If the player is not mad about being that character tomorrow, they can be executed.",
+        "otherNightReminder": "The Cerenovus points to a player, then to a character on their sheet. Wake that player. Show the 'This character selected you' card, then the Cerenovus token. Show the selected character token. If the player is not mad about being that character tomorrow, they can be executed.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Mad"
+        ]
+    },
+    {
+        "id": "chambermaid",
+        "name": "Chambermaid",
+        "ability": "Each night, choose 2 alive players (not yourself): you learn how many woke tonight due to their ability.",
+        "firstNightReminder": "The Chambermaid points to two players. Show the number signal (0, 1, 2, …) for how many of those players wake tonight for their ability.",
+        "otherNightReminder": "The Chambermaid points to two players. Show the number signal (0, 1, 2, …) for how many of those players wake tonight for their ability.",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "chef",
+        "name": "Chef",
+        "ability": "You start knowing how many pairs of evil players there are.",
+        "firstNightReminder": "Show the finger signal (0, 1, 2, …) for the number of pairs of neighbouring evil players.",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "chimei",
+        "name": "魑魅",
+        "ability": "镇民可能会被当作外来者，外来者可能会被当作镇民。恶魔可能会被当作爪牙。你可能会被当作恶魔。",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "choirboy",
+        "name": "Choirboy",
+        "ability": "If the Demon kills the King, you learn which player is the Demon. [+ the King]",
+        "firstNightReminder": "",
+        "otherNightReminder": "If the King was killed by the Demon, wake the Choirboy and point to the Demon player.",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "chongfei",
+        "name": "宠妃",
+        "ability": "每局游戏限一次，说书人会在关于你的事情上打破规则。随后，你会秘密得知说书人为此做了什么。",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "失去能力"
+        ]
+    },
+    {
+        "id": "clockmaker",
+        "name": "Clockmaker",
+        "ability": "You start knowing how many steps from the Demon to its nearest Minion.",
+        "firstNightReminder": "Show the hand signal for the number (1, 2, 3, etc.) of places from Demon to closest Minion.",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "courtier",
+        "name": "Courtier",
+        "ability": "Once per game, at night, choose a character: they are drunk for 3 nights & 3 days.",
+        "firstNightReminder": "The Courtier either shows a 'no' head signal, or points to a character on the sheet. If the Courtier used their ability: If that character is in play, that player is drunk.",
+        "otherNightReminder": "Reduce the remaining number of days the marked player is poisoned. If the Courtier has not yet used their ability: The Courtier either shows a 'no' head signal, or points to a character on the sheet. If the Courtier used their ability: If that character is in play, that player is drunk.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Drunk 3",
+            "Drunk 2",
+            "Drunk 1",
+            "No ability"
+        ]
+    },
+    {
+        "id": "cultleader",
+        "name": "Cult Leader",
+        "ability": "Each night, you become the alignment of an alive neighbour. If all good players choose to join your cult, your team wins.",
+        "firstNightReminder": "If the cult leader changed alignment, show them the thumbs up good signal of the thumbs down evil signal accordingly.",
+        "otherNightReminder": "If the cult leader changed alignment, show them the thumbs up good signal of the thumbs down evil signal accordingly.",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "dagengren",
+        "name": "打更人",
+        "ability": "每个夜晚*，你要猜测今晚第一个死亡的玩家与你的距离。如果你猜测正确，改为除你以外的所有玩家今晚不会死亡，但你可能会死亡。",
+        "firstNightReminder": "",
+        "otherNightReminder": "唤醒打更人，并让其猜测距离，以数字手势给出。在这两名玩家的角色标记旁放置“警惕”提示标记。在当晚首次有角色死亡时，如果是标记有“警惕”的玩家，那么当晚不会有除打更人外的任何人死亡。同时，如果说书人决定让打更人死亡，则在其角色标记旁放置“死亡”提示标记。在黎明时，移除所有“警惕”标记。",
+        "remindersGlobal": [],
+        "reminders": [
+            "警惕",
+            "死亡"
+        ]
+    },
+    {
+        "id": "damsel",
+        "name": "Damsel",
+        "ability": "All Minions know you are in play. If a Minion publicly guesses you (once), your team loses.",
+        "firstNightReminder": "Wake all the Minions, show them the 'This character selected you' card and the Damsel token.",
+        "otherNightReminder": "If selected by the Huntsman, wake the Damsel, show 'You are' card and a not-in-play Townsfolk token.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Guess used"
+        ]
+    },
+    {
+        "id": "daoshi",
+        "name": "道士",
+        "ability": "每个夜晚*，你要选择一名玩家：如果他是恶魔，你死亡，并且当晚不会再有其他玩家死亡。",
+        "firstNightReminder": "",
+        "otherNightReminder": "唤醒道士，让其选择一名玩家。如果他选中了恶魔，在他的角色标记旁放置“死亡”提示标记。",
+        "remindersGlobal": [],
+        "reminders": [
+            "死亡"
+        ]
+    },
+    {
+        "id": "deusexfiasco",
+        "name": "Deus ex Fiasco",
+        "ability": "Once per game, the Storyteller will make a \"mistake\", correct it and publicly admit to it.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Whoops"
+        ]
+    },
+    {
+        "id": "deviant",
+        "name": "Deviant",
+        "ability": "If you were funny today, you cannot die by exile.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "devilsadvocate",
+        "name": "Devil's Advocate",
+        "ability": "Each night, choose a living player (different to last night): if executed tomorrow, they don't die.",
+        "firstNightReminder": "The Devil's Advocate points to a living player. That player survives execution tomorrow.",
+        "otherNightReminder": "The Devil's Advocate points to a living player, different from the previous night. That player survives execution tomorrow.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Survives execution"
+        ]
+    },
+    {
+        "id": "dianxiaoer",
+        "name": "店小二",
+        "ability": "在你的首个夜晚，你会得知两名善良玩家。他们之中会有一人醉酒，即使你已死亡。",
+        "firstNightReminder": "唤醒店小二，对他指向标记有店小二的“熟客”和“醉酒”提示标记的这两名玩家。",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "熟客",
+            "醉酒"
+        ]
+    },
+    {
+        "id": "dianyuzhang",
+        "name": "典狱长",
+        "ability": "每个夜晚，你要选择一至三名玩家。如果明天白天其中之一被处决，其余玩家会在当晚死亡。否则，当晚他们之中会有一名玩家死亡。",
+        "firstNightReminder": "唤醒典狱长，让其选择至多三名玩家。在这些玩家角色标记旁放置“囚禁”提示标记。",
+        "otherNightReminder": "如果今天白天被处决的玩家标记有“囚禁”，则其他标记有囚禁的玩家死亡。否则，将其中一人标记为死亡。移除所有“囚禁”提示标记。唤醒典狱长，让其选择至多三名玩家。在这些玩家角色标记旁放置“囚禁”提示标记。",
+        "remindersGlobal": [],
+        "reminders": [
+            "囚禁",
+            "死亡"
+        ]
+    },
+    {
+        "id": "djinn",
+        "name": "Djinn",
+        "ability": "Use the Djinn's special rule. All players know what it is.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "doomsayer",
+        "name": "Doomsayer",
+        "ability": "If 4 or more players live, each living player may publicly choose (once per game) that a player of their own alignment dies.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "dreamer",
+        "name": "Dreamer",
+        "ability": "Each night, choose a player (not yourself or Travellers): you learn 1 good and 1 evil character, 1 of which is correct.",
+        "firstNightReminder": "The Dreamer points to a player. Show 1 good and 1 evil character token; one of these is correct.",
+        "otherNightReminder": "The Dreamer points to a player. Show 1 good and 1 evil character token; one of these is correct.",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "drunk",
+        "name": "Drunk",
+        "ability": "You do not know you are the Drunk. You think you are a Townsfolk character, but you are not.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [
+            "Drunk"
+        ],
+        "reminders": []
+    },
+    {
+        "id": "duchess",
+        "name": "Duchess",
+        "ability": "Each day, 3 players may choose to visit you. At night*, each visitor learns how many visitors are evil, but 1 gets false info.",
+        "firstNightReminder": "",
+        "otherNightReminder": "Wake each player marked \"Visitor\" or \"False Info\" one at a time. Show them the Duchess token, then fingers (1, 2, 3) equaling the number of evil players marked \"Visitor\" or, if you are waking the player marked \"False Info,\" show them any number of fingers except the number of evil players marked \"Visitor.\"",
+        "remindersGlobal": [],
+        "reminders": [
+            "Visitor",
+            "False Info"
+        ]
+    },
+    {
+        "id": "empath",
+        "name": "Empath",
+        "ability": "Each night, you learn how many of your 2 alive neighbours are evil.",
+        "firstNightReminder": "Show the finger signal (0, 1, 2) for the number of evil alive neighbours of the Empath.",
+        "otherNightReminder": "Show the finger signal (0, 1, 2) for the number of evil neighbours.",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "engineer",
+        "name": "Engineer",
+        "ability": "Once per game, at night, choose which Minions or which Demon is in play.",
+        "firstNightReminder": "The Engineer shows a 'no' head signal, or points to a Demon or points to the relevant number of Minions. If the Engineer chose characters, replace the Demon or Minions with the choices, then wake the relevant players and show them the You are card and the relevant character tokens.",
+        "otherNightReminder": "The Engineer shows a 'no' head signal, or points to a Demon or points to the relevant number of Minions. If the Engineer chose characters, replace the Demon or Minions with the choices, then wake the relevant players and show them the 'You are' card and the relevant character tokens.",
+        "remindersGlobal": [],
+        "reminders": [
+            "No ability"
+        ]
+    },
+    {
+        "id": "eviltwin",
+        "name": "Evil Twin",
+        "ability": "You & an opposing player know each other. If the good player is executed, evil wins. Good can't win if you both live.",
+        "firstNightReminder": "Wake the Evil Twin and their twin. Confirm that they have acknowledged each other. Point to the Evil Twin. Show their Evil Twin token to the twin player. Point to the twin. Show their character token to the Evil Twin player.",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Twin"
+        ]
+    },
+    {
+        "id": "exorcist",
+        "name": "Exorcist",
+        "ability": "Each night*, choose a player (different to last night): the Demon, if chosen, learns who you are then doesn't wake tonight.",
+        "firstNightReminder": "",
+        "otherNightReminder": "The Exorcist points to a player, different from the previous night. If that player is the Demon: Wake the Demon. Show the Exorcist token. Point to the Exorcist. The Demon does not act tonight.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Chosen"
+        ]
+    },
+    {
+        "id": "fanggu",
+        "name": "Fang Gu",
+        "ability": "Each night*, choose a player: they die. The 1st Outsider this kills becomes an evil Fang Gu & you die instead. [+1 Outsider]",
+        "firstNightReminder": "",
+        "otherNightReminder": "The Fang Gu points to a player. That player dies. Or, if that player was an Outsider and there are no other Fang Gu in play: The Fang Gu dies instead of the chosen player. The chosen player is now an evil Fang Gu. Wake the new Fang Gu. Show the 'You are' card, then the Fang Gu token. Show the 'You are' card, then the thumb-down 'evil' hand sign.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead",
+            "Once"
+        ]
+    },
+    {
+        "id": "fangshi",
+        "name": "方士",
+        "ability": "每局游戏限一次，在夜晚时*，你可以选择查看魔典的部分内容。死亡的玩家数量越多，你能看到的内容也就越多，最多能查看魔典的一半。",
+        "firstNightReminder": "",
+        "otherNightReminder": "唤醒方士，如果他点头，让他查看魔典，但只展示部分内容。随后标记他“失去能力”。",
+        "remindersGlobal": [],
+        "reminders": [
+            "失去能力"
+        ]
+    },
+    {
+        "id": "farmer",
+        "name": "Farmer",
+        "ability": "If you die at night, an alive good player becomes a Farmer.",
+        "firstNightReminder": "",
+        "otherNightReminder": "If a Farmer died tonight, choose another good player and make them the Farmer. Wake this player, show them the 'You are' card and the Farmer character token.",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "fearmonger",
+        "name": "Fearmonger",
+        "ability": "Each night, choose a player. If you nominate & execute them, their team loses. All players know if you choose a new player.",
+        "firstNightReminder": "The Fearmonger points to a player. Place the Fear token next to that player and announce that a new player has been selected with the Fearmonger ability.",
+        "otherNightReminder": "The Fearmonger points to a player. If different from the previous night, place the Fear token next to that player and announce that a new player has been selected with the Fearmonger ability.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Fear"
+        ]
+    },
+    {
+        "id": "fengshuishi",
+        "name": "风水师",
+        "ability": "每局游戏限一次，在夜晚时*，你可以选择除你以外的两名玩家：根据他们的阵营（相同/相反）得知他们之间距离（较近/较远）的那一侧玩家中是否有恶魔。",
+        "firstNightReminder": "",
+        "otherNightReminder": "唤醒风水师。风水师要么摇头不使用能力，要么指向两名玩家。对其点头或摇头示意，随后在其角色标记旁放置“失去能力”提示标记。",
+        "remindersGlobal": [],
+        "reminders": [
+            "失去能力"
+        ]
+    },
+    {
+        "id": "ferryman",
+        "name": "Ferryman",
+        "ability": "On the final day, all dead players regain their vote token.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "fibbin",
+        "name": "Fibbin",
+        "ability": "Once per game, 1 good player might get false information.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Used"
+        ]
+    },
+    {
+        "id": "fiddler",
+        "name": "Fiddler",
+        "ability": "Once per game, the Demon secretly chooses an opposing player: all players choose which of these 2 players win.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "fisherman",
+        "name": "Fisherman",
+        "ability": "Once per game, during the day, visit the Storyteller for some advice to help you win.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "No ability"
+        ]
+    },
+    {
+        "id": "flowergirl",
+        "name": "Flowergirl",
+        "ability": "Each night*, you learn if a Demon voted today.",
+        "firstNightReminder": "",
+        "otherNightReminder": "Nod 'yes' or shake head 'no' for whether the Demon voted today. Place the 'Demon not voted' marker (remove 'Demon voted', if any).",
+        "remindersGlobal": [],
+        "reminders": [
+            "Demon voted",
+            "Demon not voted"
+        ]
+    },
+    {
+        "id": "fool",
+        "name": "Fool",
+        "ability": "The first time you die, you don't.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "No ability"
+        ]
+    },
+    {
+        "id": "fortuneteller",
+        "name": "Fortune Teller",
+        "ability": "Each night, choose 2 players: you learn if either is a Demon. There is a good player that registers as a Demon to you.",
+        "firstNightReminder": "The Fortune Teller points to two players. Give the head signal (nod yes, shake no) for whether one of those players is the Demon. ",
+        "otherNightReminder": "The Fortune Teller points to two players. Show the head signal (nod 'yes', shake 'no') for whether one of those players is the Demon.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Red herring"
+        ]
+    },
+    {
+        "id": "gambler",
+        "name": "Gambler",
+        "ability": "Each night*, choose a player & guess their character: if you guess wrong, you die.",
+        "firstNightReminder": "",
+        "otherNightReminder": "The Gambler points to a player, and a character on their sheet. If incorrect, the Gambler dies.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead"
+        ]
+    },
+    {
+        "id": "gangster",
+        "name": "Gangster",
+        "ability": "Once per day, you may choose to kill an alive neighbour, if your other alive neighbour agrees.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "ganshiren",
+        "name": "赶尸人",
+        "ability": "与你邻近的两名镇民玩家会在其首次死亡时被当作仍然存活。[-1外来者]",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "以为存活"
+        ]
+    },
+    {
+        "id": "gardener",
+        "name": "Gardener",
+        "ability": "The Storyteller assigns 1 or more players' characters.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "geling",
+        "name": "歌伶",
+        "ability": "每局游戏限一次，在白天时，你可以提议所有玩家观看你的演出，并从同意参加的玩家中选择你的观众。如果恶魔成为了观众，你会在当晚死亡。",
+        "firstNightReminder": "",
+        "otherNightReminder": "如果伶人在白天使用了能力，且恶魔成为了观众，标记伶人死亡。",
+        "remindersGlobal": [],
+        "reminders": [
+            "失去能力",
+            "死亡",
+            "观众"
+        ]
+    },
+    {
+        "id": "general",
+        "name": "General",
+        "ability": "Each night, you learn which alignment the Storyteller believes is winning: good, evil, or neither.",
+        "firstNightReminder": "Show the General thumbs up for good winning, thumbs down for evil winning or thumb to the side for neither.",
+        "otherNightReminder": "Show the General thumbs up for good winning, thumbs down for evil winning or thumb to the side for neither.",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "goblin",
+        "name": "Goblin",
+        "ability": "If you publicly claim to be the Goblin when nominated & are executed that day, your team wins.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Claimed"
+        ]
+    },
+    {
+        "id": "godfather",
+        "name": "Godfather",
+        "ability": "You start knowing which Outsiders are in play. If 1 died today, choose a player tonight: they die. [−1 or +1 Outsider]",
+        "firstNightReminder": "Show each of the Outsider tokens in play.",
+        "otherNightReminder": "If an Outsider died today: The Godfather points to a player. That player dies.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Died today",
+            "Dead"
+        ]
+    },
+    {
+        "id": "golem",
+        "name": "Golem",
+        "ability": "You may only nominate once per game. When you do, if the nominee is not the Demon, they die.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Can not nominate"
+        ]
+    },
+    {
+        "id": "goon",
+        "name": "Goon",
+        "ability": "Each night, the 1st player to choose you with their ability is drunk until dusk. You become their alignment.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Drunk"
+        ]
+    },
+    {
+        "id": "gossip",
+        "name": "Gossip",
+        "ability": "Each day, you may make a public statement. Tonight, if it was true, a player dies.",
+        "firstNightReminder": "",
+        "otherNightReminder": "If the Gossip's public statement was true: Choose a player not protected from dying tonight. That player dies.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead"
+        ]
+    },
+    {
+        "id": "grandmother",
+        "name": "Grandmother",
+        "ability": "You start knowing a good player & their character. If the Demon kills them, you die too.",
+        "firstNightReminder": "Show the marked character token. Point to the marked player.",
+        "otherNightReminder": "If the Grandmother's grandchild was killed by the Demon tonight: The Grandmother dies.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Grandchild"
+        ]
+    },
+    {
+        "id": "gudiao",
+        "name": "蛊雕",
+        "ability": "蛊雕：每个夜晚，你要选择左或右：将你的飞行标记从当前位置移动到这个方向上的下一名存活善良玩家。他中毒且可能被当作邪恶阵营和爪牙角色，你会知道他原本的角色。",
+        "firstNightReminder": "唤醒蛊雕，让其选择一个方向。将他的“中毒”标记移动至那个方向上的下一个存活玩家的角色标记旁。随后对他指向那名玩家，并展示“他是”提示标记和该玩家的角色标记。",
+        "otherNightReminder": "唤醒蛊雕，让其选择一个方向。将他的“中毒”标记移动至那个方向上的下一个存活玩家的角色标记旁。随后对他指向那名玩家，并展示“他是”提示标记和该玩家的角色标记。",
+        "remindersGlobal": [],
+        "reminders": [
+            "中毒"
+        ]
+    },
+    {
+        "id": "gunslinger",
+        "name": "Gunslinger",
+        "ability": "Each day, after the 1st vote has been tallied, you may choose a player that voted: they die.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "harlot",
+        "name": "Harlot",
+        "ability": "Each night*, choose a living player: if they agree, you learn their character, but you both might die.",
+        "firstNightReminder": "",
+        "otherNightReminder": "The Harlot points at any player. Then, put the Harlot to sleep. Wake the chosen player, show them the 'This character selected you' token, then the Harlot token. That player either nods their head yes or shakes their head no. If they nodded their head yes, wake the Harlot and show them the chosen player's character token. Then, you may decide that both players die.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead"
+        ]
+    },
+    {
+        "id": "harpy",
+        "name": "Harpy",
+        "ability": "Each night, choose 2 players: tomorrow, the 1st player is mad that the 2nd is evil, or both might die.",
+        "firstNightReminder": "Wake the Harpy; they point at one player, then another. Wake the 1st player the Harpy pointed to, show them the 'This character has selected you' card, show them the Harpy token, then point at the 2nd player the Harpy pointed to.",
+        "otherNightReminder": "Wake the Harpy; they point at one player, then another. Wake the 1st player the Harpy pointed to, show them the 'This character has selected you' card, show them the Harpy token, then point at the 2nd player the Harpy pointed to.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Mad",
+            "2nd"
+        ]
+    },
+    {
+        "id": "hatter",
+        "name": "Hatter",
+        "ability": "If you died today or tonight, the Minion & Demon players may choose new Minion & Demon characters to be.",
+        "firstNightReminder": "",
+        "otherNightReminder": "If the Hatter died today: Wake the Minions and Demon. Show them the 'This Character Selected You' info token, then the Hatter token. Each player either shakes their head no or points to another character of the same type as their current character.  If a second player would end up with the same character as another player, shake your head no and gesture for them to choose again. Put them to sleep. Change each player to the character they chose.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Tea Party Tonight"
+        ]
+    },
+    {
+        "id": "hebo",
+        "name": "河伯",
+        "ability": "如果你提名了与你阵营相同的玩家，他可能会在当晚死亡。",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "死亡"
+        ]
+    },
+    {
+        "id": "hellslibrarian",
+        "name": "Hell's Librarian",
+        "ability": "Something bad might happen to whoever talks when the Storyteller has asked for silence.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Something Bad"
+        ]
+    },
+    {
+        "id": "heretic",
+        "name": "Heretic",
+        "ability": "Whoever wins, loses & whoever loses, wins, even if you are dead.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "heshang",
+        "name": "和尚",
+        "ability": "每个夜晚，当有邪恶玩家的能力首次选择或影响与你邻近的存活玩家时，改为此次能力不生效，你会得知这一信息。",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "已生效"
+        ]
+    },
+    {
+        "id": "highpriestess",
+        "name": "High Priestess",
+        "ability": "Each night, learn which player the Storyteller believes you should talk to most.",
+        "firstNightReminder": "Point to a player.",
+        "otherNightReminder": "Point to a player.",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "humeiniang",
+        "name": "狐媚娘",
+        "ability": "在你的首个夜晚，你要选择一名玩家：他会知道狐媚娘在场。如果你死于处决，当晚他转变为邪恶阵营。",
+        "firstNightReminder": "唤醒狐媚娘，让她选择一名玩家。标记那名玩家“被魅惑”。随后唤醒那名玩家，对他展示“该角色的能力对你触发”和狐媚娘角色标记。",
+        "otherNightReminder": "如果今日狐媚娘死于处决，且被魅惑的玩家为善良阵营，唤醒被魅惑的玩家，对他展示“你是”和朝下的大拇指。",
+        "remindersGlobal": [],
+        "reminders": [
+            "被魅惑"
+        ]
+    },
+    {
+        "id": "hundun",
+        "name": "混沌",
+        "ability": "每个夜晚*，你要选择一名玩家：他死亡。恶魔与爪牙互相不认识。当首次有爪牙死亡时，当晚他们会互相认识。[+1爪牙]",
+        "firstNightReminder": "如果混沌在场，注意不要唤醒爪牙和恶魔让他们互相认识。恶魔仍然能够得知自己的三个伪装。",
+        "otherNightReminder": "唤醒混沌，让他选择一名玩家，标记那名玩家死亡。如果混沌存活时有爪牙首次死亡，进行爪牙与恶魔的互认环节。",
+        "remindersGlobal": [],
+        "reminders": [
+            "死亡"
+        ]
+    },
+    {
+        "id": "huntsman",
+        "name": "Huntsman",
+        "ability": "Once per game, at night, choose a living player: the Damsel, if chosen, becomes a not-in-play Townsfolk. [+the Damsel]",
+        "firstNightReminder": "The Huntsman shakes their head 'no' or points to a player. If they point to the Damsel, wake that player, show the 'You are' card and a not-in-play character token.",
+        "otherNightReminder": "The Huntsman shakes their head 'no' or points to a player. If they point to the Damsel, wake that player, show the 'You are' card and a not-in-play character token.",
+        "remindersGlobal": [],
+        "reminders": [
+            "No ability"
+        ]
+    },
+    {
+        "id": "imp",
+        "name": "Imp",
+        "ability": "Each night*, choose a player: they die. If you kill yourself this way, a Minion becomes the Imp.",
+        "firstNightReminder": "",
+        "otherNightReminder": "The Imp points to a player. That player dies. If the Imp chose themselves: Replace the character of 1 alive minion with a spare Imp token. Show the 'You are' card, then the Imp token.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead"
+        ]
+    },
+    {
+        "id": "innkeeper",
+        "name": "Innkeeper",
+        "ability": "Each night*, choose 2 players: they can't die tonight, but 1 is drunk until dusk.",
+        "firstNightReminder": "",
+        "otherNightReminder": "The previously protected and drunk players lose those markers. The Innkeeper points to two players. Those players are protected. One is drunk.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Protected",
+            "Drunk"
+        ]
+    },
+    {
+        "id": "investigator",
+        "name": "Investigator",
+        "ability": "You start knowing that 1 of 2 players is a particular Minion.",
+        "firstNightReminder": "Show the character token of a Minion in play. Point to two players, one of which is that character.",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Minion",
+            "Wrong"
+        ]
+    },
+    {
+        "id": "jianning",
+        "name": "奸佞",
+        "ability": "每个夜晚*，你要选择一名玩家：他死亡。如果你今天白天没有投票，今晚你可以行动两次。",
+        "firstNightReminder": "",
+        "otherNightReminder": "唤醒奸佞，让其选择一名玩家。如果白天奸佞未被提名，改为让其选择两名玩家。标记他选择的玩家死亡。",
+        "remindersGlobal": [],
+        "reminders": [
+            "死亡",
+            "未被提名",
+            "已被提名"
+        ]
+    },
+    {
+        "id": "jiaohuazi",
+        "name": "叫花子",
+        "ability": "每个白天限一次，你可以公开选择一名其他玩家，让他选择一个非恶魔角色：你可能会获得这个角色的能力，直到下个黎明。",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [
+            "是叫花子"
+        ],
+        "reminders": []
+    },
+    {
+        "id": "jinweijun",
+        "name": "禁卫军",
+        "ability": "“疯狂”地想要死亡的玩家可能会立即被处决。",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "jinyiwei",
+        "name": "锦衣卫",
+        "ability": "每个夜晚*，你要选择一名玩家：如果他在下个黄昏前死亡，你代替他死亡。",
+        "firstNightReminder": "",
+        "otherNightReminder": "移除上个夜晚放置的“保护”标记。唤醒锦衣卫，让其选择一名玩家。在该玩家角色标记旁放置“保护”提示标记。",
+        "remindersGlobal": [],
+        "reminders": [
+            "保护"
+        ]
+    },
+    {
+        "id": "jiubao",
+        "name": "酒保",
+        "ability": "与你邻近的善良玩家之一醉酒，即使你已死亡。",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "醉酒"
+        ]
+    },
+    {
+        "id": "judge",
+        "name": "Judge",
+        "ability": "Once per game, if another player nominated, you may choose to force the current execution to pass or fail.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "No ability"
+        ]
+    },
+    {
+        "id": "juggler",
+        "name": "Juggler",
+        "ability": "On your 1st day, publicly guess up to 5 players' characters. That night, you learn how many you got correct.",
+        "firstNightReminder": "",
+        "otherNightReminder": "If today was the Juggler's first day: Show the hand signal for the number (0, 1, 2, etc.) of 'Correct' markers. Remove markers.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Correct"
+        ]
+    },
+    {
+        "id": "kazali",
+        "name": "Kazali",
+        "ability": "Each night*, choose a player: they die. [You choose which players are Minions. -? to +? Outsiders]",
+        "firstNightReminder": "The Kazali points at a player and a Minion on the character sheet. Replace their old character token with the Minion token, show them the “You Are” info token then the Minion character token, and give a thumbs down. Repeat until the normal number of Minions exist. Put the Kazali to sleep.",
+        "otherNightReminder": "The Kazali points to a player. That player dies.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead"
+        ]
+    },
+    {
+        "id": "king",
+        "name": "King",
+        "ability": "Each night, if the dead outnumber the living, you learn 1 alive character. The Demon knows who you are.",
+        "firstNightReminder": "Wake the Demon, show them the 'This character selected you' card, show the King token and point to the King player.",
+        "otherNightReminder": "If there are more dead than living, show the King a character token of a living player.",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "klutz",
+        "name": "Klutz",
+        "ability": "When you learn that you died, publicly choose 1 alive player: if they are evil, your team loses.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "knight",
+        "name": "Knight",
+        "ability": "You start knowing 2 players that are not the Demon.",
+        "firstNightReminder": "Point to 2 non-Demon players.",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Know",
+            "Know"
+        ]
+    },
+    {
+        "id": "langzhong",
+        "name": "郎中",
+        "ability": "每个夜晚，你要选择一名玩家：你会得知一个与他能力相关的词语。",
+        "firstNightReminder": "唤醒郎中，让其指向一名玩家。以不会被其他玩家察觉的形式对其提供与该玩家角色能力相关的一个词语。",
+        "otherNightReminder": "唤醒郎中，让其指向一名玩家。以不会被其他玩家察觉的形式对其提供与该玩家角色能力相关的一个词语。",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "lankeren",
+        "name": "烂柯人",
+        "ability": "你不知道你的阵营（你有可能会属于邪恶阵营）。在你的首个夜晚，你会得知三名玩家，其中有且仅有两名玩家与你同一阵营。",
+        "firstNightReminder": "决定烂柯人的阵营，并唤醒他，指向三名玩家。其中两名玩家与他同一阵营。",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "被得知"
+        ]
+    },
+    {
+        "id": "legion",
+        "name": "Legion",
+        "ability": "Each night*, a player might die. Executions fail if only evil voted. You register as a Minion too. [Most players are Legion]",
+        "firstNightReminder": "",
+        "otherNightReminder": "Choose a player, that player dies.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead",
+            "About to die"
+        ]
+    },
+    {
+        "id": "leviathan",
+        "name": "Leviathan",
+        "ability": "If more than 1 good player is executed, you win. All players know you are in play. After day 5, evil wins.",
+        "firstNightReminder": "Place the Leviathan 'Day 1' marker. Announce 'The Leviathan is in play; this is Day 1.'",
+        "otherNightReminder": "Change the Leviathan Day reminder for the next day.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Day 1",
+            "Day 2",
+            "Day 3",
+            "Day 4",
+            "Day 5",
+            "Good player executed"
+        ]
+    },
+    {
+        "id": "librarian",
+        "name": "Librarian",
+        "ability": "You start knowing that 1 of 2 players is a particular Outsider. (Or that zero are in play.)",
+        "firstNightReminder": "Show the character token of an Outsider in play. Point to two players, one of which is that character.",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Outsider",
+            "Wrong"
+        ]
+    },
+    {
+        "id": "lilmonsta",
+        "name": "Lil' Monsta",
+        "ability": "Each night, Minions choose who babysits Lil' Monsta's token & \"is the Demon\". A player dies each night*. [+1 Minion]",
+        "firstNightReminder": "Wake all Minions together, allow them to vote by pointing at who they want to babysit Lil' Monsta.",
+        "otherNightReminder": "Wake all Minions together, allow them to vote by pointing at who they want to babysit Lil' Monsta. Choose a player, that player dies.",
+        "remindersGlobal": [
+            "Is the Demon",
+            "Dead"
+        ],
+        "reminders": []
+    },
+    {
+        "id": "lleech",
+        "name": "Lleech",
+        "ability": "Each night*, choose a player: they die. You start by choosing an alive player: they are poisoned - you die if & only if they die.",
+        "firstNightReminder": "The Lleech points to a player. Place the Poisoned reminder token.",
+        "otherNightReminder": "The Lleech points to a player. That player dies.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead",
+            "Poisoned"
+        ]
+    },
+    {
+        "id": "lunatic",
+        "name": "Lunatic",
+        "ability": "You think you are a Demon, but you are not. The Demon knows who you are & who you choose at night.",
+        "firstNightReminder": "If 7 or more players: Show the Lunatic a number of arbitrary 'Minions', players equal to the number of Minions in play. Show 3 character tokens of arbitrary good characters. If the token received by the Lunatic is a Demon that would wake tonight: Allow the Lunatic to do the Demon actions. Place their 'attack' markers. Wake the Demon. Show the Demon's real character token. Show them the Lunatic player. If the Lunatic attacked players: Show the real demon each marked player. Remove any Lunatic 'attack' markers.",
+        "otherNightReminder": "Allow the Lunatic to do the actions of the Demon. Place their 'attack' markers. If the Lunatic selected players: Wake the Demon. Show the 'attack' marker, then point to each marked player. Remove any Lunatic 'attack' markers.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Attack 1",
+            "Attack 2",
+            "Attack 3"
+        ]
+    },
+    {
+        "id": "lycanthrope",
+        "name": "Lycanthrope",
+        "ability": "Each night*, choose a living player: if good, they die, but they are the only player that can die tonight.",
+        "firstNightReminder": "",
+        "otherNightReminder": "The Lycanthrope points to a living player: if good, they die and no one else can die tonight.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead"
+        ]
+    },
+    {
+        "id": "magician",
+        "name": "Magician",
+        "ability": "The Demon thinks you are a Minion. Minions think you are a Demon.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "marionette",
+        "name": "Marionette",
+        "ability": "You think you are a good character but you are not. The Demon knows who you are. [You neighbour the Demon]",
+        "firstNightReminder": "Select one of the good players next to the Demon and place the Is the Marionette reminder token. Wake the Demon and show them the Marionette.",
+        "otherNightReminder": "",
+        "remindersGlobal": [
+            "Is the Marionette"
+        ],
+        "reminders": []
+    },
+    {
+        "id": "mastermind",
+        "name": "Mastermind",
+        "ability": "If the Demon dies by execution (ending the game), play for 1 more day. If a player is then executed, their team loses.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "mathematician",
+        "name": "Mathematician",
+        "ability": "Each night, you learn how many players' abilities worked abnormally (since dawn) due to another character's ability.",
+        "firstNightReminder": "Show the hand signal for the number (0, 1, 2, etc.) of players whose ability malfunctioned due to other abilities.",
+        "otherNightReminder": "Show the hand signal for the number (0, 1, 2, etc.) of players whose ability malfunctioned due to other abilities.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Abnormal"
+        ]
+    },
+    {
+        "id": "matron",
+        "name": "Matron",
+        "ability": "Each day, you may choose up to 3 sets of 2 players to swap seats. Players may not leave their seats to talk in private.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "mayor",
+        "name": "Mayor",
+        "ability": "If only 3 players live & no execution occurs, your team wins. If you die at night, another player might die instead.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "mezepheles",
+        "name": "Mezepheles",
+        "ability": "You start knowing a secret word. The 1st good player to say this word becomes evil that night.",
+        "firstNightReminder": "Show the Mezepheles their secret word.",
+        "otherNightReminder": "Wake the 1st good player that said the Mezepheles' secret word and show them the 'You are' card and the thumbs down evil signal.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Turns evil",
+            "No ability"
+        ]
+    },
+    {
+        "id": "minstrel",
+        "name": "Minstrel",
+        "ability": "When a Minion dies by execution, all other players (except Travellers) are drunk until dusk tomorrow.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Everyone drunk"
+        ]
+    },
+    {
+        "id": "monk",
+        "name": "Monk",
+        "ability": "Each night*, choose a player (not yourself): they are safe from the Demon tonight.",
+        "firstNightReminder": "",
+        "otherNightReminder": "The previously protected player is no longer protected. The Monk points to a player not themself. Mark that player 'Protected'.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Protected"
+        ]
+    },
+    {
+        "id": "moonchild",
+        "name": "Moonchild",
+        "ability": "When you learn that you died, publicly choose 1 alive player. Tonight, if it was a good player, they die.",
+        "firstNightReminder": "",
+        "otherNightReminder": "If the Moonchild used their ability to target a player today: If that player is good, they die.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead"
+        ]
+    },
+    {
+        "id": "mutant",
+        "name": "Mutant",
+        "ability": "If you are \"mad\" about being an Outsider, you might be executed.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "niangjiushi",
+        "name": "酿酒师",
+        "ability": "每个夜晚，你要选择一个善良角色并给出相应的信息形式：该角色通过自身能力获取信息时，改为得知你给出的信息，直到下个黄昏。[-1外来者]",
+        "firstNightReminder": "唤醒酿酒师，让其选择一个角色并给出该角色对应的信息形式。如果该角色在场，在对应的角色标记旁放置“微醺”提示标记。如有必要，记录下该信息形式作为备忘，但不要将这一信息展示给任何能查看魔典的玩家。",
+        "otherNightReminder": "唤醒酿酒师，让其选择一个角色并给出该角色对应的信息形式。如果该角色在场，在对应的角色标记旁放置“微醺”提示标记。如有必要，记录下该信息形式作为备忘，但不要将这一信息展示给任何能查看魔典的玩家。",
+        "remindersGlobal": [],
+        "reminders": [
+            "微醺"
+        ]
+    },
+    {
+        "id": "nichen",
+        "name": "逆臣",
+        "ability": "在你的首个夜晚，你要选择除你以外的一名玩家：如果他先死于处决，你转变为邪恶；如果你先死于处决，他转变为邪恶。",
+        "firstNightReminder": "唤醒逆臣，让其选择一名玩家。在该玩家的角色标记旁放置“不共戴天”提示标记。",
+        "otherNightReminder": "如果逆臣或标记了“不共戴天”的玩家死于处决，唤醒两者之中的另一名玩家，告诉他变为邪恶阵营。",
+        "remindersGlobal": [],
+        "reminders": [
+            "不共戴天"
+        ]
+    },
+    {
+        "id": "nightwatchman",
+        "name": "Nightwatchman",
+        "ability": "Once per game, at night, choose a player: they learn who you are.",
+        "firstNightReminder": "The Nightwatchman may point to a player. Wake that player, show the 'This character selected you' card and the Nightwatchman token, then point to the Nightwatchman player.",
+        "otherNightReminder": "The Nightwatchman may point to a player. Wake that player, show the 'This character selected you' card and the Nightwatchman token, then point to the Nightwatchman player.",
+        "remindersGlobal": [],
+        "reminders": [
+            "No ability"
+        ]
+    },
+    {
+        "id": "noble",
+        "name": "Noble",
+        "ability": "You start knowing 3 players, 1 and only 1 of which is evil.",
+        "firstNightReminder": "Point to 3 players including one evil player, in no particular order.",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Seen"
+        ]
+    },
+    {
+        "id": "nodashii",
+        "name": "No Dashii",
+        "ability": "Each night*, choose a player: they die. Your 2 Townsfolk neighbours are poisoned.",
+        "firstNightReminder": "",
+        "otherNightReminder": "The No Dashii points to a player. That player dies.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead",
+            "Poisoned"
+        ]
+    },
+    {
+        "id": "ojo",
+        "name": "Ojo",
+        "ability": "Each night*, choose a character: they die. If they are not in play, the Storyteller chooses who dies.",
+        "firstNightReminder": "",
+        "otherNightReminder": "The Ojo points to a character on the sheet; if in play, that player dies. If it is not in play, the Storyteller chooses who dies instead.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead"
+        ]
+    },
+    {
+        "id": "oracle",
+        "name": "Oracle",
+        "ability": "Each night*, you learn how many dead players are evil.",
+        "firstNightReminder": "",
+        "otherNightReminder": "Show the hand signal for the number (0, 1, 2, etc.) of dead evil players.",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "organgrinder",
+        "name": "Organ Grinder",
+        "ability": "All players keep their eyes closed when voting & the vote tally is secret. Votes for you only count if you vote.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "About to die"
+        ]
+    },
+    {
+        "id": "pacifist",
+        "name": "Pacifist",
+        "ability": "Executed good players might not die.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "panguan",
+        "name": "判官",
+        "ability": "在你的首个夜晚，你会得知一个关键词。在白天时（最后一天除外）有邪恶玩家首次说出该关键词会使得当前白天阶段立即结束。",
+        "firstNightReminder": "唤醒判官，并对其展示关键词。",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "失去能力"
+        ]
+    },
+    {
+        "id": "philosopher",
+        "name": "Philosopher",
+        "ability": "Once per game, at night, choose a good character: gain that ability. If this character is in play, they are drunk.",
+        "firstNightReminder": "The Philosopher either shows a 'no' head signal, or points to a good character on their sheet. If they chose a character: Swap the out-of-play character token with the Philosopher token. Or, if the character is in play, place the drunk marker by that player and the Not the Philosopher token by the Philosopher.",
+        "otherNightReminder": "If the Philosopher has not used their ability: the Philosopher either shows a 'no' head signal, or points to a good character on their sheet. If they chose a character: Swap the out-of-play character token with the Philosopher token. Or, if the character is in play, place the drunk marker by that player and the Not the Philosopher token by the Philosopher.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Drunk",
+            "Is the Philosopher"
+        ]
+    },
+    {
+        "id": "pithag",
+        "name": "Pit-Hag",
+        "ability": "Each night*, choose a player & a character they become (if not-in-play). If a Demon is made, deaths tonight are arbitrary.",
+        "firstNightReminder": "",
+        "otherNightReminder": "The Pit-Hag points to a player and a character on the sheet. If this character is not in play, wake that player and show them the 'You are' card and the relevant character token. If the character is in play, nothing happens.",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "pixie",
+        "name": "Pixie",
+        "ability": "You start knowing 1 in-play Townsfolk. If you were mad that you were this character, you gain their ability when they die.",
+        "firstNightReminder": "Show the Pixie 1 in-play Townsfolk character token.",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Mad",
+            "Has ability"
+        ]
+    },
+    {
+        "id": "plaguedoctor",
+        "name": "Plague Doctor",
+        "ability": "If you die, the Storyteller gains a not-in-play Minion ability.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Storyteller Ability"
+        ]
+    },
+    {
+        "id": "po",
+        "name": "Po",
+        "ability": "Each night*, you may choose a player: they die. If your last choice was no-one, choose 3 players tonight.",
+        "firstNightReminder": "",
+        "otherNightReminder": "If the Po chose no-one the previous night: The Po points to three players. Otherwise: The Po either shows the 'no' head signal , or points to a player. Chosen players die",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead",
+            "3 attacks"
+        ]
+    },
+    {
+        "id": "poisoner",
+        "name": "Poisoner",
+        "ability": "Each night, choose a player: they are poisoned tonight and tomorrow day.",
+        "firstNightReminder": "The Poisoner points to a player. That player is poisoned.",
+        "otherNightReminder": "The previously poisoned player is no longer poisoned. The Poisoner points to a player. That player is poisoned.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Poisoned"
+        ]
+    },
+    {
+        "id": "politician",
+        "name": "Politician",
+        "ability": "If you were the player most responsible for your team losing, you change alignment & win, even if dead.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "poppygrower",
+        "name": "Poppy Grower",
+        "ability": "Minions & Demons do not know each other. If you die, they learn who each other are that night.",
+        "firstNightReminder": "Do not inform the Demon/Minions who each other are",
+        "otherNightReminder": "If the Poppy Grower has died, show the Minions/Demon who each other are.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Evil wakes"
+        ]
+    },
+    {
+        "id": "preacher",
+        "name": "Preacher",
+        "ability": "Each night, choose a player: a Minion, if chosen, learns this. All chosen Minions have no ability.",
+        "firstNightReminder": "The Preacher chooses a player. If a Minion is chosen, wake the Minion and show the 'This character selected you' card and then the Preacher token.",
+        "otherNightReminder": "The Preacher chooses a player. If a Minion is chosen, wake the Minion and show the 'This character selected you' card and then the Preacher token.",
+        "remindersGlobal": [],
+        "reminders": [
+            "At a sermon"
+        ]
+    },
+    {
+        "id": "professor",
+        "name": "Professor",
+        "ability": "Once per game, at night*, choose a dead player: if they are a Townsfolk, they are resurrected.",
+        "firstNightReminder": "",
+        "otherNightReminder": "If the Professor has not used their ability: The Professor either shakes their head no, or points to a player. If that player is a Townsfolk, they are now alive.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Alive",
+            "No ability"
+        ]
+    },
+    {
+        "id": "psychopath",
+        "name": "Psychopath",
+        "ability": "Each day, before nominations, you may publicly choose a player: they die. If executed, you only die if you lose roshambo.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "pukka",
+        "name": "Pukka",
+        "ability": "Each night, choose a player: they are poisoned. The previously poisoned player dies then becomes healthy.",
+        "firstNightReminder": "The Pukka points to a player. That player is poisoned.",
+        "otherNightReminder": "The Pukka points to a player. That player is poisoned. The previously poisoned player dies. ",
+        "remindersGlobal": [],
+        "reminders": [
+            "Poisoned",
+            "Dead"
+        ]
+    },
+    {
+        "id": "puzzlemaster",
+        "name": "Puzzlemaster",
+        "ability": "1 player is drunk, even if you die. If you guess (once) who it is, learn the Demon player, but guess wrong & get false info.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Drunk",
+            "Guess used"
+        ]
+    },
+    {
+        "id": "qianke",
+        "name": "掮客",
+        "ability": "每个夜晚，你要选择两名存活玩家：如果他们阵营相同，今晚任何玩家使用自身能力选择他们之一作为目标时，改为选中另一名玩家。",
+        "firstNightReminder": "唤醒车夫，让他指向两名存活玩家。如果这两名玩家阵营相同，在这些玩家的角色标记旁放置“熟客”提示标记。",
+        "otherNightReminder": "移除上个夜晚放置的“熟客”标记。唤醒车夫，让他指向两名存活玩家。如果这两名玩家阵营相同，在这些玩家的角色标记旁放置“熟客”提示标记。",
+        "remindersGlobal": [],
+        "reminders": [
+            "熟客"
+        ]
+    },
+    {
+        "id": "qintianjian",
+        "name": "钦天监",
+        "ability": "在你的首个夜晚，你会得知离你最近的邪恶玩家位于你的哪一侧（左/右/相同）。如果与你邻近的玩家中有邪恶阵营，你会得知错误信息。",
+        "firstNightReminder": "唤醒占星者，对其用拇指指向其左侧或右侧示意。如果两侧邪恶玩家与他距离相同，拇指朝下示意。",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "qiongqi",
+        "name": "穷奇",
+        "ability": "每个夜晚*，你要选择一名玩家：他死亡。所有的外来者都可能会被当作邪恶阵营、爪牙角色或恶魔角色。",
+        "firstNightReminder": "",
+        "otherNightReminder": "唤醒穷奇，让其选择一名玩家。标记那名玩家死亡。",
+        "remindersGlobal": [],
+        "reminders": [
+            "死亡"
+        ]
+    },
+    {
+        "id": "ravenkeeper",
+        "name": "Ravenkeeper",
+        "ability": "If you die at night, you are woken to choose a player: you learn their character.",
+        "firstNightReminder": "",
+        "otherNightReminder": "If the Ravenkeeper died tonight: The Ravenkeeper points to a player. Show that player's character token.",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "recluse",
+        "name": "Recluse",
+        "ability": "You might register as evil & as a Minion or Demon, even if dead.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "revolutionary",
+        "name": "Revolutionary",
+        "ability": "2 neighboring players are known to be the same alignment. Once per game, one of them registers falsely.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Used"
+        ]
+    },
+    {
+        "id": "riot",
+        "name": "Riot",
+        "ability": "Nominees die, but may nominate again immediately (on day 3, they must). After day 3, evil wins. [All Minions are Riot]",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "rulianshi",
+        "name": "入殓师",
+        "ability": "如果你提名并处决了恶魔，你会变成邪恶的恶魔。当剩余存活玩家小于等于四人时（旅行者除外），你失去能力。",
+        "firstNightReminder": "",
+        "otherNightReminder": "如果白天入殓师提名了恶魔且恶魔被处决，唤醒他，并对他展示“你是”提示标记和恶魔角色标记。",
+        "remindersGlobal": [],
+        "reminders": [
+            "是恶魔"
+        ]
+    },
+    {
+        "id": "sage",
+        "name": "Sage",
+        "ability": "If the Demon kills you, you learn that it is 1 of 2 players.",
+        "firstNightReminder": "",
+        "otherNightReminder": "If the Sage was killed by a Demon: Point to two players, one of which is that Demon.",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "sailor",
+        "name": "Sailor",
+        "ability": "Each night, choose an alive player: either you or they are drunk until dusk. You can't die.",
+        "firstNightReminder": "The Sailor points to a living player. Either the Sailor, or the chosen player, is drunk.",
+        "otherNightReminder": "The previously drunk player is no longer drunk. The Sailor points to a living player. Either the Sailor, or the chosen player, is drunk.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Drunk"
+        ]
+    },
+    {
+        "id": "saint",
+        "name": "Saint",
+        "ability": "If you die by execution, your team loses.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "savant",
+        "name": "Savant",
+        "ability": "Each day, you may visit the Storyteller to learn 2 things in private: 1 is true & 1 is false.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "scapegoat",
+        "name": "Scapegoat",
+        "ability": "If a player of your alignment is executed, you might be executed instead.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "scarletwoman",
+        "name": "Scarlet Woman",
+        "ability": "If there are 5 or more players alive & the Demon dies, you become the Demon. (Travellers don't count)",
+        "firstNightReminder": "",
+        "otherNightReminder": "If the Scarlet Woman became the Demon today: Show the 'You are' card, then the demon token.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Demon"
+        ]
+    },
+    {
+        "id": "seamstress",
+        "name": "Seamstress",
+        "ability": "Once per game, at night, choose 2 players (not yourself): you learn if they are the same alignment.",
+        "firstNightReminder": "The Seamstress either shows a 'no' head signal, or points to two other players. If the Seamstress chose players , nod 'yes' or shake 'no' for whether they are of same alignment.",
+        "otherNightReminder": "If the Seamstress has not yet used their ability: the Seamstress either shows a 'no' head signal, or points to two other players. If the Seamstress chose players , nod 'yes' or shake 'no' for whether they are of same alignment.",
+        "remindersGlobal": [],
+        "reminders": [
+            "No ability"
+        ]
+    },
+    {
+        "id": "sentinel",
+        "name": "Sentinel",
+        "ability": "There might be 1 extra or 1 fewer Outsider in play.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "shabaloth",
+        "name": "Shabaloth",
+        "ability": "Each night*, choose 2 players: they die. A dead player you chose last night might be regurgitated.",
+        "firstNightReminder": "",
+        "otherNightReminder": "One player that the Shabaloth chose the previous night might be resurrected. The Shabaloth points to two players. Those players die.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead",
+            "Alive"
+        ]
+    },
+    {
+        "id": "shaxing",
+        "name": "煞星",
+        "ability": "如果你死亡，当晚与你邻近的存活玩家之一可能会死亡。",
+        "firstNightReminder": "",
+        "otherNightReminder": "如果天花病人死亡，将与其邻近的存活善良玩家之一标记为死亡。",
+        "remindersGlobal": [],
+        "reminders": [
+            "死亡"
+        ]
+    },
+    {
+        "id": "shijie",
+        "name": "使节",
+        "ability": "每个夜晚限一次，所有玩家在使用自身能力选择邪恶玩家时会改为选中你，即使你已死亡。",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "已生效"
+        ]
+    },
+    {
+        "id": "shimengmo",
+        "name": "食梦貘",
+        "ability": "每个夜晚*，你要选择一名玩家：他死亡。使用自身能力选择你的玩家会改为选中自己。[-1外来者]",
+        "firstNightReminder": "",
+        "otherNightReminder": "唤醒食梦貘，让其选择一名玩家。标记那名玩家死亡。",
+        "remindersGlobal": [],
+        "reminders": [
+            "死亡"
+        ]
+    },
+    {
+        "id": "shugenja",
+        "name": "Shugenja",
+        "ability": "You start knowing if your closest evil player is clockwise or anti-clockwise. If equidistant, this info is arbitrary.",
+        "firstNightReminder": "Wake the Shugenja; point horizontally in the direction of the closest evil player. If the two closest evil players are equidistant, point your finger horizontally in either direction.",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "shusheng",
+        "name": "书生",
+        "ability": "恶魔知道你在场。每局游戏限一次，恶魔可以拜访说书人并猜测谁是书生。如果恶魔猜测正确，即使你已死亡，当晚该恶魔可以选择一名玩家：他死亡。",
+        "firstNightReminder": "唤醒恶魔，并对他展示“该角色的能力对你触发”提示标记与书生角色标记。",
+        "otherNightReminder": "如果白天恶魔成功猜中了书生是谁，唤醒那个恶魔，让其选择一名玩家。标记那名玩家死亡。",
+        "remindersGlobal": [],
+        "reminders": [
+            "已猜测",
+            "猜测正确",
+            "死亡"
+        ]
+    },
+    {
+        "id": "slayer",
+        "name": "Slayer",
+        "ability": "Once per game, during the day, publicly choose a player: if they are the Demon, they die.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "No ability"
+        ]
+    },
+    {
+        "id": "snakecharmer",
+        "name": "Snake Charmer",
+        "ability": "Each night, choose an alive player: a chosen Demon swaps characters & alignments with you & is then poisoned.",
+        "firstNightReminder": "The Snake Charmer points to a player. If that player is the Demon: swap the Demon and Snake Charmer character and alignments. Wake each player to inform them of their new role and alignment. The new Snake Charmer is poisoned.",
+        "otherNightReminder": "The Snake Charmer points to a player. If that player is the Demon: swap the Demon and Snake Charmer character and alignments. Wake each player to inform them of their new role and alignment. The new Snake Charmer is poisoned.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Poisoned"
+        ]
+    },
+    {
+        "id": "snitch",
+        "name": "Snitch",
+        "ability": "Minions start knowing 3 not-in-play characters.",
+        "firstNightReminder": "After Minion info wake each Minion and show them three not-in-play character tokens. These may be the same or different to each other and the ones shown to the Demon.",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "soldier",
+        "name": "Soldier",
+        "ability": "You are safe from the Demon.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "spiritofivory",
+        "name": "Spirit of Ivory",
+        "ability": "There can't be more than 1 extra evil player.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "No extra evil"
+        ]
+    },
+    {
+        "id": "spy",
+        "name": "Spy",
+        "ability": "Each night, you see the Grimoire. You might register as good & as a Townsfolk or Outsider, even if dead.",
+        "firstNightReminder": "Show the Grimoire to the Spy for as long as they need.",
+        "otherNightReminder": "Show the Grimoire to the Spy for as long as they need.",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "steward",
+        "name": "Steward",
+        "ability": "You start knowing 1 good player.",
+        "firstNightReminder": "Point to 1 good player.",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Know"
+        ]
+    },
+    {
+        "id": "stormcatcher",
+        "name": "Storm Catcher",
+        "ability": "Name a good character. If in play, they can only die by execution, but evil players learn which player it is.",
+        "firstNightReminder": "Mark a good player as \"Safe\". Wake each evil player and show them the marked player.",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Safe"
+        ]
+    },
+    {
+        "id": "sweetheart",
+        "name": "Sweetheart",
+        "ability": "When you die, 1 player is drunk from now on.",
+        "firstNightReminder": "",
+        "otherNightReminder": "Choose a player that is drunk.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Drunk"
+        ]
+    },
+    {
+        "id": "taotie",
+        "name": "饕餮",
+        "ability": "每个夜晚*，你要选择任意数量的非旅行者玩家或一名旅行者玩家：如果他们的角色类型均不相同，他们死亡。[+1外来者]",
+        "firstNightReminder": "",
+        "otherNightReminder": "唤醒饕餮，让其选择任意数量的玩家。如果这些玩家的角色类型均不相同，标记这些玩家死亡。",
+        "remindersGlobal": [],
+        "reminders": [
+            "死亡"
+        ]
+    },
+    {
+        "id": "taowu",
+        "name": "梼杌",
+        "ability": "每个夜晚*，你要选择一名玩家：他死亡。每个夜晚限一次，如果你以这种方式杀死了一名外来者，当晚你可以再次行动。[+1外来者]",
+        "firstNightReminder": "",
+        "otherNightReminder": "唤醒梼杌，让其选择一名玩家，并标记那名玩家死亡。如果梼杌成功杀死了一名外来者，让他再选择一名玩家，标记那名玩家死亡。",
+        "remindersGlobal": [],
+        "reminders": [
+            "死亡"
+        ]
+    },
+    {
+        "id": "tealady",
+        "name": "Tea Lady",
+        "ability": "If both your alive neighbours are good, they can't die.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Can not die"
+        ]
+    },
+    {
+        "id": "thief",
+        "name": "Thief",
+        "ability": "Each night, choose a player (not yourself): their vote counts negatively tomorrow.",
+        "firstNightReminder": "The Thief points to a player. Put the Thief's 'Negative vote' reminder by the chosen player's character token.",
+        "otherNightReminder": "The Thief points to a player. Put the Thief's 'Negative vote' reminder by the chosen player's character token.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Negative vote"
+        ]
+    },
+    {
+        "id": "tinker",
+        "name": "Tinker",
+        "ability": "You might die at any time.",
+        "firstNightReminder": "",
+        "otherNightReminder": "The Tinker might die.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead"
+        ]
+    },
+    {
+        "id": "tixingguan",
+        "name": "提刑官",
+        "ability": "在你首次提名玩家后，你会在当晚得知他的角色。外来者会被你的能力当作爪牙或恶魔角色。",
+        "firstNightReminder": "",
+        "otherNightReminder": "如果提刑官在白天进行了整局游戏中他的首次提名，唤醒他并对他展示他提名的玩家的角色标记。",
+        "remindersGlobal": [],
+        "reminders": [
+            "被首次提名"
+        ]
+    },
+    {
+        "id": "towncrier",
+        "name": "Town Crier",
+        "ability": "Each night*, you learn if a Minion nominated today.",
+        "firstNightReminder": "",
+        "otherNightReminder": "Nod 'yes' or shake head 'no' for whether a Minion nominated today. Place the 'Minion not nominated' marker (remove 'Minion nominated', if any).",
+        "remindersGlobal": [],
+        "reminders": [
+            "Minions not nominated",
+            "Minion nominated"
+        ]
+    },
+    {
+        "id": "toymaker",
+        "name": "Toymaker",
+        "ability": "The Demon may choose not to attack & must do this at least once per game. Evil players get normal starting info.",
+        "firstNightReminder": "",
+        "otherNightReminder": "If it is a night when a Demon attack could end the game, and the Demon is marked \"Final night: No Attack,\" then the Demon does not act tonight. (Do not wake them.)",
+        "remindersGlobal": [],
+        "reminders": [
+            "Final Night: No Attack"
+        ]
+    },
+    {
+        "id": "undertaker",
+        "name": "Undertaker",
+        "ability": "Each night*, you learn which character died by execution today.",
+        "firstNightReminder": "",
+        "otherNightReminder": "If a player was executed today: Show that player's character token.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Executed"
+        ]
+    },
+    {
+        "id": "vigormortis",
+        "name": "Vigormortis",
+        "ability": "Each night*, choose a player: they die. Minions you kill keep their ability & poison 1 Townsfolk neighbour. [−1 Outsider]",
+        "firstNightReminder": "",
+        "otherNightReminder": "The Vigormortis points to a player. That player dies. If a Minion, they keep their ability and one of their Townsfolk neighbours is poisoned.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead",
+            "Has ability",
+            "Poisoned"
+        ]
+    },
+    {
+        "id": "villageidiot",
+        "name": "Village Idiot",
+        "ability": "Each night, choose a player: you learn their alignment. [+0 to +2 Village Idiots. 1 of the extras is drunk]",
+        "firstNightReminder": "The Village Idiot points to a player; give a thumbs up if that player is good or a thumbs down if that player is evil.",
+        "otherNightReminder": "The Village Idiot points to a player; give a thumbs up if that player is good or a thumbs down if that player is evil.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Drunk"
+        ]
+    },
+    {
+        "id": "virgin",
+        "name": "Virgin",
+        "ability": "The 1st time you are nominated, if the nominator is a Townsfolk, they are executed immediately.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "No ability"
+        ]
+    },
+    {
+        "id": "vizier",
+        "name": "Vizier",
+        "ability": "All players know who you are. You can not die during the day. If good voted, you may choose to execute immediately.",
+        "firstNightReminder": "Announce 'The Vizier is in play' and state which player they are.",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "vortox",
+        "name": "Vortox",
+        "ability": "Each night*, choose a player: they die. Townsfolk abilities yield false info. Each day, if no-one is executed, evil wins.",
+        "firstNightReminder": "",
+        "otherNightReminder": "The Vortox points to a player. That player dies.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Dead"
+        ]
+    },
+    {
+        "id": "voudon",
+        "name": "Voudon",
+        "ability": "Only you and the dead can vote. They don't need a vote token to do so. A 50% majority is not required.",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "washerwoman",
+        "name": "Washerwoman",
+        "ability": "You start knowing that 1 of 2 players is a particular Townsfolk.",
+        "firstNightReminder": "Show the character token of a Townsfolk in play. Point to two players, one of which is that character.",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": [
+            "Townsfolk",
+            "Wrong"
+        ]
+    },
+    {
+        "id": "widow",
+        "name": "Widow",
+        "ability": "On your 1st night, look at the Grimoire and choose a player: they are poisoned. 1 good player knows a Widow is in play.",
+        "firstNightReminder": "Show the Grimoire to the Widow for as long as they need. The Widow points to a player. That player is poisoned. Wake a good player. Show the 'These characters are in play' card, then the Widow character token.",
+        "otherNightReminder": "",
+        "remindersGlobal": [
+            "Knows"
+        ],
+        "reminders": [
+            "Poisoned"
+        ]
+    },
+    {
+        "id": "witch",
+        "name": "Witch",
+        "ability": "Each night, choose a player: if they nominate tomorrow, they die. If just 3 players live, you lose this ability.",
+        "firstNightReminder": "The Witch points to a player. If that player nominates tomorrow they die immediately.",
+        "otherNightReminder": "If there are 4 or more players alive: The Witch points to a player. If that player nominates tomorrow they die immediately.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Cursed"
+        ]
+    },
+    {
+        "id": "wudaozhe",
+        "name": "悟道者",
+        "ability": "你以为你是一个外来者，但你实际上不是。如果有邪恶玩家的能力选择或影响了你，在该效果生效前你会变成一个不在场的镇民角色。",
+        "firstNightReminder": "",
+        "otherNightReminder": "",
+        "remindersGlobal": [
+            "是悟道者"
+        ],
+        "reminders": []
+    },
+    {
+        "id": "wushiren",
+        "name": "舞狮人",
+        "ability": "每个夜晚，你会得知一个在场角色。每局游戏限一次，你得知的信息改为恶魔的伪装之一。",
+        "firstNightReminder": "唤醒舞狮人，对他展示一个角色标记。如果展示了恶魔的伪装，在舞狮人角色标记旁放置“限一次”角色标记。如果舞狮人有“限一次”角色标记，则无法对他展示恶魔的伪装作为正确信息。",
+        "otherNightReminder": "唤醒舞狮人，对他展示一个角色标记。如果展示了恶魔的伪装，在舞狮人角色标记旁放置“限一次”角色标记。如果舞狮人有“限一次”角色标记，则无法对他展示恶魔的伪装作为正确信息。",
+        "remindersGlobal": [],
+        "reminders": [
+            "限一次"
+        ]
+    },
+    {
+        "id": "xingjiaoshang",
+        "name": "行脚商",
+        "ability": "每局游戏限一次，在夜晚时，你可以选择一名玩家：你会得知放置在该玩家角色标记旁的所有提示标记。",
+        "firstNightReminder": "唤醒行脚商，让其选择一名玩家。将当前放置在该玩家角色标记旁的所有提示标记展示给他看。",
+        "otherNightReminder": "唤醒行脚商，让其选择一名玩家。将当前放置在该玩家角色标记旁的所有提示标记展示给他看。",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "xionghaizi",
+        "name": "熊孩子",
+        "ability": "每个夜晚，你要选择两个善良角色：他们的能力会产生错误信息，直到下个黄昏。",
+        "firstNightReminder": "唤醒熊孩子，让其选择两个善良角色。如果这些角色在场，在对应角色标记旁放置“捣蛋”提示标记。",
+        "otherNightReminder": "移除上个夜晚放置的“捣蛋”提示标记。唤醒熊孩子，让其选择两个善良角色。如果这些角色在场，在对应角色标记旁放置“捣蛋”提示标记。",
+        "remindersGlobal": [],
+        "reminders": [
+            "捣蛋"
+        ]
+    },
+    {
+        "id": "xizi",
+        "name": "戏子",
+        "ability": "所有戏子互相认识。不论在场的戏子数量多少或存活与否，胜负结果会被对调。[所有善良玩家都是戏子]",
+        "firstNightReminder": "唤醒所有戏子，让他们互相确认。如有必要，对他们展示“你是”提示标记和戏子角色标记。",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "yangguren",
+        "name": "养蛊人",
+        "ability": "在你存活时提名你的玩家会在当晚死亡，即使你已死亡。",
+        "firstNightReminder": "",
+        "otherNightReminder": "如果有玩家被放置了“提名”标记，标记该玩家死亡。",
+        "remindersGlobal": [],
+        "reminders": [
+            "提名",
+            "死亡"
+        ]
+    },
+    {
+        "id": "yinluren",
+        "name": "引路人",
+        "ability": "每个夜晚，你要选择两名玩家：你会得知今晚是否有邪恶玩家的能力选择或影响了他们之中的玩家。",
+        "firstNightReminder": "唤醒摆渡者，让其选择两名玩家。以点头或摇头作为信息给出。",
+        "otherNightReminder": "唤醒摆渡者，让其选择两名玩家。以点头或摇头作为信息给出。",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "yinyangshi",
+        "name": "阴阳师",
+        "ability": "在你的首个夜晚，你会得知两个善良角色和两个邪恶角色。其中有且只有两个角色在场。",
+        "firstNightReminder": "唤醒阴阳师，并对其展示两个善良角色，两个邪恶角色，共四个角色标记。其中正好只有两个角色在场。",
+        "otherNightReminder": "",
+        "remindersGlobal": [],
+        "reminders": []
+    },
+    {
+        "id": "zombuul",
+        "name": "Zombuul",
+        "ability": "Each night*, if no-one died today, choose a player: they die. The 1st time you die, you live but register as dead.",
+        "firstNightReminder": "",
+        "otherNightReminder": "If no-one died during the day: The Zombuul points to a player. That player dies.",
+        "remindersGlobal": [],
+        "reminders": [
+            "Died today",
+            "Dead"
+        ]
+    }
+]

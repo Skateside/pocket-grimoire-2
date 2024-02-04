@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "lib": [
+            "dom",
+            "ES2023"
+        ],
+        "module": "esnext",
+        "noImplicitAny": true,
+        "rootDir": "assets/ts",
+        "paths": {
+            "tslib": ["./node_modules/tslib/tslib.d.ts"]
+        }
+    },
+    "exclude": ["node_modules", "ideas", ".git"]
+}

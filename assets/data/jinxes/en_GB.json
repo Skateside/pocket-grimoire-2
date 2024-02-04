@@ -1,0 +1,657 @@
+[
+    {
+        "target": "chambermaid",
+        "trick": "mathematician",
+        "reason": "The Chambermaid learns if the Mathematician wakes tonight or not, even though the Chambermaid wakes first."
+    },
+    {
+        "target": "eviltwin",
+        "trick": "plaguedoctor",
+        "reason": "The Storyteller cannot gain the Evil Twin ability if the Plague Doctor dies."
+    },
+    {
+        "target": "butler",
+        "trick": "cannibal",
+        "reason": "If the Cannibal gains the Butler ability, the Cannibal learns this."
+    },
+    {
+        "target": "lunatic",
+        "trick": "mathematician",
+        "reason": "The Mathematician learns if the Lunatic attacks a different player(s) than the real Demon attacked."
+    },
+    {
+        "target": "pithag",
+        "trick": "heretic",
+        "reason": "A Pit-Hag can not create a Heretic. "
+    },
+    {
+        "target": "pithag",
+        "trick": "damsel",
+        "reason": "If a Pit-Hag creates a Damsel, the Storyteller chooses which player it is."
+    },
+    {
+        "target": "pithag",
+        "trick": "politician",
+        "reason": "A Pit-Hag can not create an evil Politician."
+    },
+    {
+        "target": "pithag",
+        "trick": "villageidiot",
+        "reason": "If there is a spare token, the Pit-Hag can create an extra Village Idiot. If so, the drunk Village Idiot might change."
+    },
+    {
+        "target": "pithag",
+        "trick": "xizi",
+        "reason": "麻脸巫婆无法创造戏子。"
+    },
+    {
+        "target": "pithag",
+        "trick": "taowu",
+        "reason": "如果梼杌变成了其他恶魔，因为梼杌而失去能力的爪牙会立即死亡。"
+    },
+    {
+        "target": "cerenovus",
+        "trick": "goblin",
+        "reason": "The Cerenovus may choose to make a player mad that they are the Goblin."
+    },
+    {
+        "target": "goblin",
+        "trick": "plaguedoctor",
+        "reason": "If the Plague Doctor dies, a living Minion gains the Goblin ability in addition to their own ability, and learns this."
+    },
+    {
+        "target": "leviathan",
+        "trick": "soldier",
+        "reason": "If Leviathan nominates and executes the Soldier, the Soldier does not die."
+    },
+    {
+        "target": "leviathan",
+        "trick": "monk",
+        "reason": "If Leviathan nominates and executes the player the Monk chose, that player does not die."
+    },
+    {
+        "target": "leviathan",
+        "trick": "innkeeper",
+        "reason": "If Leviathan nominates and executes a player the Innkeeper chose, that player does not die."
+    },
+    {
+        "target": "leviathan",
+        "trick": "ravenkeeper",
+        "reason": "If Leviathan is in play & the Ravenkeeper dies by execution, they wake that night to use their ability."
+    },
+    {
+        "target": "leviathan",
+        "trick": "sage",
+        "reason": "If Leviathan is in play & the Sage dies by execution, they wake that night to use their ability."
+    },
+    {
+        "target": "leviathan",
+        "trick": "farmer",
+        "reason": "If Leviathan is in play & a Farmer dies by execution, a good player becomes a Farmer that night."
+    },
+    {
+        "target": "leviathan",
+        "trick": "mayor",
+        "reason": "If Leviathan is in play & no execution occurs on day 5, good wins."
+    },
+    {
+        "target": "leviathan",
+        "trick": "hatter",
+        "reason": "If the Hatter dies on or after day 5, the Demon cannot choose Leviathan."
+    },
+    {
+        "target": "leviathan",
+        "trick": "pithag",
+        "reason": "After day 5, the Pit-Hag cannot choose Leviathan."
+    },
+    {
+        "target": "leviathan",
+        "trick": "heshang",
+        "reason": "如果利维坦发起的提名中被处决的玩家是与和尚邻近的存活玩家，\n那么那名玩家不会死亡，并且当晚和尚得知\n他的能力被触发。（如常在和尚旁放置“已生效”提示标记，\n因为黎明时才会移除此标记，因此当晚和尚无法再触发他的能力。）"
+    },
+    {
+        "target": "leviathan",
+        "trick": "xizi",
+        "reason": "在戏子存在于剧本中时，利维坦可以在游戏中\n任意时候向说书人示意自己“想要死亡”， 说书人会在当晚杀死这名玩家。"
+    },
+    {
+        "target": "lilmonsta",
+        "trick": "poppygrower",
+        "reason": "If the Poppy Grower is in play, Minions don't wake together. They are woken one by one, until one of them chooses to take the Lil' Monsta token."
+    },
+    {
+        "target": "lilmonsta",
+        "trick": "magician",
+        "reason": "Only 1 jinxed character can be in play. "
+    },
+    {
+        "target": "lilmonsta",
+        "trick": "scarletwoman",
+        "reason": "If there are 5 or more players alive and the player holding the Lil' Monsta token dies, the Scarlet Woman is given the Lil' Monsta token tonight."
+    },
+    {
+        "target": "lilmonsta",
+        "trick": "organgrinder",
+        "reason": "Votes for the Organ Grinder count if the Organ Grinder is babysitting Lil' Monsta."
+    },
+    {
+        "target": "lilmonsta",
+        "trick": "vizier",
+        "reason": "The Vizier can die by execution if they are babysitting Lil' Monsta."
+    },
+    {
+        "target": "lilmonsta",
+        "trick": "hatter",
+        "reason": "If a Demon chooses Lil' Monsta, they also choose a Minion to become and babysit Lil' Monsta tonight."
+    },
+    {
+        "target": "lilmonsta",
+        "trick": "xizi",
+        "reason": "在戏子存在于剧本中时，照顾小怪宝的玩家可以在游戏中\n任意时候向说书人示意自己“想要死亡”， 说书人会在当晚杀死这名玩家。"
+    },
+    {
+        "target": "lycanthrope",
+        "trick": "gambler",
+        "reason": "If the Lycanthrope is alive and the Gambler kills themself at night, no other players can die tonight."
+    },
+    {
+        "target": "lycanthrope",
+        "trick": "dagengren",
+        "reason": "如果打更人猜测正确的玩家是半兽人攻击的玩家，\n那么当晚只会有打更人死亡。"
+    },
+    {
+        "target": "lycanthrope",
+        "trick": "jinyiwei",
+        "reason": "如果半兽人选择了锦衣卫保护的善良玩家，\n那么当晚只会有锦衣卫死亡。"
+    },
+    {
+        "target": "legion",
+        "trick": "engineer",
+        "reason": "Legion and the Engineer can not both be in play at the start of the game. If the Engineer creates Legion, most players (including all evil players) become evil Legion. "
+    },
+    {
+        "target": "legion",
+        "trick": "preacher",
+        "reason": "Only 1 jinxed character can be in play."
+    },
+    {
+        "target": "legion",
+        "trick": "hatter",
+        "reason": "If the Hatter dies and Legion is in play, nothing happens. If the Hatter dies and an evil player chooses Legion, all current evil players become Legion."
+    },
+    {
+        "target": "legion",
+        "trick": "xizi",
+        "reason": "在戏子存在于剧本中时，军团可以在游戏中任意时候\n向说书人示意自己“想要死亡”，说书人会在其中一名玩家示意后\n在夜晚一同唤醒所有军团，并询问这些玩家是否要一同死亡。"
+    },
+    {
+        "target": "fanggu",
+        "trick": "scarletwoman",
+        "reason": "If the Fang Gu chooses an Outsider and dies, the Scarlet Woman does not become the Fang Gu."
+    },
+    {
+        "target": "spy",
+        "trick": "alchemist",
+        "reason": "The Alchemist can not have the Spy ability."
+    },
+    {
+        "target": "spy",
+        "trick": "magician",
+        "reason": "When the Spy sees the Grimoire, the Demon and Magician's character tokens are removed."
+    },
+    {
+        "target": "spy",
+        "trick": "poppygrower",
+        "reason": "If the Poppy Grower is in play, the Spy does not see the Grimoire until the Poppy Grower dies."
+    },
+    {
+        "target": "spy",
+        "trick": "plaguedoctor",
+        "reason": "If the Plague Doctor dies, a living Minion gains the Spy ability in addition to their own ability, and learns this."
+    },
+    {
+        "target": "spy",
+        "trick": "damsel",
+        "reason": "Only 1 jinxed character can be in play. "
+    },
+    {
+        "target": "spy",
+        "trick": "heretic",
+        "reason": "Only 1 jinxed character can be in play."
+    },
+    {
+        "target": "spy",
+        "trick": "xizi",
+        "reason": "互为克星的角色在同一时间里只能有其中一个角色在场。"
+    },
+    {
+        "target": "widow",
+        "trick": "alchemist",
+        "reason": "The Alchemist can not have the Widow ability."
+    },
+    {
+        "target": "widow",
+        "trick": "magician",
+        "reason": "When the Widow sees the Grimoire, the Demon and Magician's character tokens are removed."
+    },
+    {
+        "target": "widow",
+        "trick": "poppygrower",
+        "reason": "If the Poppy Grower is in play, the Widow does not see the Grimoire until the Poppy Grower dies."
+    },
+    {
+        "target": "widow",
+        "trick": "damsel",
+        "reason": "Only 1 jinxed character can be in play."
+    },
+    {
+        "target": "widow",
+        "trick": "heretic",
+        "reason": "Only 1 jinxed character can be in play."
+    },
+    {
+        "target": "widow",
+        "trick": "xizi",
+        "reason": "互为克星的角色在同一时间里只能有其中一个角色在场。"
+    },
+    {
+        "target": "godfather",
+        "trick": "heretic",
+        "reason": "Only 1 jinxed character can be in play."
+    },
+    {
+        "target": "godfather",
+        "trick": "xizi",
+        "reason": "互为克星的角色在同一时间里只能有其中一个角色在场。"
+    },
+    {
+        "target": "scarletwoman",
+        "trick": "plaguedoctor",
+        "reason": "If the Plague Doctor dies, a living Minion gains the Scarlet Woman ability in addition to their own ability, and learns this."
+    },
+    {
+        "target": "boomdandy",
+        "trick": "plaguedoctor",
+        "reason": "If the Plague Doctor is executed and the Storyteller would gain the Boomdandy ability, the Boomdandy ability triggers immediately."
+    },
+    {
+        "target": "fearmonger",
+        "trick": "plaguedoctor",
+        "reason": "If the Plague Doctor dies, a living Minion gains the Fearmonger ability in addition to their own ability, and learns this."
+    },
+    {
+        "target": "baron",
+        "trick": "heretic",
+        "reason": "The Baron might only add 1 Outsider, not 2."
+    },
+    {
+        "target": "baron",
+        "trick": "plaguedoctor",
+        "reason": "If the Storyteller gains the Baron ability, up to two players become not-in-play Outsiders."
+    },
+    {
+        "target": "marionette",
+        "trick": "lilmonsta",
+        "reason": "The Marionette neighbors a Minion, not the Demon. The Marionette is not woken to choose who takes the Lil' Monsta token, and does not learn they are the Marionette if they have the Lil' Monsta token."
+    },
+    {
+        "target": "marionette",
+        "trick": "poppygrower",
+        "reason": "When the Poppy Grower dies, the Demon learns the Marionette but the Marionette learns nothing."
+    },
+    {
+        "target": "marionette",
+        "trick": "snitch",
+        "reason": "The Marionette does not learn 3 not in-play characters. The Demon learns an extra 3 instead."
+    },
+    {
+        "target": "marionette",
+        "trick": "balloonist",
+        "reason": "If the Marionette thinks that they are the Balloonist, +1 Outsider was added."
+    },
+    {
+        "target": "marionette",
+        "trick": "damsel",
+        "reason": "The Marionette does not learn that a Damsel is in play."
+    },
+    {
+        "target": "marionette",
+        "trick": "plaguedoctor",
+        "reason": "If the Demon has a neighbour who is alive and a Townsfolk or Outsider when the Plague Doctor dies, that player becomes an evil Marionette. If there is already an extra evil player, this does not happen."
+    },
+    {
+        "target": "marionette",
+        "trick": "huntsman",
+        "reason": "If the Marionette thinks that they are the Huntsman, the Damsel was added."
+    },
+    {
+        "target": "marionette",
+        "trick": "taowu",
+        "reason": "梼杌不会得知谁是提线木偶。在梼杌使得提线木偶\n失去能力后，梼杌会得知对应的那一名提线木偶是谁，\n但提线木偶会仍然以为自己是一个善良角色。"
+    },
+    {
+        "target": "lleech",
+        "trick": "mastermind",
+        "reason": "If the Mastermind is alive and the Lleech's host dies by execution, the Lleech lives but loses their ability. "
+    },
+    {
+        "target": "lleech",
+        "trick": "slayer",
+        "reason": "If the Slayer slays the Lleech's host, the host dies. "
+    },
+    {
+        "target": "lleech",
+        "trick": "heretic",
+        "reason": "If the Lleech has poisoned the Heretic then the Lleech dies, the Heretic remains poisoned."
+    },
+    {
+        "target": "riot",
+        "trick": "engineer",
+        "reason": "Riot and the Engineer can not both be in play at the start of the game. If the Engineer creates Riot, the evil players become Riot."
+    },
+    {
+        "target": "riot",
+        "trick": "golem",
+        "reason": "If The Golem nominates Riot, the Riot player does not die."
+    },
+    {
+        "target": "riot",
+        "trick": "snitch",
+        "reason": "If the Snitch is in play, each Riot player gets an extra 3 bluffs. "
+    },
+    {
+        "target": "riot",
+        "trick": "saint",
+        "reason": "If a good player nominates and kills the Saint, the Saint's team loses. "
+    },
+    {
+        "target": "riot",
+        "trick": "butler",
+        "reason": "The Butler can not nominate their master."
+    },
+    {
+        "target": "riot",
+        "trick": "pithag",
+        "reason": "If the Pit-Hag creates Riot, all evil players become Riot. If the Pit-Hag creates Riot after day 3, the game continues for one more day."
+    },
+    {
+        "target": "riot",
+        "trick": "mayor",
+        "reason": "If the 3rd day begins with just three players alive, the players may choose (as a group) not to nominate at all. If so (and a Mayor is alive) then the Mayor's team wins."
+    },
+    {
+        "target": "riot",
+        "trick": "monk",
+        "reason": "If a Riot player nominates and kills the Monk-protected-player, the Monk-protected-player does not die."
+    },
+    {
+        "target": "riot",
+        "trick": "farmer",
+        "reason": "If a Riot player nominates and kills a Farmer, the Farmer uses their ability tonight."
+    },
+    {
+        "target": "riot",
+        "trick": "innkeeper",
+        "reason": "If a Riot player nominates an Innkeeper-protected-player, the Innkeeper-protected-player does not die."
+    },
+    {
+        "target": "riot",
+        "trick": "sage",
+        "reason": "If a Riot player nominates and kills a Sage, the Sage uses their ability tonight."
+    },
+    {
+        "target": "riot",
+        "trick": "ravenkeeper",
+        "reason": "If a Riot player nominates and kills the Ravenkeeper, the Ravenkeeper uses their ability tonight."
+    },
+    {
+        "target": "riot",
+        "trick": "soldier",
+        "reason": "If a Riot player nominates the Soldier, the Soldier does not die."
+    },
+    {
+        "target": "riot",
+        "trick": "grandmother",
+        "reason": "If a Riot player nominates and kills the Grandchild, the Grandmother dies too."
+    },
+    {
+        "target": "riot",
+        "trick": "king",
+        "reason": "If a Riot player nominates and kills the King and the Choirboy is alive, the Choirboy uses their ability tonight."
+    },
+    {
+        "target": "riot",
+        "trick": "exorcist",
+        "reason": "Only 1 jinxed character can be in play. "
+    },
+    {
+        "target": "riot",
+        "trick": "minstrel",
+        "reason": "Only 1 jinxed character can be in play. "
+    },
+    {
+        "target": "riot",
+        "trick": "flowergirl",
+        "reason": "Only 1 jinxed character can be in play. "
+    },
+    {
+        "target": "riot",
+        "trick": "undertaker",
+        "reason": "Players that die by nomination register as being executed to the Undertaker."
+    },
+    {
+        "target": "riot",
+        "trick": "cannibal",
+        "reason": "Players that die by nomination register as being executed to the Cannibal."
+    },
+    {
+        "target": "riot",
+        "trick": "pacifist",
+        "reason": "Players that die by nomination register as being executed to the Pacifist. "
+    },
+    {
+        "target": "riot",
+        "trick": "devilsadvocate",
+        "reason": "Players that die by nomination register as being executed to the Devil's Advocate."
+    },
+    {
+        "target": "riot",
+        "trick": "investigator",
+        "reason": "Riot registers as a Minion to the Investigator. "
+    },
+    {
+        "target": "riot",
+        "trick": "clockmaker",
+        "reason": "Riot registers as a Minion to the Clockmaker."
+    },
+    {
+        "target": "riot",
+        "trick": "towncrier",
+        "reason": "Riot registers as a Minion to the Town Crier."
+    },
+    {
+        "target": "riot",
+        "trick": "damsel",
+        "reason": "Riot registers as a Minion to the Damsel."
+    },
+    {
+        "target": "riot",
+        "trick": "preacher",
+        "reason": "Riot registers as a Minion to the Preacher."
+    },
+    {
+        "target": "riot",
+        "trick": "hatter",
+        "reason": "If the Hatter dies, Riot is in play and a Riot chooses a different Demon, a normal evil team is created from the Riot players. If the Hatter dies and the Demon chooses Riot, Minions become Riot too."
+    },
+    {
+        "target": "riot",
+        "trick": "banxian",
+        "reason": "当且仅当暴乱提名了半仙时，半仙不会死亡，而是让另一名\n存活的邪恶玩家死亡。（随后那名死亡的邪恶玩家可以立即\n发起新的提名。如果场上已经没有其他存活的邪恶玩家，那么\n半仙在被唯一存活的暴乱提名时会正常死亡。）"
+    },
+    {
+        "target": "riot",
+        "trick": "dagengren",
+        "reason": "如果在夜晚无人死亡，打更人的能力能保护下一个白天\n首次死亡的玩家（如果打更人的猜测正确）。然而集体免死的效果\n不会在白天触发，打更人也不会因此在\n白天死亡。"
+    },
+    {
+        "target": "riot",
+        "trick": "heshang",
+        "reason": "如果暴乱提名了与和尚邻近的存活玩家，那么那名玩家不会死亡，\n并且当晚和尚得知他的能力被触发。（如常在和尚旁\n放置“已生效”提示标记，因为黎明时才会移除此标记，\n因此当晚和尚无法再触发他的能力。）"
+    },
+    {
+        "target": "riot",
+        "trick": "xizi",
+        "reason": "在戏子存在于剧本中时，暴乱可以在游戏中任意时候\n向说书人示意自己“想要死亡”，说书人会在其中一名玩家示意\n后在夜晚一同唤醒所有暴乱，并询问这些\n玩家是否要一同死亡。"
+    },
+    {
+        "target": "riot",
+        "trick": "nichen",
+        "reason": "被提名且死亡的玩家算作被处决。"
+    },
+    {
+        "target": "riot",
+        "trick": "humeiniang",
+        "reason": "被提名且死亡的玩家算作被处决。"
+    },
+    {
+        "target": "alhadikhia",
+        "trick": "scarletwoman",
+        "reason": "If there are two living Al-Hadikhias, the Scarlet Woman Al-Hadikhia becomes the Scarlet Woman again."
+    },
+    {
+        "target": "alhadikhia",
+        "trick": "mastermind",
+        "reason": "Only 1 jinxed character can be in play. Evil players start knowing which player and character it is."
+    },
+    {
+        "target": "organgrinder",
+        "trick": "butler",
+        "reason": "If the Organ Grinder is causing eyes closed voting, the Butler may raise their hand to vote but their vote is only counted if their master voted too."
+    },
+    {
+        "target": "organgrinder",
+        "trick": "flowergirl",
+        "reason": "If players' eyes were closed during the nominations, the Flowergirl learns how many times the Demon voted."
+    },
+    {
+        "target": "organgrinder",
+        "trick": "minstrel",
+        "reason": "Only 1 jinxed character can be in play. Evil players start knowing which player and character it is."
+    },
+    {
+        "target": "organgrinder",
+        "trick": "preacher",
+        "reason": "Only 1 jinxed character can be in play. Evil players start knowing which player and character it is."
+    },
+    {
+        "target": "organgrinder",
+        "trick": "taowu",
+        "reason": "当梼杌被处决时，如果街头风琴手具有能力，\n说书人会宣布“无人被处决”。"
+    },
+    {
+        "target": "vizier",
+        "trick": "investigator",
+        "reason": "If the Investigator learns that the Vizier is in play, the existence of the Vizier is not announced by the Storyteller."
+    },
+    {
+        "target": "vizier",
+        "trick": "preacher",
+        "reason": "If the Vizier loses their ability, they learn this. If the Vizier is executed while they have their ability, their team wins."
+    },
+    {
+        "target": "vizier",
+        "trick": "courtier",
+        "reason": "If the Vizier loses their ability, they learn this. If the Vizier is executed while they have their ability, their team wins."
+    },
+    {
+        "target": "vizier",
+        "trick": "alchemist",
+        "reason": "If the Alchemist has the Vizier ability, they may only choose to execute immediately if three or more players voted, regardless of those players' alignment."
+    },
+    {
+        "target": "vizier",
+        "trick": "magician",
+        "reason": "Only 1 jinxed character can be in play. Evil players start knowing which player and character it is."
+    },
+    {
+        "target": "vizier",
+        "trick": "fearmonger",
+        "reason": "The Vizier wakes with the Fearmonger, learns who they choose and cannot choose to immediately execute that player."
+    },
+    {
+        "target": "plaguedoctor",
+        "trick": "yangguren",
+        "reason": "如果瘟疫医生死亡且说书人会因此获得养蛊人的能力，\n改为一名存活的爪牙玩家获得此能力，且他会得知此事。"
+    },
+    {
+        "target": "plaguedoctor",
+        "trick": "ganshiren",
+        "reason": "如果瘟疫医生死亡且说书人会因此获得赶尸人的能力，改为一名存活的爪牙玩家获得此能力，且他会得知此事。"
+    },
+    {
+        "target": "xizi",
+        "trick": "eviltwin",
+        "reason": "互为克星的角色在同一时间里只能有其中一个角色在场。"
+    },
+    {
+        "target": "humeiniang",
+        "trick": "heretic",
+        "reason": "互为克星的角色在同一时间里只能有其中一个角色在场。"
+    },
+    {
+        "target": "taowu",
+        "trick": "scarletwoman",
+        "reason": "红唇女郎在梼杌的能力判断中被当作“不具有能力”。"
+    },
+    {
+        "target": "taowu",
+        "trick": "mastermind",
+        "reason": "主谋在梼杌的能力判断中被当作“不具有能力”。"
+    },
+    {
+        "target": "taowu",
+        "trick": "hatter",
+        "reason": "如果梼杌变成了其他恶魔，因为梼杌而失去能力的爪牙会立即死亡。"
+    },
+    {
+        "target": "taowu",
+        "trick": "engineer",
+        "reason": "如果梼杌变成了其他恶魔，因为梼杌而失去能力的爪牙会立即死亡。"
+    },
+    {
+        "target": "taowu",
+        "trick": "snakecharmer",
+        "reason": "如果梼杌的角色发生了交换，不会因此移除原本梼杌的“失去能力”提示标记。"
+    },
+    {
+        "target": "taowu",
+        "trick": "barber",
+        "reason": "如果梼杌的角色发生了交换，不会因此移除原本梼杌的“失去能力”提示标记。"
+    },
+    {
+        "target": "kazali",
+        "trick": "bountyhunter",
+        "reason": "An evil Townsfolk is only created if the Bounty Hunter is still in play after the Kazali acts."
+    },
+    {
+        "target": "kazali",
+        "trick": "goon",
+        "reason": "If the Kazali chooses the Goon to become a Minion, remaining Minion choices are decided by the Storyteller."
+    },
+    {
+        "target": "kazali",
+        "trick": "marionette",
+        "reason": "If the Kazali chooses to create a Marionette, they must choose one of their neighbours."
+    },
+    {
+        "target": "kazali",
+        "trick": "huntsman",
+        "reason": "If the Kazali chooses the Damsel to become a Minion, and a Huntsman is in play, a good player becomes the Damsel."
+    },
+    {
+        "target": "kazali",
+        "trick": "choirboy",
+        "reason": "The Kazali can not choose the King to become a Minion if a Choirboy is in play."
+    }
+]

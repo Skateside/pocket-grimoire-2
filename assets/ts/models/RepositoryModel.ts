@@ -43,6 +43,7 @@ export default class RepositoryModel extends Model<{
             id: "",
             team: "outsider",
             name: "",
+            edition: "",
             image: "#",
             firstNight: 0,
             firstNightReminder: "",
@@ -260,6 +261,23 @@ export default class RepositoryModel extends Model<{
 
     }
 
+    getEditions() {
+        return Object.groupBy(this.repository, ({ role }) => role.edition);
+    }
+
+    getEditionsRoles() {
+
+        const constructor = this.constructor as typeof RepositoryModel;
+
+        return Object.fromEntries(
+            Object.entries(this.getEditions()).map(([edition, data]) => [
+                edition,
+                data.map((datum) => constructor.getRoleData(datum))
+            ])
+        );
+
+    }
+
     resetRepository() {
 
         const {
@@ -329,6 +347,20 @@ export default class RepositoryModel extends Model<{
             });
 
         });
+
+        this.trigger("script-update", null);
+
+    }
+
+    setScriptByEdition(edition: string) {
+
+        const editions = this.getEditionsRoles();
+
+        if (!Object.hasOwn(editions, edition)) {
+            throw new ReferenceError(`Unrecognised edition "${edition}"`);
+        }
+
+        this.setScript(editions[edition]);
 
     }
 

@@ -16,6 +16,7 @@ export type IRole = {
     team: ITeam,
     name: string,
     image: string,
+    edition: string,
     firstNight: number,
     firstNightReminder: string,
     otherNight: number,
@@ -24,7 +25,6 @@ export type IRole = {
     reminders: string[],
     remindersGlobal?: string[],
     jinxes?: IJinx[],
-    // ...
 };
 
 export type IData = {

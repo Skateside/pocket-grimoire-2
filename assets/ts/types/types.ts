@@ -15,6 +15,7 @@ export type IRole = {
     id: string,
     team: ITeam,
     name: string,
+    ability: string,
     image: string,
     edition: string,
     firstNight: number,

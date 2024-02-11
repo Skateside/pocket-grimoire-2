@@ -3,7 +3,7 @@ import {
     IRole,
     IData,
     IJinx,
-    ITeam,
+    // ITeam,
     IRepositoryNights,
     IRepositoryNightsRoles
 } from "../types/types";
@@ -43,6 +43,7 @@ export default class RepositoryModel extends Model<{
             id: "",
             team: "outsider",
             name: "",
+            ability: "",
             edition: "",
             image: "#",
             firstNight: 0,
@@ -376,6 +377,10 @@ export default class RepositoryModel extends Model<{
 
     }
 
+    getScriptRolesByTeam() {
+        return Object.groupBy(this.getScriptRoles(), ({ team }) => team);
+    }
+
     getInPlay() {
         return this.repository.filter(({ inPlay }) => inPlay > 0);
     }
@@ -388,6 +393,7 @@ export default class RepositoryModel extends Model<{
 
     }
 
+    /*
     getTeam(team: ITeam) {
 
         return Object.groupBy(
@@ -414,6 +420,7 @@ export default class RepositoryModel extends Model<{
         };
 
     }
+    */
 
     getNight(script: IData[], type: keyof IRepositoryNights) {
 

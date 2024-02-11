@@ -11,9 +11,9 @@ export default class EditionView extends View<{
 
         this.form = document.getElementById("edition") as HTMLFormElement;
 
-        this.inputs = Array.from(
-            document.querySelectorAll<HTMLInputElement>("[name=\"edition\"]")
-        );
+        this.inputs = [
+            ...document.querySelectorAll<HTMLInputElement>("[name=\"edition\"]")
+        ];
 
     }
 

@@ -41,12 +41,13 @@ export default class Observer<TEventMap = {}> {
 
     trigger<K extends keyof TEventMap>(eventName: K, detail: TEventMap[K]) {
 
-        this.observerElement
-            .dispatchEvent(new CustomEvent<TEventMap[K]>(eventName as string, {
+        this.observerElement.dispatchEvent(
+            new CustomEvent<TEventMap[K]>(eventName as string, {
                 detail,
                 bubbles: false,
                 cancelable: false,
-            }));
+            })
+        );
 
     }
 
@@ -67,7 +68,7 @@ export default class Observer<TEventMap = {}> {
         handler: ObserverHandler<TEventMap[K]>
     ) {
 
-        this.observerElement.addEventListener(
+        this.observerElement.removeEventListener(
             eventName as string,
             this.unconvertObserverHandler(handler)
         );

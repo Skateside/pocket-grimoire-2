@@ -10,7 +10,7 @@ declare global {
          * @param callbackFn Function identifying the key for the groups.
          */
         groupBy<T, K extends PropertyKey>(
-            items: T[],
+            items: Iterable<T>,
             callbackFn: (element: T, index: number) => K
         ): Record<K, T[]>;
 

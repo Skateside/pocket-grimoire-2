@@ -13,7 +13,6 @@ export default class NightOrderController extends Controller<RepositoryModel, Ni
             view
         } = this;
 
-        // view.ready();
         view.drawNights(model.getScriptNightsRoles());
         view.markInPlay(model.getInPlayRoles());
 

@@ -19,8 +19,8 @@ import {
 import Model from "./Model";
 
 export default class RepositoryModel extends Model<{
-    "script-update": null,
-    "inplay-update": null
+    "script-update": undefined,
+    "inplay-update": undefined,
 }> {
 
     protected repository: IRepository = [];
@@ -349,7 +349,7 @@ export default class RepositoryModel extends Model<{
 
         });
 
-        this.trigger("script-update", null);
+        this.trigger("script-update");
 
     }
 

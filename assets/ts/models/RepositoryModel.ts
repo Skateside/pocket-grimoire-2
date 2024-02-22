@@ -217,11 +217,6 @@ export default class RepositoryModel extends Model<{
         const constructor = this.constructor as typeof RepositoryModel;
         const index = this.findDataIndex({ id: role.id });
 
-        // Patch for the American spelling of "traveller".
-        if ((role as any).team === "traveler") {
-            role.team = "traveller";
-        }
-
         if (index < 0) {
 
             repository.push(

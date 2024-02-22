@@ -9,7 +9,9 @@ export type IJinx = {
 //                      both in play.
 // state: "active" = both the role and id are in play.
 
-export type ITeam = "townsfolk" | "outsider" | "minion" | "demon" | "traveller" | "fabled";
+// Note: Official schema uses "traveler" so I should use it, too.
+// https://github.com/ThePandemoniumInstitute/botc-release/blob/main/script-schema.json
+export type ITeam = "townsfolk" | "outsider" | "minion" | "demon" | "traveler" | "fabled";
 
 export type IRole = {
     id: string,

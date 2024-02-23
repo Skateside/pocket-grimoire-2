@@ -39,13 +39,16 @@ export default class Observer<TEventMap = {}> {
 
     }
 
-    trigger<K extends keyof TEventMap>(eventName: K, detail?: TEventMap[K]) {
+    trigger<K extends keyof TEventMap>(
+        eventName: K,
+        ...details: TEventMap[K] extends undefined ? [] | [undefined] : [TEventMap[K]]
+    ) {
 
         this.observerElement.dispatchEvent(
             new CustomEvent<TEventMap[K]>(eventName as string, {
-                detail,
                 bubbles: false,
                 cancelable: false,
+                detail: details[0],
             })
         );
 

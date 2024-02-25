@@ -6,12 +6,28 @@ import {
 import {
     renderTemplate,
 } from "../utilities/dom";
+import {
+    supplant,
+} from "../utilities/strings";
 
 export default class RoleSelectView extends View {
 
+    private form: HTMLElement;
     private fieldsets: Record<ITeam, HTMLElement>;
+    private rangeToOutput: WeakMap<HTMLInputElement, HTMLOutputElement>;
+    private checkboxToRange: WeakMap<HTMLInputElement, HTMLInputElement>;
 
-    discoverElements(): void {
+    constructor() {
+
+        super();
+        this.rangeToOutput = new WeakMap();
+        this.checkboxToRange = new WeakMap();
+
+    }
+
+    discoverElements() {
+
+        this.form = document.querySelector(".js--role-select");
 
         this.fieldsets = Array.prototype.reduce.call(
             document.querySelectorAll(".js--role-select--team"),
@@ -46,11 +62,91 @@ export default class RoleSelectView extends View {
                     },
                     ".js--role-select--ability"(element) {
                         element.textContent = role.ability;
+                    },
+                    ".js--role-select--quantity"(element) {
+
+                        element.textContent = supplant(
+                            element.dataset.text,
+                            [role.name]
+                        );
+
                     }
                 }))
             );
 
         });
+
+    }
+
+    addListeners() {
+
+        this.form.addEventListener("input", ({ target }) => {
+
+            const input = target as HTMLInputElement;
+
+            if (input.matches(".js--role-select--input")) {
+                return this.updateOutput(input);
+            }
+
+            if (input.matches(".js--role-select--checkbox")) {
+                return this.updateRange(input);
+            }
+
+        });
+
+    }
+
+    getOutputFromRange(input: HTMLInputElement) {
+
+        const {
+            rangeToOutput,
+        } = this;
+
+        if (!rangeToOutput.has(input)) {
+
+            rangeToOutput.set(
+                input,
+                input
+                    .closest(".js--role-select--role")
+                    .querySelector<HTMLOutputElement>(".js--role-select--output")
+            );
+
+        }
+
+        return rangeToOutput.get(input);
+
+    }
+
+    updateOutput(input: HTMLInputElement) {
+        this.getOutputFromRange(input).value = input.value;
+    }
+
+    getRangeFromCheckbox(input: HTMLInputElement) {
+
+        const {
+            checkboxToRange,
+        } = this;
+
+        if (!checkboxToRange.has(input)) {
+
+            checkboxToRange.set(
+                input,
+                input
+                    .closest(".js--role-select--role")
+                    .querySelector<HTMLInputElement>(".js--role-select--input")
+            );
+
+        }
+
+        return checkboxToRange.get(input);
+
+    }
+
+    updateRange(input: HTMLInputElement) {
+
+        const range = this.getRangeFromCheckbox(input);
+        range.value = String(Number(input.checked));
+        this.updateOutput(range);
 
     }
 

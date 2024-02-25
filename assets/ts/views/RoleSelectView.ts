@@ -94,6 +94,9 @@ export default class RoleSelectView extends View<{
                 ".js--role-draw--button"(element) {
                     element.textContent = String(index + 1);
                     element.textContent += ` (${role.name})`; // TEMP
+                    // TODO: make some hidden data to associate the button with
+                    // the role - the current PG uses a data-* attribute,
+                    // exposing the information.
                 }
             }))
         );

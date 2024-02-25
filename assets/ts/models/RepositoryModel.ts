@@ -12,6 +12,12 @@ import {
     matches
 } from "../utilities/objects";
 import {
+    times,
+} from "../utilities/numbers";
+import {
+    shuffle,
+} from "../utilities/arrays";
+import {
     fetchFromCache,
     fetchFromStorage,
     updateStorage
@@ -21,6 +27,7 @@ import Model from "./Model";
 export default class RepositoryModel extends Model<{
     "script-update": undefined,
     "inplay-update": undefined,
+    "bag-update": undefined,
 }> {
 
     protected repository: IRepository = [];
@@ -32,6 +39,7 @@ export default class RepositoryModel extends Model<{
             origin: "official",
             inScript: false,
             inPlay: 0,
+            inBag: 0,
             ...options
         };
 
@@ -385,6 +393,44 @@ export default class RepositoryModel extends Model<{
         const constructor = this.constructor as typeof RepositoryModel;
 
         return this.getInPlay().map((data) => constructor.getRoleData(data));
+
+    }
+
+    setBag(bag: Record<string, number | string>) {
+
+        this.repository.forEach((data) => {
+
+            const { id } = data.role;
+
+            data.inBag = Number(
+                Object.hasOwn(bag, id)
+                ? bag[id]
+                : 0
+            );
+
+        });
+
+        this.trigger("bag-update");
+
+    }
+
+    getInBag() {
+        return this.repository.filter(({ inBag }) => inBag > 0);
+    }
+
+    // NOTE: most "get*Roles" methods just take the associated "get*" method and
+    // map the results using constructor.getRoleData(). This method works
+    // differently and, as such, might need a different name.
+    getInBagRoles() {
+
+        const constructor = this.constructor as typeof RepositoryModel;
+        const roles: IRole[] = [];
+
+        this.getInBag().forEach((data) => {
+            times(data.inBag, () => roles.push(constructor.getRoleData(data)));
+        });
+
+        return shuffle(roles);
 
     }
 

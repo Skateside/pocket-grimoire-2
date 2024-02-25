@@ -35,6 +35,7 @@ export type IData = {
     origin: "official" | "homebrew" | "augment",
     inScript: boolean,
     inPlay: number,
+    inBag: number,
     augment?: Partial<IRole>,
     // coordinates?: ICoordinates[], // NOTE: this wouldn't extend to reminder tokens.
 };
@@ -43,6 +44,11 @@ export type IData = {
 // origin: "augment" = this role cam from the database but something in the
 //                     script added to it or replaced part of it.
 //                     This object would also have an `augment` property.
+// inScript: true if the role is in the script, false if it's not.
+// inPlay: the number of tokens of this role that have been added to the
+//         grimoire pad.
+// inBag: the number of tokens of this role that have been added to the bag,
+//        ready for players to select.
 
 export type IRepository = IData[];
 

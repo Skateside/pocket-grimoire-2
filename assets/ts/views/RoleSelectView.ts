@@ -5,15 +5,19 @@ import {
 } from "../types/types";
 import {
     renderTemplate,
+    serialiseForm,
 } from "../utilities/dom";
 import {
     supplant,
 } from "../utilities/strings";
 
-export default class RoleSelectView extends View {
+export default class RoleSelectView extends View<{
+    "roles-selected": Record<string, number | string>,
+}> {
 
     private form: HTMLElement;
     private fieldsets: Record<ITeam, HTMLElement>;
+    private roleDraw: HTMLElement;
     private rangeToOutput: WeakMap<HTMLInputElement, HTMLOutputElement>;
     private checkboxToRange: WeakMap<HTMLInputElement, HTMLInputElement>;
 
@@ -41,6 +45,8 @@ export default class RoleSelectView extends View {
             },
             Object.create(null)
         );
+
+        this.roleDraw = document.querySelector(".js--role-draw");
 
     }
 
@@ -70,6 +76,9 @@ export default class RoleSelectView extends View {
                             [role.name]
                         );
 
+                    },
+                    ".js--role-select--input"(element: HTMLInputElement) {
+                        element.name = `quantity[${role.id}]`;
                     }
                 }))
             );
@@ -78,9 +87,26 @@ export default class RoleSelectView extends View {
 
     }
 
+    drawBag(bag: IRole[]) {
+
+        this.roleDraw.replaceChildren(
+            ...bag.map((role, index) => renderTemplate("#role-draw", {
+                ".js--role-draw--button"(element) {
+                    element.textContent = String(index + 1);
+                    element.textContent += ` (${role.name})`; // TEMP
+                }
+            }))
+        );
+
+    }
+
     addListeners() {
 
-        this.form.addEventListener("input", ({ target }) => {
+        const {
+            form
+        } = this;
+
+        form.addEventListener("input", ({ target }) => {
 
             const input = target as HTMLInputElement;
 
@@ -91,6 +117,14 @@ export default class RoleSelectView extends View {
             if (input.matches(".js--role-select--checkbox")) {
                 return this.updateRange(input);
             }
+
+        });
+
+        form.addEventListener("submit", (e) => {
+
+            e.preventDefault();
+            const { quantity } = serialiseForm(form as HTMLFormElement);
+            this.trigger("roles-selected", quantity);
 
         });
 

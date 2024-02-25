@@ -102,3 +102,31 @@ export function renderTemplate(
     return clone;
 
 }
+
+export function serialiseForm(form: HTMLFormElement): Record<string, any> {
+
+    const formData = new FormData(form);
+    const data = Object.create(null);
+    const keyed = /(\w+)\[(\w+)]/;
+
+    for (let [key, value] of formData) {
+
+        const matches = key.match(keyed);
+
+        if (matches?.length) {
+
+            if (!Object.hasOwn(data, matches[1])) {
+                data[matches[1]] = Object.create(null);
+            }
+
+            data[matches[1]][matches[2]] = value;
+
+        } else {
+            data[key] = value;
+        }
+
+    }
+
+    return data;
+
+}

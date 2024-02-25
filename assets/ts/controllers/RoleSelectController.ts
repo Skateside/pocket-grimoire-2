@@ -16,6 +16,13 @@ export default class RoleSelectController extends Controller<RepositoryModel, Ro
         model.on("script-update", () => {
             view.drawSelection(model.getScriptRolesByTeam());
         });
+        model.on("bag-update", () => {
+            view.drawBag(model.getInBagRoles());
+        });
+
+        view.on("roles-selected", (bag) => {
+            model.setBag(bag);
+        });
 
     }
 

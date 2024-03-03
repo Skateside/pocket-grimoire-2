@@ -33,7 +33,7 @@ export type IRole = {
 export type IData = {
     role: IRole,
     origin: "official" | "homebrew" | "augment",
-    inScript: boolean,
+    scriptPos: number,
     inPlay: number,
     inBag: number,
     augment?: Partial<IRole>,
@@ -51,6 +51,10 @@ export type IData = {
 //        ready for players to select.
 
 export type IRepository = IData[];
+
+export type IScript = (string | (Partial<IRole> & Pick<IRole, "id">))[];
+
+export type IScripts = Record<string, IScript>;
 
 export type IQuerySelectorOptions = Partial<{
     required: boolean,

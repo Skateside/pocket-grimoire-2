@@ -11,7 +11,76 @@ const notify = require("gulp-notify");
 const rename = require("gulp-rename");
 const uglify = require("gulp-uglify");
 
-gulp.task("create-en_GB-data", () => Promise.all([
+const createdData = Object.create(null);
+
+gulp.task("create-data:mkdir", () => new Promise((resolve) => {
+
+    fs.mkdirSync("./dist/assets/data/characters/", { recursive: true });
+    resolve();
+
+}));
+
+gulp.task("create-data:night-order", () => new Promise((resolve, reject) => {
+
+    fs.readFile("./assets/data/night-order.json", (err, data) => {
+
+        if (err) {
+            return reject(err);
+        }
+
+        const nightOrder = JSON.parse(data);
+
+        fs.readFile("./assets/data/characters/en_GB.json", (err, data) => {
+
+            if (err) {
+                return reject(err);
+            }
+
+            const characters = JSON.parse(data);
+            const fullOrder = Object.fromEntries(
+                Object
+                    .entries(nightOrder)
+                    .map(([type, list]) => {
+
+                        return [
+                            type,
+                            list.map((item) => {
+
+                                const character = characters.find(
+                                    ({ name }) => name === item
+                                );
+
+                                return (
+                                    character
+                                    ? character.id
+                                    : item
+                                );
+
+                            })
+                        ];
+
+                    })
+            );
+            createdData.nightOrder = fullOrder;
+            const json = JSON.stringify(fullOrder);
+
+            fs.writeFile("./dist/assets/data/night-order.json", json, (err) => {
+
+                if (err) {
+                    return reject(err);
+                }
+
+                resolve();
+
+            });
+
+        });
+
+    });
+
+}));
+
+gulp.task("create-data:en_GB", () => Promise.all([
 
     // Create the characters JSON file.
     new Promise((resolve, reject) => {
@@ -23,6 +92,7 @@ gulp.task("create-en_GB-data", () => Promise.all([
             }
 
             const characters = JSON.parse(data);
+            createdData.characters = characters;
             const enGB = characters.map(({
                 id,
                 name,
@@ -126,6 +196,7 @@ gulp.task("create-en_GB-data", () => Promise.all([
     }),
 
     // Create the Teams JSON file.
+    // Note: Not sure if I care about this - it might just be handled through translations.
     new Promise((resolve, reject) => {
 
         fs.copyFile(
@@ -146,75 +217,88 @@ gulp.task("create-en_GB-data", () => Promise.all([
 
 ]));
 
-gulp.task("create-data", () => new Promise((resolve, reject) => {
+gulp.task("create-data:character", () => new Promise((resolve, reject) => {
 
-    fs.readFile("./assets/data/characters.json", (err, data) => {
+    const characters = createdData.characters;
+    if (!characters) {
+        return reject(new Error("characters haven't been loaded"));
+    }
+
+    const nightOrder = createdData.nightOrder;
+    if (!nightOrder) {
+        return reject(new Error("nightOrder haven't been loaded"));
+    }
+
+    // Update the firstNight/otherNight properties to be up-to-date.
+    characters.forEach((character) => {
+
+        const firstNight = nightOrder.firstNight.indexOf(character.id) + 1;
+        if (firstNight) {
+            character.firstNight = firstNight;
+        }
+
+        const otherNight = nightOrder.otherNight.indexOf(character.id) + 1;
+        if (otherNight) {
+            character.otherNight = otherNight;
+        }
+
+    });
+
+    fs.readdir("./assets/data/characters/", (err, files) => {
 
         if (err) {
             return reject(err);
         }
 
-        const characters = JSON.parse(data);
+        files.forEach((file) => {
 
-        fs.readdir("./assets/data/characters/", (err, files) => {
+            const langCharacters = JSON.parse(JSON.stringify(characters));
 
-            if (err) {
-                return reject(err);
-            }
+            const data = JSON.parse(
+                fs.readFileSync(`./assets/data/characters/${file}`)
+            );
 
-            files.forEach((file) => {
+            data.forEach((datum) => {
 
-                const langCharacters = JSON.parse(JSON.stringify(characters));
+                const character = langCharacters.find(({ id }) => id === datum.id);
 
-                const data = JSON.parse(
-                    fs.readFileSync(`./assets/data/characters/${file}`)
-                );
+                if (!character) {
+                    return reject(`Cannot find character "${datum.id}"`);
+                }
 
-                data.forEach((datum) => {
+                Object.assign(character, datum);
 
-                    const character = langCharacters.find(({ id }) => id === datum.id);
+            });
 
-                    if (!character) {
-                        return reject(`Cannot find character "${datum.id}"`);
-                    }
+            const jinxes = JSON.parse(
+                fs.readFileSync(`./assets/data/jinxes/${file}`)
+            );
 
-                    Object.assign(character, datum);
+            jinxes.forEach(({ target, trick, reason }) => {
 
-                });
+                const character = langCharacters.find(({ id }) => id === target);
 
-                const jinxes = JSON.parse(
-                    fs.readFileSync(`./assets/data/jinxes/${file}`)
-                );
+                if (!character) {
+                    return reject(`Cannot find character "${datum.id}"`);
+                }
 
-                jinxes.forEach(({ target, trick, reason }) => {
+                if (!character.jinxes) {
+                    character.jinxes = [];
+                }
 
-                    const character = langCharacters.find(({ id }) => id === target);
+                character.jinxes.push({ id: trick, reason });
 
-                    if (!character) {
-                        return reject(`Cannot find character "${datum.id}"`);
-                    }
+            });
 
-                    if (!character.jinxes) {
-                        character.jinxes = [];
-                    }
+            const json = JSON.stringify(langCharacters);
 
-                    character.jinxes.push({ id: trick, reason });
+            fs.writeFile(`./dist/assets/data/characters/${file}`, json, (err) => {
 
-                });
+                if (err) {
+                    return reject(err);
+                }
 
-                // const json = JSON.stringify(langCharacters, null, "    ");
-                const json = JSON.stringify(langCharacters);
-
-                fs.mkdirSync("./dist/assets/data/", { recursive: true });
-                fs.writeFile(`./dist/assets/data/${file}`, json, (err) => {
-
-                    if (err) {
-                        return reject(err);
-                    }
-
-                    resolve();
-
-                });
+                resolve();
 
             });
 
@@ -224,9 +308,53 @@ gulp.task("create-data", () => new Promise((resolve, reject) => {
 
 }));
 
+function copyJson(source, destination) {
+
+    return new Promise((resolve, reject) => {
+
+        fs.readFile(source, (err, data) => {
+
+            if (err) {
+                return reject(err);
+            }
+
+            const parsed = JSON.parse(data);
+            const json = JSON.stringify(parsed);
+
+            fs.writeFile(destination, json, (err) => {
+
+                if (err) {
+                    return reject(err);
+                }
+
+                resolve();
+
+            });
+
+        });
+
+    });
+
+}
+
+gulp.task("create-data:scripts", () => copyJson(
+    "./assets/data/scripts.json",
+    "./dist/assets/data/scripts.json"
+));
+gulp.task("create-data:game", () => copyJson(
+    "./assets/data/game.json",
+    "./dist/assets/data/game.json"
+));
+
 gulp.task("data", gulp.series(
-    "create-en_GB-data",
-    "create-data"
+    "create-data:mkdir",
+    "create-data:night-order",
+    "create-data:en_GB",
+    gulp.parallel(
+        "create-data:character",
+        "create-data:scripts",
+        "create-data:game"
+    )
 ));
 
 gulp.task("scripts", () => Promise.all(
@@ -326,11 +454,17 @@ gulp.task("empty", (callback) => {
 
 gulp.task("dev", gulp.series(
     "env:dev",
-    "scripts"
+    gulp.parallel(
+        "data",
+        "scripts"
+    )
 ));
 
 gulp.task("prod", gulp.series(
     "env:prod",
     "empty",
-    "scripts"
+    gulp.parallel(
+        "data",
+        "scripts"
+    )
 ));

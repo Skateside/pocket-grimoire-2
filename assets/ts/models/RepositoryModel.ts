@@ -4,6 +4,8 @@ import {
     IData,
     IJinx,
     // ITeam,
+    IScript,
+    IScripts,
     IRepositoryNights,
     IRepositoryNightsRoles
 } from "../types/types";
@@ -31,13 +33,14 @@ export default class RepositoryModel extends Model<{
 }> {
 
     protected repository: IRepository = [];
+    protected scripts: IScripts = Object.create(null);
 
     static enwrapRole(role: IRole, options: Partial<IData> = {}): IData {
 
         return {
             role,
             origin: "official",
-            inScript: false,
+            scriptPos: -1,
             inPlay: 0,
             inBag: 0,
             ...options
@@ -117,6 +120,7 @@ export default class RepositoryModel extends Model<{
 
         super();
         this.repository = [];
+        this.scripts = Object.create(null);
 
     }
 
@@ -124,13 +128,16 @@ export default class RepositoryModel extends Model<{
 
         return Promise.all([
             fetchFromCache<IRole[]>(`./assets/data/${locale}.json`),
-            fetchFromStorage("repository")
+            fetchFromCache<IScripts>("./assets/data/scripts.json"),
+            fetchFromStorage("repository"),
         ]).then(([
             roles,
-            repository
+            scripts,
+            repository,
         ]) => {
 
             this.setRoles(roles);
+            this.setScripts(scripts);
             this.setRepositoryInfo(repository);
 
         });
@@ -141,7 +148,10 @@ export default class RepositoryModel extends Model<{
         roles.forEach((role) => this.addOfficialRole(role));
     }
 
-    // loadRepository(repository: (Partial<IData> & Pick<IData, "role" | "inScript" | "inPlay">)[]) {
+    setScripts(scripts: IScripts) {
+        this.scripts = scripts;
+    }
+
     setRepositoryInfo(repository: Partial<IData>[]) {
 
         repository.forEach((repoInfo) => {
@@ -153,7 +163,7 @@ export default class RepositoryModel extends Model<{
             }
 
             const data = this.findData({ id: repoInfo.role.id });
-            data.inScript = repoInfo.inScript;
+            data.scriptPos = repoInfo.scriptPos;
             data.inPlay = repoInfo.inPlay;
 
         });
@@ -168,7 +178,7 @@ export default class RepositoryModel extends Model<{
                 role: {
                     id: data.role.id
                 },
-                inScript: data.inScript,
+                scriptPos: data.scriptPos,
                 inPlay: data.inPlay
             };
 
@@ -265,6 +275,7 @@ export default class RepositoryModel extends Model<{
 
     }
 
+    /*
     getEditions() {
         return Object.groupBy(this.repository, ({ role }) => role.edition);
     }
@@ -281,6 +292,7 @@ export default class RepositoryModel extends Model<{
         );
 
     }
+    */
 
     resetRepository() {
 
@@ -295,7 +307,7 @@ export default class RepositoryModel extends Model<{
             const data = repository[index];
 
             data.inPlay = 0;
-            data.inScript = false;
+            data.scriptPos = -1;
 
             if (data.origin === "augment") {
 
@@ -310,26 +322,31 @@ export default class RepositoryModel extends Model<{
 
     }
 
-    setScript(script: (Partial<IRole> & Pick<IRole, "id">)[]) {
+    setScript(script: IScript) {
 
         this.repository.forEach((data) => {
 
-            data.inScript = false;
+            data.scriptPos = -1;
             data.role.jinxes?.forEach((jinx) => jinx.state = "theoretical");
 
         });
 
         const roles: Record<string, IRole> = Object.create(null);
 
-        script.forEach(({ id }) => {
+        script.forEach((reference, index) => {
 
+            const id = (
+                typeof reference === "string"
+                ? reference
+                : reference.id
+            );
             const data = this.findData({ id });
 
             if (!data) {
                 return;
             }
 
-            data.inScript = true;
+            data.scriptPos = index;
 
             const {
                 role
@@ -358,18 +375,20 @@ export default class RepositoryModel extends Model<{
 
     setScriptByEdition(edition: string) {
 
-        const editions = this.getEditionsRoles();
-
-        if (!Object.hasOwn(editions, edition)) {
+        if (!Object.hasOwn(this.scripts, edition)) {
             throw new ReferenceError(`Unrecognised edition "${edition}"`);
         }
 
-        this.setScript(editions[edition]);
+        this.setScript(this.scripts[edition]);
 
     }
 
     getScript() {
-        return this.repository.filter(({ inScript }) => inScript);
+
+        return this.repository
+            .filter(({ scriptPos }) => scriptPos > -1)
+            .sort((a, b) => a.scriptPos - b.scriptPos);
+
     }
 
     getScriptRoles() {
@@ -441,7 +460,7 @@ export default class RepositoryModel extends Model<{
             this.repository.filter(({ role }) => role.team === team),
             (data: IData) => {
                 return (
-                    data.inScript
+                    data.scriptPos > -1
                     ? "in"
                     : "out"
                 );

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en-GB">
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>PG Playing</title>
+
+        <style>
+            .o-row {
+                display: grid;
+                grid-auto-columns: 1fr;
+                grid-template-areas: "a a";
+                gap: 1rem;
+            }
+        </style>
+
+    </head>
+    <body>
+
+        <h2>Script Selection</h2>
+        <form id="edition">
+            <ul>
+                <li>
+                    <label for="edition-tb">
+                        <input type="radio" name="edition" id="edition-tb" value="tb" required>
+                        Trouble Brewing
+                    </label>
+                </li>
+                <li>
+                    <label for="edition-bmr">
+                        <input type="radio" name="edition" id="edition-bmr" value="bmr">
+                        Bad Moon Rising
+                    </label>
+                </li>
+                <li>
+                    <label for="edition-snv">
+                        <input type="radio" name="edition" id="edition-snv" value="snv">
+                        Sects and Violets
+                    </label>
+                </li>
+            </ul>
+            <p><button type="submit">Select</button></p>
+        </form>
+
+        <hr>
+
+        <h2>Role Selection</h2>
+
+        <form class="js--role-select">
+            <fieldset class="js--role-select--team" data-team="townsfolk">
+                <legend>Townsfolk</legend>
+                <div class="js--role-select--items"></div>
+            </fieldset>
+            <fieldset class="js--role-select--team" data-team="outsider">
+                <legend>Outsiders</legend>
+                <div class="js--role-select--items"></div>
+            </fieldset>
+            <fieldset class="js--role-select--team" data-team="minion">
+                <legend>Minons</legend>
+                <div class="js--role-select--items"></div>
+            </fieldset>
+            <fieldset class="js--role-select--team" data-team="demon">
+                <legend>Demons</legend>
+                <div class="js--role-select--items"></div>
+            </fieldset>
+            <fieldset class="js--role-select--team" data-team="traveller">
+                <legend>Travellers</legend>
+                <div class="js--role-select--items"></div>
+            </fieldset>
+            <p><button type="submit">Draw</button></p>
+        </form>
+
+        <template id="role-select">
+            <div class="js--role-select--role">
+                <div>
+                    <label data-text="Quantity for {0}" class="js--role-select--quantity"></label>
+                    <input type="range" class="js--role-select--input" value="0" min="0" step="1" max="15">
+                    <output class="js--role-select--output" aria-hidden="true">0</output>
+                </div>
+                <label class="js--role-select--label">
+                    <input type="checkbox" class="js--role-select--checkbox">
+                    <img class="js--role-select--image">
+                    <span class="js--role-select--name"></span>
+                    <span class="js--role-select--ability"></span>
+                </label>
+            </div>
+        </template>
+
+        <h3>Select your character</h3>
+        <ol class="js--role-draw"></ol>
+
+        <template id="role-draw">
+            <button type="button" class="js--role-draw--button"></button>
+        </template>
+
+        <hr>
+
+        <h2>Night Order</h2>
+
+        <div class="o-row">
+            <div class="o-row__content">
+                <p>First night</p>
+                <ol id="first-night"></ol>
+            </div>
+            <div class="o-row__content">
+                <p>Other nights</p>
+                <ol id="other-nights"></ol>
+            </div>
+        </div>
+        <label for="show-all">
+            <input type="checkbox" id="show-all">
+            Show all
+        </label>
+
+        <template id="night-order-entry">
+            <li class="js--night-order-entry--wrapper">
+                <p><strong class="js--night-order-entry--name"></strong></p>
+                <p class="js--night-order-entry--text"></p>
+                <img class="js--night-order-entry--image">
+            </li>
+        </template>
+
+        <hr>
+
+        <h2>Info Tokens</h2>
+
+        <ul id="info-token-custom-holder"></ul>
+        <div id="info-token-dialog-holder"></div>
+        <p>
+            <button type="button" id="add-info-token">Add custom token</button>
+        </p>
+
+        <hr>
+
+        <!-- <h2>Tokens</h2> -->
+
+
+        <script src="./assets/js/index.js"></script>
+
+    </body>
+</html>

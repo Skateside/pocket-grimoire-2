@@ -11,7 +11,44 @@ export type IJinx = {
 
 // Note: Official schema uses "traveler" so I should use it, too.
 // https://github.com/ThePandemoniumInstitute/botc-release/blob/main/script-schema.json
-export type ITeam = "townsfolk" | "outsider" | "minion" | "demon" | "traveler" | "fabled";
+export type IPlayTeams = "townsfolk" | "outsider" | "minion" | "demon" | "traveler";
+export type ITeam = IPlayTeams | "fabled";
+
+// We might not do much with special rules, but it's worth having them so that
+// we can use them in the future, if needed.
+export type ISpecial = {
+    type: (
+        "ability"
+        | "reveal"
+        | "selection"
+        | "signal"
+        | "vote"
+    ),
+    name: (
+        "bag-disabled"
+        | "bag-duplicate"
+        | "card"
+        | "distribute-votes"
+        | "ghost-votes"
+        | "grimoire"
+        | "hidden"
+        | "player"
+        | "pointing"
+        | "multiplier"
+        | "replace-character"
+    ),
+    value?: string | number,
+    time?: (
+        "pregame"
+        | "day"
+        | "night"
+        | "firstNight"
+        | "firstDay"
+        | "otherNight"
+        | "otherDay"
+    ),
+    global?: IPlayTeams,
+};
 
 export type IRole = {
     id: string,
@@ -28,6 +65,7 @@ export type IRole = {
     reminders: string[],
     remindersGlobal?: string[],
     jinxes?: IJinx[],
+    special?: ISpecial[],
 };
 
 export type IData = {

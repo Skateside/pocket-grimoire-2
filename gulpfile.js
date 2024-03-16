@@ -1,3 +1,137 @@
+const gulp = require("gulp");
+const browserify = require("browserify");
+const source = require("vinyl-source-stream");
+// const buffer = require("vinyl-buffer");
+const watchify = require("watchify");
+const fancyLog = require("fancy-log");
+const fs = require("fs");
+// const uglify = require("gulp-uglify");
+// const noop = require("gulp-noop");
+
+const PATHS = {
+    pages: ["src/*.html"],
+};
+
+gulp.task("env:dev", (callback) => {
+    process.env.NODE_ENV = "development";
+    callback();
+});
+
+gulp.task("env:prod", (callback) => {
+    process.env.NODE_ENV = "production";
+    callback();
+});
+
+gulp.task("empty", (callback) => {
+
+    fs.rmSync("./dist/", {
+        force: true,
+        recursive: true
+    });
+    callback();
+
+});
+
+gulp.task("html", () => {
+
+    return gulp
+        .src(PATHS.pages)
+        .pipe(gulp.dest("dist"))
+
+});
+
+function getBrowserify() {
+
+    return browserify({
+            basedir: ".",
+            debug: process.env.NODE_ENV !== "production",
+            // entries: ["assets/ts/index.ts"],
+            // entries: [],
+            cache: {},
+            packageCache: {},
+        })
+        .plugin("tsify", {
+            target: "es6",
+        })
+        .transform("babelify", {
+            presets: ["@babel/preset-env"],
+            extensions: [".ts", ".js"],
+        });
+
+}
+
+const watchedBrowserify = watchify(getBrowserify());
+
+function bundleTypeScript(settings = {}) {
+
+    const base = (
+        settings.watch
+        ? watchedBrowserify
+        : getBrowserify()
+    )
+
+    return base
+        // .pipe(source("assets/ts/index.ts"))
+        .bundle()
+        // .pipe(buffer())
+        // .pipe(
+        //     process.env.NODE_ENV === "production"
+        //     ? uglify()
+        //     : noop()
+        // )
+        // .on("error", fancyLog)
+        .pipe(source("assets/js/index.js"))
+        .pipe(gulp.dest("dist"));
+
+    // const bundle = base.bundle();
+
+    // if (process.env.NODE_ENV === "production") {
+    //     bundle.pipe(uglify());
+    // }
+
+    // return bundle
+    //     .pipe(source("assets/js/index.js"))
+    //     .pipe(gulp.dest("dist"));
+
+}
+
+watchedBrowserify.on("update", () => bundleTypeScript({ watch: true }));
+watchedBrowserify.on("log", fancyLog);
+
+gulp.task("scripts", () => bundleTypeScript());
+gulp.task("scripts:watch", () => bundleTypeScript({ watch: true }));
+
+gulp.task("dev", gulp.series(
+    "env:dev",
+    gulp.parallel(
+        "html",
+        // "data",
+        "scripts:watch"
+    )
+));
+
+gulp.task("prod", gulp.series(
+    "env:prod",
+    "empty",
+    gulp.parallel(
+        "html",
+        // "data",
+        "scripts"
+    )
+));
+
+// const ts = require("gulp-typescript");
+// const tsProject = ts.createProject("tsconfig.json");
+
+// gulp.task("ts", () => {
+//     return tsProject
+//         .src()
+//         .pipe(tsProject())
+//         .js
+//         .pipe(gulp.dest("dist"));
+// });
+
+/*
 const fs = require("fs")
 const gulp = require("gulp");
 const sourcemaps = require("gulp-sourcemaps");
@@ -468,3 +602,4 @@ gulp.task("prod", gulp.series(
         "scripts"
     )
 ));
+*/

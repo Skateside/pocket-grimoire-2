@@ -45,7 +45,7 @@ function getBrowserify() {
     return browserify({
             basedir: ".",
             debug: process.env.NODE_ENV !== "production",
-            // entries: ["assets/ts/index.ts"],
+            entries: ["assets/ts/index.ts"],
             // entries: [],
             cache: {},
             packageCache: {},

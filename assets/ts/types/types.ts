@@ -82,7 +82,10 @@ export type IData = {
 // origin: "augment" = this role cam from the database but something in the
 //                     script added to it or replaced part of it.
 //                     This object would also have an `augment` property.
-// inScript: true if the role is in the script, false if it's not.
+// scriptPos: the position that this role appears in this script, allowing the
+//            roles to be ordered that way.
+//            Rather than attempting to enforce SAO, just take the script at
+//            face-value.
 // inPlay: the number of tokens of this role that have been added to the
 //         grimoire pad.
 // inBag: the number of tokens of this role that have been added to the bag,

@@ -2,6 +2,7 @@ import {
     IRepository,
     IRole,
     IData,
+    ISeat,
     IJinx,
     // ITeam,
     IScript,
@@ -34,6 +35,7 @@ export default class RepositoryModel extends Model<{
 
     protected repository: IRepository = [];
     protected scripts: IScripts = Object.create(null);
+    protected seats: ISeat[] = [];
 
     static enwrapRole(role: IRole, options: Partial<IData> = {}): IData {
 
@@ -121,6 +123,7 @@ export default class RepositoryModel extends Model<{
         super();
         this.repository = [];
         this.scripts = Object.create(null);
+        this.seats = [];
 
     }
 

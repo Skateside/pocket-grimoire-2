@@ -93,6 +93,12 @@ export type IData = {
 
 export type IRepository = IData[];
 
+export type ISeat = {
+    position: ICoordinates,
+    data?: IData,
+    name?: string,
+};
+
 export type IScript = (string | (Partial<IRole> & Pick<IRole, "id">))[];
 
 export type IScripts = Record<string, IScript>;

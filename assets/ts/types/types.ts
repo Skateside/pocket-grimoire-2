@@ -139,6 +139,12 @@ export type IReminderToken = IToken & {
 };
 
 export type IStorage = {
-    lookup: Record<string, any>,
+    // lookup: Record<string, any>,
     repository: Record<string, any>[],
+};
+
+// A Promise variant that can be resolved externally.
+export type IDefer<T extends any = any> = Promise<T> & {
+    resolve(value: T | PromiseLike<T>): void,
+    reject(reason?: any): void
 };

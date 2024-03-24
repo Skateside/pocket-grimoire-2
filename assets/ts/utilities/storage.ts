@@ -2,7 +2,7 @@ import { deepClone } from "./objects";
 import { IStorage } from "../types/types";
 
 const defaults: IStorage = {
-    lookup: Object.create(null),
+    // lookup: Object.create(null),
     repository: []
 };
 const STORAGE_KEY = "pg";// "pocket-grimoire";
@@ -34,6 +34,7 @@ function set(key: keyof IStorage, value: any) {
 
 }
 
+/*
 export function fetchFromCache<T>(url: string): Promise<T> {
 
     const lookup = get("lookup");
@@ -56,6 +57,7 @@ export function fetchFromCache<T>(url: string): Promise<T> {
         });
 
 }
+*/
 
 export function fetchFromStorage<K extends keyof IStorage>(key: K): Promise<IStorage[K]> {
     return Promise.resolve(get(key));

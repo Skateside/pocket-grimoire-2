@@ -7,6 +7,7 @@ const fancyLog = require("fancy-log");
 const fs = require("fs");
 // const uglify = require("gulp-uglify");
 // const noop = require("gulp-noop");
+const makeData = require("./tools/generate-data.js");
 
 const PATHS = {
     pages: ["src/*.html"],
@@ -40,6 +41,8 @@ gulp.task("html", () => {
 
 });
 
+gulp.task("data", (callback) => makeData().then(() => callback()));
+
 function getBrowserify() {
 
     return browserify({
@@ -63,6 +66,8 @@ function getBrowserify() {
 const watchedBrowserify = watchify(getBrowserify());
 
 function bundleTypeScript(settings = {}) {
+
+    // TODO: Add minification in production mode.
 
     const base = (
         settings.watch
@@ -105,7 +110,7 @@ gulp.task("dev", gulp.series(
     "env:dev",
     gulp.parallel(
         "html",
-        // "data",
+        "data",
         "scripts:watch"
     )
 ));
@@ -115,7 +120,7 @@ gulp.task("prod", gulp.series(
     "empty",
     gulp.parallel(
         "html",
-        // "data",
+        "data",
         "scripts"
     )
 ));

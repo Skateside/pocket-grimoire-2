@@ -11,6 +11,7 @@ import InfoController from "./controllers/InfoController";
 import TokenController from "./controllers/TokenController";
 import EditionController from "./controllers/EditionController";
 import RoleSelectController from "./controllers/RoleSelectController";
+import global from "./utilities/global";
 
 const repositoryModel = new RepositoryModel();
 const infoModel = new InfoModel();
@@ -98,3 +99,5 @@ app.addController(new EditionController(repositoryModel, new EditionView()));
 app.addController(new RoleSelectController(repositoryModel, new RoleSelectView()));
 app.load();
 */
+
+(window as any).PG = global;

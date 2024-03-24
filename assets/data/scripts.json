@@ -21,7 +21,12 @@
         "spy",
         "baron",
         "scarletwoman",
-        "imp"
+        "imp",
+        "scapegoat",
+        "gunslinger",
+        "beggar",
+        "bureaucrat",
+        "thief"
     ],
     "bmr": [
         "grandmother",
@@ -48,7 +53,12 @@
         "zombuul",
         "pukka",
         "shabaloth",
-        "po"
+        "po",
+        "apprentice",
+        "matron",
+        "voudon",
+        "judge",
+        "bishop"
     ],
     "snv": [
         "clockmaker",
@@ -75,6 +85,11 @@
         "fanggu",
         "vigormortis",
         "nodashii",
-        "vortox"
+        "vortox",
+        "butcher",
+        "bonecollector",
+        "harlot",
+        "barista",
+        "deviant"
     ]
 }

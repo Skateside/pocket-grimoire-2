@@ -20,4 +20,3 @@ export function defer<T extends any = any>() {
     return promise;
 
 }
-

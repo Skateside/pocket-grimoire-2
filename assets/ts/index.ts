@@ -18,7 +18,7 @@ const infoModel = new InfoModel();
 const tokenModel = new TokenModel();
 
 Promise.all([
-    repositoryModel.load("en_GB"),
+    repositoryModel.load(),
     infoModel.load(),
     tokenModel.load()
 ]).then(() => {
@@ -59,7 +59,7 @@ import Controller from "./controllers/Controller";
 class App {
 
     private controllers: Controller<Model, View>[];
-    private loaders: ((locale?: string) => Promise<any>)[];
+    private loaders: (() => Promise<any>)[];
 
     constructor() {
 
@@ -72,7 +72,7 @@ class App {
         this.controllers.push(controller);
     }
 
-    addLoader(loader: (locale?: string) => Promise<any>) {
+    addLoader(loader: () => Promise<any>) {
         this.loaders.push(loader);
     }
 
@@ -89,7 +89,7 @@ class App {
 }
 
 const app = new App();
-app.addLoader((locale) => repositoryModel.load(locale));
+app.addLoader(() => repositoryModel.load());
 app.addLoader(() => infoModel.load());
 app.addLoader(() => tokenModel.load());
 app.addController(new NightOrderController(repositoryModel, new NightOrderView()));

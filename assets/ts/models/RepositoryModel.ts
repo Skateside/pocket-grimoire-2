@@ -20,7 +20,6 @@ import {
     shuffle,
 } from "../utilities/arrays";
 import {
-    // fetchFromCache,
     fetchFromStorage,
     updateStorage
 } from "../utilities/storage";
@@ -125,11 +124,9 @@ export default class RepositoryModel extends Model<{
 
     }
 
-    load(locale: string) {
+    load() {
 
         return Promise.all([
-            // fetchFromCache<IRole[]>(`./assets/data/${locale}.json`),
-            // fetchFromCache<IScripts>("./assets/data/scripts.json"),
             defers.roles,
             defers.scripts,
             fetchFromStorage("repository"),

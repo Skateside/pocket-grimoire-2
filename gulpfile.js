@@ -10,7 +10,7 @@ const fs = require("fs");
 const makeData = require("./tools/generate-data.js");
 
 const PATHS = {
-    pages: ["src/*.html"],
+    pages: ["src/**/*.html"],
 };
 
 gulp.task("env:dev", (callback) => {
@@ -39,6 +39,10 @@ gulp.task("html", () => {
         .src(PATHS.pages)
         .pipe(gulp.dest("dist"))
 
+});
+
+gulp.task("html:watch", () => {
+    gulp.watch(PATHS.pages, gulp.series("html"));
 });
 
 gulp.task("data", (callback) => makeData().then(() => callback()));
@@ -109,7 +113,7 @@ gulp.task("scripts:watch", () => bundleTypeScript({ watch: true }));
 gulp.task("dev", gulp.series(
     "env:dev",
     gulp.parallel(
-        "html",
+        gulp.series("html", "html:watch"),
         "data",
         "scripts:watch"
     )

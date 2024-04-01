@@ -1,3 +1,5 @@
+export type INumeric = number | `${number}`;
+
 export type IJinx = {
     id: string,
     reason: string,
@@ -11,8 +13,9 @@ export type IJinx = {
 
 // Note: Official schema uses "traveler" so I should use it, too.
 // https://github.com/ThePandemoniumInstitute/botc-release/blob/main/script-schema.json
-export type IPlayTeams = "townsfolk" | "outsider" | "minion" | "demon" | "traveler";
-export type ITeam = IPlayTeams | "fabled";
+export type ICoreTeam = "townsfolk" | "outsider" | "minion" | "demon";
+export type IPlayTeam = ICoreTeam | "traveler";
+export type ITeam = IPlayTeam | "fabled";
 
 // We might not do much with special rules, but it's worth having them so that
 // we can use them in the future, if needed.
@@ -37,7 +40,7 @@ export type ISpecial = {
         | "multiplier"
         | "replace-character"
     ),
-    value?: string | number,
+    value?: number | string, // string doesn't have to be numeric.
     time?: (
         "pregame"
         | "day"
@@ -47,7 +50,7 @@ export type ISpecial = {
         | "otherNight"
         | "otherDay"
     ),
-    global?: IPlayTeams,
+    global?: IPlayTeam,
 };
 
 export type IRole = {
@@ -157,3 +160,9 @@ export type IDefer<T extends any = any> = Promise<T> & {
     resolve(value: T | PromiseLike<T>): void,
     reject(reason?: any): void
 };
+
+export type IGameNumbers = {
+    [K in ICoreTeam]: number
+}
+
+export type IGameNumbersCollection = Record<number, IGameNumbers>;

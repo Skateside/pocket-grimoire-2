@@ -51,25 +51,25 @@
             <summary>Role Selection</summary>
             <div>
 
-                <form class="js--role-select">
+                <form class="js--role-select--roles">
                     <fieldset class="js--role-select--team" data-team="townsfolk">
-                        <legend>Townsfolk</legend>
+                        <legend data-text="Townsfolk ({count}/{max})">Townsfolk</legend>
                         <div class="js--role-select--items"></div>
                     </fieldset>
                     <fieldset class="js--role-select--team" data-team="outsider">
-                        <legend>Outsiders</legend>
+                        <legend data-text="Outsiders ({count}/{max})">Outsiders</legend>
                         <div class="js--role-select--items"></div>
                     </fieldset>
                     <fieldset class="js--role-select--team" data-team="minion">
-                        <legend>Minons</legend>
+                        <legend data-text="Minons ({count}/{max})">Minons</legend>
                         <div class="js--role-select--items"></div>
                     </fieldset>
                     <fieldset class="js--role-select--team" data-team="demon">
-                        <legend>Demons</legend>
+                        <legend data-text="Demons ({count}/{max})">Demons</legend>
                         <div class="js--role-select--items"></div>
                     </fieldset>
                     <fieldset class="js--role-select--team" data-team="traveler">
-                        <legend>Travellers</legend>
+                        <legend data-text="Travellers ({count}/{max})">Travellers</legend>
                         <div class="js--role-select--items"></div>
                     </fieldset>
                     <p><button type="submit">Draw</button></p>
@@ -97,9 +97,17 @@
                 <template id="role-draw">
                     <button type="button" class="js--role-draw--button"></button>
                 </template>
-                
-                </div>
-            </details>
+
+            </div>
+        </details>
+
+        <hr>
+
+        <details>
+            <summary>Grimoire</summary>
+            <div>
+            </div>
+        </details>
 
         <hr>
 

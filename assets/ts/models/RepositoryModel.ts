@@ -1,4 +1,5 @@
 import {
+    INumeric,
     IRepository,
     IRole,
     IData,
@@ -8,7 +9,9 @@ import {
     IScript,
     IScripts,
     IRepositoryNights,
-    IRepositoryNightsRoles
+    IRepositoryNightsRoles,
+    IGameNumbers,
+    IGameNumbersCollection,
 } from "../types/types";
 import {
     deepClone,
@@ -115,6 +118,46 @@ export default class RepositoryModel extends Model<{
             return merged;
 
         }, source);
+
+    }
+
+    static getGameNumbers(): IGameNumbersCollection;
+    static getGameNumbers(players: INumeric): IGameNumbers;
+    static getGameNumbers(players?: INumeric) {
+
+        const gameNumbers: IGameNumbersCollection = {
+             5: { "townsfolk": 3, "outsider": 0, "minion": 1, "demon": 1 },
+             6: { "townsfolk": 3, "outsider": 1, "minion": 1, "demon": 1 },
+             7: { "townsfolk": 5, "outsider": 0, "minion": 1, "demon": 1 },
+             8: { "townsfolk": 5, "outsider": 1, "minion": 1, "demon": 1 },
+             9: { "townsfolk": 5, "outsider": 2, "minion": 1, "demon": 1 },
+            10: { "townsfolk": 7, "outsider": 0, "minion": 2, "demon": 1 },
+            11: { "townsfolk": 7, "outsider": 1, "minion": 2, "demon": 1 },
+            12: { "townsfolk": 7, "outsider": 2, "minion": 2, "demon": 1 },
+            13: { "townsfolk": 9, "outsider": 0, "minion": 3, "demon": 1 },
+            14: { "townsfolk": 9, "outsider": 1, "minion": 3, "demon": 1 },
+            15: { "townsfolk": 9, "outsider": 2, "minion": 3, "demon": 1 },
+        };
+
+        if (players === undefined) {
+            return gameNumbers;
+        }
+
+        let playerCount = Math.floor(players as number);
+
+        if (Number.isNaN(playerCount)) {
+            throw new TypeError(`Unrecognised player count type: ${players}`);
+        }
+
+        if (playerCount < 5 || playerCount > 20) {
+            throw new RangeError(`Player count must be between 5 and 20 - ${playerCount} given`);
+        }
+
+        if (playerCount > 15) {
+            playerCount = 15;
+        }
+
+        return gameNumbers[playerCount];
 
     }
 
@@ -418,7 +461,7 @@ export default class RepositoryModel extends Model<{
 
     }
 
-    setBag(bag: Record<string, number | string>) {
+    setBag(bag: Record<string, INumeric>) {
 
         this.repository.forEach((data) => {
 

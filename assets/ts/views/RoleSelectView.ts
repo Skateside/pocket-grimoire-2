@@ -1,5 +1,6 @@
 import View from "./View";
 import {
+    INumeric,
     ITeam,
     IRole,
 } from "../types/types";
@@ -12,7 +13,7 @@ import {
 } from "../utilities/strings";
 
 export default class RoleSelectView extends View<{
-    "roles-selected": Record<string, number | string>,
+    "roles-selected": Record<string, INumeric>,
 }> {
 
     private form: HTMLElement;
@@ -31,7 +32,7 @@ export default class RoleSelectView extends View<{
 
     discoverElements() {
 
-        this.form = document.querySelector(".js--role-select");
+        this.form = document.querySelector(".js--role-select--roles");
 
         this.fieldsets = Array.prototype.reduce.call(
             document.querySelectorAll(".js--role-select--team"),

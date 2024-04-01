@@ -1,7 +1,9 @@
+import { INumeric } from "../types/types";
+
 /**
  * Converts the given number to its positive integer.
  */
-export function toPosInt(number: number | string) {
+export function toPosInt(number: INumeric) {
     return Math.floor(Math.abs(Number(number)));
 }
 
@@ -12,7 +14,7 @@ export function toPosInt(number: number | string) {
  * will be called.
  */
 export function times(
-    number: number | string,
+    number: INumeric,
     handler: (index?: number, max?: number) => void,
 ) {
 

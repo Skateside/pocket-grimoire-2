@@ -1,13 +1,22 @@
 import View from "./View";
+import {
+    IDomLookupCache,
+} from "../types/types";
+import {
+    makeLookupCache,
+} from "../utilities/dom";
 
 export default class GlobalView extends View {
 
-    private rangeToOutput: WeakMap<HTMLInputElement, HTMLOutputElement>;
+    protected getOutputFromRange: IDomLookupCache<HTMLOutputElement>;
 
     constructor() {
 
         super();
-        this.rangeToOutput = new WeakMap();
+
+        this.getOutputFromRange = makeLookupCache(({ dataset: { output } }) => {
+            return document.querySelector<HTMLOutputElement>(output);
+        });
 
     }
 
@@ -27,24 +36,11 @@ export default class GlobalView extends View {
 
     updateRangeOutput(input: HTMLInputElement) {
 
-        const {
-            rangeToOutput,
-        } = this;
-        let output = rangeToOutput.get(input);
+        const output = this.getOutputFromRange(input);
 
-        if (!output && !rangeToOutput.has(input)) {
-
-            output = document
-                .querySelector<HTMLOutputElement>(input.dataset.output);
-            rangeToOutput.set(input, output);
-
+        if (output) {
+            output.value = input.value;
         }
-
-        if (!output) {
-            return;
-        }
-
-        output.value = input.value;
 
     }
 

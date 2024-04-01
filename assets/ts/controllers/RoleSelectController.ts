@@ -10,8 +10,11 @@ export default class RoleSelectController extends Controller<RepositoryModel, Ro
 
         const {
             model,
-            view
+            view,
         } = this;
+        const {
+            getGameNumbers,
+        } = RepositoryModel;
 
         model.on("script-update", () => {
             view.drawSelection(model.getScriptRolesByTeam());
@@ -23,6 +26,11 @@ export default class RoleSelectController extends Controller<RepositoryModel, Ro
         view.on("roles-selected", (bag) => {
             model.setBag(bag);
         });
+        view.on("player-count-update", (number) => {
+            view.setGameNumbers(getGameNumbers(number));
+        });
+
+        view.setGameNumbers(getGameNumbers(view.getPlayerCount()));
 
     }
 

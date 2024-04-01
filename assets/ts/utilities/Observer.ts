@@ -5,8 +5,8 @@ import {
 
 export default class Observer<TEventMap = {}> {
 
-    private observerElement: HTMLElement;
-    private observerMap: WeakMap<ObserverHandler, ObserverConverted>;
+    protected observerElement: HTMLElement;
+    protected observerMap: WeakMap<ObserverHandler, ObserverConverted>;
 
     constructor() {
 
@@ -15,7 +15,7 @@ export default class Observer<TEventMap = {}> {
 
     }
 
-    private convertObserverHandler(
+    protected convertObserverHandler(
         handler: ObserverHandler,
     ): ObserverConverted {
 
@@ -29,7 +29,7 @@ export default class Observer<TEventMap = {}> {
 
     }
 
-    private unconvertObserverHandler(
+    protected unconvertObserverHandler(
         handler: ObserverHandler,
     ): ObserverConverted {
 

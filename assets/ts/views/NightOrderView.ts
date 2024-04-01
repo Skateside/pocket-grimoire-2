@@ -51,9 +51,10 @@ export default class NightOrderView extends View<{
             ".js--night-order-entry--text"(element) {
                 element.textContent = role[`${type}NightReminder`];
             },
-            ".js--night-order-entry--image"(element) {
-                (element as HTMLImageElement).src = role.image;
-            },
+            // TEMP: this is only commented out to prevent 404's in the console.
+            // ".js--night-order-entry--image"(element) {
+            //     (element as HTMLImageElement).src = role.image;
+            // },
         });
 
     }

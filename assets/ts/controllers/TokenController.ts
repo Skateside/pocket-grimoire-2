@@ -17,7 +17,7 @@ export default class TokenController extends Controller<TokenModel, TokenView> {
 
         const {
             model,
-            view
+            view,
         } = this;
 
         model.getRoles().forEach(({ role, coords }, index) => {

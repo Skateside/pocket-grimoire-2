@@ -166,3 +166,5 @@ export type IGameNumbers = {
 }
 
 export type IGameNumbersCollection = Record<number, IGameNumbers>;
+
+export type IDomLookupCache<T extends HTMLElement = HTMLElement> = (element: HTMLElement) => T;

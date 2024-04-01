@@ -1,5 +1,6 @@
 import {
     IQuerySelectorOptions,
+    IDomLookupCache,
 } from "../types/types";
 import {
     memoise,
@@ -148,5 +149,26 @@ export function announceInput(input: HTMLInputElement | HTMLSelectElement | HTML
     input.dispatchEvent(new Event("change", {
         bubbles: true,
     }));
+
+}
+
+export function makeLookupCache<T extends HTMLElement = HTMLElement>(lookup: IDomLookupCache<T>) {
+
+    const cache = new WeakMap<HTMLElement, T>();
+
+    return (element: HTMLElement): T => {
+
+        let value = cache.get(element);
+
+        if (value === undefined) {
+
+            value = lookup(element) as T;
+            cache.set(element, value);
+
+        }
+
+        return value;
+
+    };
 
 }

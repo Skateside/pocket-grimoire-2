@@ -10,7 +10,7 @@ export default class EditionController extends Controller<RepositoryModel, Editi
 
         const {
             model,
-            view
+            view,
         } = this;
 
         view.on("edition-selected", (edition) => {

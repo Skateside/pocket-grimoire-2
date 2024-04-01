@@ -1,32 +1,61 @@
 import View from "./View";
 import {
     INumeric,
-    ITeam,
+    ICoreTeam,
+    IPlayTeam,
     IRole,
+    IGameNumbers,
+    IDomLookupCache,
 } from "../types/types";
 import {
     renderTemplate,
     serialiseForm,
     announceInput,
     identify,
+    makeLookupCache,
 } from "../utilities/dom";
 import {
     supplant,
 } from "../utilities/strings";
 
+type IFieldsetData = {
+    content: HTMLElement,
+    legend: HTMLElement,
+    inputs: HTMLInputElement[],
+};
+
 export default class RoleSelectView extends View<{
     "roles-selected": Record<string, INumeric>,
+    "player-count-update": number,
+    // "role-count-update": [string, number],
 }> {
 
-    private form: HTMLElement;
-    private fieldsets: Record<ITeam, HTMLElement>;
-    private roleDraw: HTMLElement;
-    private checkboxToRange: WeakMap<HTMLInputElement, HTMLInputElement>;
+    protected form: HTMLElement;
+    protected fieldsets: Record<IPlayTeam, IFieldsetData>;
+    protected roleCount: HTMLInputElement;
+    protected roleDraw: HTMLElement;
+    protected getRangeFromCheckbox: IDomLookupCache<HTMLInputElement>;
+    protected getCheckboxFromRange: IDomLookupCache<HTMLInputElement>;
 
     constructor() {
 
         super();
-        this.checkboxToRange = new WeakMap();
+
+        this.getRangeFromCheckbox = makeLookupCache((element) => {
+
+            return element
+                .closest(".js--role-select--role")
+                .querySelector<HTMLInputElement>(".js--role-select--input")
+
+        });
+
+        this.getCheckboxFromRange = makeLookupCache((element) => {
+
+            return element
+                .closest(".js--role-select--role")
+                .querySelector<HTMLInputElement>(".js--role-select--checkbox")
+
+        });
 
     }
 
@@ -36,34 +65,43 @@ export default class RoleSelectView extends View<{
 
         this.fieldsets = Array.prototype.reduce.call(
             document.querySelectorAll(".js--role-select--team"),
-            (group: Record<ITeam, HTMLElement>, element: HTMLElement) => {
+            (
+                group: Record<IPlayTeam, IFieldsetData>,
+                element: HTMLElement,
+            ) => {
 
-                group[element.dataset.team as ITeam] = (
-                    element.querySelector(".js--role-select--items")
-                );
+                group[element.dataset.team as IPlayTeam] = {
+                    legend: element.querySelector(".js--role-select--legend"),
+                    content: element.querySelector(".js--role-select--items"),
+                    inputs: [],
+                };
                 return group;
 
             },
             Object.create(null)
         );
 
+        this.roleCount = document.querySelector(".js--role-select--count");
+        this.updatePlayerCount(Number(this.roleCount.value));
+
         this.roleDraw = document.querySelector(".js--role-draw");
 
     }
 
-    drawSelection(teams: Record<ITeam, IRole[]>) {
+    drawSelection(teams: Record<IPlayTeam, IRole[]>) {
 
         Object.entries(teams).forEach(([team, roles]) => {
 
-            const fieldset = this.fieldsets[team as ITeam];
-            fieldset.replaceChildren(
+            const fieldset = this.fieldsets[team as IPlayTeam];
+            fieldset.content.replaceChildren(
                 ...roles.map((role) => renderTemplate("#role-select", {
                     ".js--role-select--checkbox"(element: HTMLInputElement) {
                         element.value = role.id;
                     },
-                    ".js--role-select--image"(element: HTMLImageElement) {
-                        element.src = role.image;
-                    },
+                    // TEMP: this is only commented out to prevent 404's in the console.
+                    // ".js--role-select--image"(element: HTMLImageElement) {
+                    //     element.src = role.image;
+                    // },
                     ".js--role-select--name"(element) {
                         element.textContent = role.name;
                     },
@@ -79,15 +117,24 @@ export default class RoleSelectView extends View<{
 
                     },
                     ".js--role-select--input"(element: HTMLInputElement) {
+
                         element.name = `quantity[${role.id}]`;
+                        // element.dataset.id = role.id;
                         element.dataset.output = "#" + identify(
                             element
                                 .parentElement
                                 .querySelector(".js--role-select--output")
                         )
+
                     }
                 }))
             );
+
+            fieldset.inputs = [
+                ...fieldset
+                    .content
+                    .querySelectorAll<HTMLInputElement>(".js--role-select--input")
+            ];
 
         });
 
@@ -112,12 +159,24 @@ export default class RoleSelectView extends View<{
     addListeners() {
 
         const {
-            form
+            form,
+            roleCount,
         } = this;
 
         form.addEventListener("input", ({ target }) => {
 
             const input = target as HTMLInputElement;
+
+            if (input.matches(".js--role-select--input")) {
+
+                // this.trigger("role-count-update", [
+                //     input.dataset.id,
+                //     Number(input.value),
+                // ]);
+                this.updateCheckbox(input);
+                return this.updateLegendCounts();
+
+            }
 
             if (input.matches(".js--role-select--checkbox")) {
                 return this.updateRange(input);
@@ -133,26 +192,9 @@ export default class RoleSelectView extends View<{
 
         });
 
-    }
-
-    getRangeFromCheckbox(input: HTMLInputElement) {
-
-        const {
-            checkboxToRange,
-        } = this;
-
-        if (!checkboxToRange.has(input)) {
-
-            checkboxToRange.set(
-                input,
-                input
-                    .closest(".js--role-select--role")
-                    .querySelector<HTMLInputElement>(".js--role-select--input")
-            );
-
-        }
-
-        return checkboxToRange.get(input);
+        roleCount.addEventListener("input", () => {
+            this.updatePlayerCount(Number(roleCount.value));
+        });
 
     }
 
@@ -162,6 +204,54 @@ export default class RoleSelectView extends View<{
         range.value = String(Number(input.checked));
         announceInput(range);
 
+    }
+
+    updatePlayerCount(playerCount: number) {
+        this.trigger("player-count-update", playerCount);
+    }
+
+    setGameNumbers(gameNumbers: IGameNumbers) {
+
+        Object.entries(this.fieldsets).forEach(([team, { legend }]) => {
+
+            const playTeam = team as IPlayTeam;
+
+            if (Object.hasOwn(gameNumbers, playTeam)) {
+                legend.dataset.max = String(gameNumbers[playTeam as ICoreTeam]);
+            }
+
+            this.updateLegend(legend);
+
+        });
+
+    }
+
+    updateLegend(legend: HTMLElement) {
+        legend.textContent = supplant(legend.dataset.text, legend.dataset);
+    }
+
+    updateLegendCounts() {
+
+        Object.values(this.fieldsets).forEach(({ inputs, legend }) => {
+
+            legend.dataset.count = String(
+                inputs.reduce(
+                    (total, input) => total + Number(input.value),
+                    0,
+                )
+            )
+            this.updateLegend(legend);
+
+        });
+
+    }
+
+    getPlayerCount() {
+        return Number(this.roleCount.value);
+    }
+
+    updateCheckbox(input: HTMLInputElement) {
+        this.getCheckboxFromRange(input).checked = Number(input.value) > 0;
     }
 
 }

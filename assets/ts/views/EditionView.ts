@@ -4,8 +4,8 @@ export default class EditionView extends View<{
     "edition-selected": string,
 }> {
 
-    private form: HTMLFormElement;
-    private inputs: HTMLInputElement[];
+    protected form: HTMLFormElement;
+    protected inputs: HTMLInputElement[];
 
     discoverElements(): void {
 

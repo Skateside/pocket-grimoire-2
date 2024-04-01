@@ -67,8 +67,8 @@ import View from "./views/View";
 import Controller from "./controllers/Controller";
 class App {
 
-    private controllers: Controller<Model, View>[];
-    private loaders: (() => Promise<any>)[];
+    protected controllers: Controller<Model, View>[];
+    protected loaders: (() => Promise<any>)[];
 
     constructor() {
 

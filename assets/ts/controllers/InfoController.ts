@@ -10,7 +10,7 @@ export default class InfoController extends Controller<InfoModel, InfoView> {
 
         const {
             model,
-            view
+            view,
         } = this;
 
         view.drawHomebrew(model.getInfos().homebrew);

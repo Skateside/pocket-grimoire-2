@@ -1,6 +1,6 @@
 export function matches(
     check: Record<PropertyKey, any> | null,
-    source: Record<PropertyKey, any> | null
+    source: Record<PropertyKey, any> | null,
 ): boolean {
 
     if (!check || !source) {

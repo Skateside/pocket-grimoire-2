@@ -2,7 +2,7 @@ import {
     IRoleToken,
     IRole,
     IReminderToken,
-    ICoordinates
+    ICoordinates,
 } from "../types/types";
 import Model from "./Model";
 

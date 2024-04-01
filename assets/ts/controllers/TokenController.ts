@@ -2,7 +2,7 @@ import Controller from "./Controller";
 import TokenModel from "../models/TokenModel";
 import TokenView from "../views/TokenView";
 import {
-    IRole
+    IRole,
 } from "../types/types";
 
 export default class TokenController extends Controller<TokenModel, TokenView> {

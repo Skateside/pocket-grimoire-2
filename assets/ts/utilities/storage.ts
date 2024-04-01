@@ -1,5 +1,9 @@
-import { deepClone } from "./objects";
-import { IStorage } from "../types/types";
+import {
+    deepClone,
+} from "./objects";
+import {
+    IStorage,
+} from "../types/types";
 
 const defaults: IStorage = {
     // lookup: Object.create(null),
@@ -17,7 +21,7 @@ function read(): IStorage {
 
     return {
         ...deepClone(defaults),
-        ...storage
+        ...storage,
     };
 
 }

@@ -1,4 +1,6 @@
-import { INumeric } from "../types/types";
+import {
+    INumeric,
+} from "../types/types";
 
 /**
  * Converts the given number to its positive integer.

@@ -7,6 +7,8 @@ import {
 import {
     renderTemplate,
     serialiseForm,
+    announceInput,
+    identify,
 } from "../utilities/dom";
 import {
     supplant,
@@ -19,13 +21,11 @@ export default class RoleSelectView extends View<{
     private form: HTMLElement;
     private fieldsets: Record<ITeam, HTMLElement>;
     private roleDraw: HTMLElement;
-    private rangeToOutput: WeakMap<HTMLInputElement, HTMLOutputElement>;
     private checkboxToRange: WeakMap<HTMLInputElement, HTMLInputElement>;
 
     constructor() {
 
         super();
-        this.rangeToOutput = new WeakMap();
         this.checkboxToRange = new WeakMap();
 
     }
@@ -80,6 +80,11 @@ export default class RoleSelectView extends View<{
                     },
                     ".js--role-select--input"(element: HTMLInputElement) {
                         element.name = `quantity[${role.id}]`;
+                        element.dataset.output = "#" + identify(
+                            element
+                                .parentElement
+                                .querySelector(".js--role-select--output")
+                        )
                     }
                 }))
             );
@@ -114,10 +119,6 @@ export default class RoleSelectView extends View<{
 
             const input = target as HTMLInputElement;
 
-            if (input.matches(".js--role-select--input")) {
-                return this.updateOutput(input);
-            }
-
             if (input.matches(".js--role-select--checkbox")) {
                 return this.updateRange(input);
             }
@@ -132,31 +133,6 @@ export default class RoleSelectView extends View<{
 
         });
 
-    }
-
-    getOutputFromRange(input: HTMLInputElement) {
-
-        const {
-            rangeToOutput,
-        } = this;
-
-        if (!rangeToOutput.has(input)) {
-
-            rangeToOutput.set(
-                input,
-                input
-                    .closest(".js--role-select--role")
-                    .querySelector<HTMLOutputElement>(".js--role-select--output")
-            );
-
-        }
-
-        return rangeToOutput.get(input);
-
-    }
-
-    updateOutput(input: HTMLInputElement) {
-        this.getOutputFromRange(input).value = input.value;
     }
 
     getRangeFromCheckbox(input: HTMLInputElement) {
@@ -184,7 +160,7 @@ export default class RoleSelectView extends View<{
 
         const range = this.getRangeFromCheckbox(input);
         range.value = String(Number(input.checked));
-        this.updateOutput(range);
+        announceInput(range);
 
     }
 

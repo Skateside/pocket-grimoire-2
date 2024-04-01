@@ -1,7 +1,7 @@
 import View from "./View";
 import {
     IRole,
-    ICoordinates
+    ICoordinates,
 } from "../types/types";
 
 export default class TokenView extends View {

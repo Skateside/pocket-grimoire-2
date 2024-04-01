@@ -108,7 +108,7 @@ export type IScripts = Record<string, IScript>;
 
 export type IQuerySelectorOptions = Partial<{
     required: boolean,
-    root: HTMLElement | Document | null
+    root: HTMLElement | Document | null,
 }>;
 
 export type ObserverHandler<T extends any = any> = (detail: T) => void;
@@ -126,7 +126,7 @@ export type IInfoData = {
     text: string,
     colour: IColours,
     type: "official" | "homebrew",
-    index?: number
+    index?: number,
 }
 
 export type ICoordinates = {
@@ -158,7 +158,7 @@ export type IStorage = {
 // A Promise variant that can be resolved externally.
 export type IDefer<T extends any = any> = Promise<T> & {
     resolve(value: T | PromiseLike<T>): void,
-    reject(reason?: any): void
+    reject(reason?: any): void,
 };
 
 export type IGameNumbers = {

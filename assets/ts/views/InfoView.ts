@@ -1,21 +1,21 @@
 import View from "./View";
 import {
     IInfoData,
-    IQuerySelectorOptions
+    IQuerySelectorOptions,
 } from "../types/types";
 import {
     querySelectorCached,
     renderTemplate,
-    updateChildren
+    updateChildren,
 } from "../utilities/dom";
 import {
     toHTML,
-    strip
+    strip,
 } from "../utilities/markdown";
 
 export default class InfoView extends View<{
     "info-edit": null,
-    "info-remove": number
+    "info-remove": number,
 }> {
 
     // protected official: HTMLElement;
@@ -48,7 +48,7 @@ export default class InfoView extends View<{
 
         const {
             dialogs,
-            homebrew
+            homebrew,
         } = this;
 
         dialogs.querySelector(`#info-token--${index}`)?.remove();
@@ -65,7 +65,7 @@ export default class InfoView extends View<{
     drawHomebrewEntry(info: IInfoData) {
 
         const {
-            index
+            index,
         } = info;
 
         // Maybe something is needed here to generate the index if it's not yet
@@ -84,7 +84,7 @@ export default class InfoView extends View<{
                     element.id = dialogId;
                     element.style.setProperty(
                         "--colour",
-                        `var(--${info.colour})`
+                        `var(--${info.colour})`,
                     );
 
                 },
@@ -92,7 +92,7 @@ export default class InfoView extends View<{
                     element.querySelectorAll("button").forEach((button) => {
                         button.dataset.index = String(info.index);
                     });
-                }
+                },
             })
         );
 
@@ -103,7 +103,7 @@ export default class InfoView extends View<{
                 },
                 ".js--info-token--button"(element) {
                     element.dataset.dialog = `#${dialogId}`;
-                }
+                },
             })
         );
 
@@ -128,7 +128,7 @@ export default class InfoView extends View<{
         updateChildren(dialog, {
             ".js--info-token--dialog-text"(element) {
                 element.innerHTML = toHTML(info.text);
-            }
+            },
         });
 
         updateChildren(homebrew, {
@@ -140,7 +140,7 @@ export default class InfoView extends View<{
                     `var(--${info.colour})`
                 );
 
-            }
+            },
         });
 
     }

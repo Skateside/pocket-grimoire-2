@@ -1,4 +1,6 @@
-import { defer } from "./promises";
+import {
+    defer,
+} from "./promises";
 import {
     IRole,
     IScripts,

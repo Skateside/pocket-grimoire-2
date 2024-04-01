@@ -1,11 +1,11 @@
 import View from "./View";
 import {
     querySelectorCached,
-    renderTemplate
+    renderTemplate,
 } from "../utilities/dom";
 import {
     IRepositoryNightsRoles,
-    IRole
+    IRole,
 } from "../types/types";
 
 export default class NightOrderView extends View<{
@@ -18,7 +18,7 @@ export default class NightOrderView extends View<{
     discoverElements() {
 
         const options = {
-            required: true
+            required: true,
         };
 
         this.firstNight = querySelectorCached("#first-night", options)!;
@@ -62,7 +62,7 @@ export default class NightOrderView extends View<{
 
         element.classList.toggle(
             "is-playing",
-            ids.includes(element.dataset.id || "")
+            ids.includes(element.dataset.id || ""),
         );
 
     }
@@ -91,7 +91,7 @@ export default class NightOrderView extends View<{
         const {
             firstNight,
             otherNights,
-            showNotInPlay
+            showNotInPlay,
         } = this;
 
         showNotInPlay.addEventListener("change", () => {

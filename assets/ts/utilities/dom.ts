@@ -1,5 +1,9 @@
-import { IQuerySelectorOptions } from "../types/types";
-import { memoise } from "./functions";
+import {
+    IQuerySelectorOptions,
+} from "../types/types";
+import {
+    memoise,
+} from "./functions";
 
 let identifyCounter = 0;
 
@@ -128,5 +132,21 @@ export function serialiseForm(form: HTMLFormElement): Record<string, any> {
     }
 
     return data;
+
+}
+
+/**
+ * Triggers the appropriate events for an input having changed, in the correct
+ * (or, at least, a consistent) order. If the given input does not exist or is
+ * not an input then nothing happens.
+ */
+export function announceInput(input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) {
+
+    input.dispatchEvent(new Event("input", {
+        bubbles: true,
+    }));
+    input.dispatchEvent(new Event("change", {
+        bubbles: true,
+    }));
 
 }

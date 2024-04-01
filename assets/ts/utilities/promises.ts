@@ -1,4 +1,6 @@
-import { IDefer } from "../types/types";
+import {
+    IDefer,
+} from "../types/types";
 
 export function defer<T extends any = any>() {
 

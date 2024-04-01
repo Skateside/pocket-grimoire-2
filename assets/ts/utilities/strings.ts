@@ -1,6 +1,6 @@
 export function supplant(
     template: string,
-    replacements: Record<string, number | string> | (number | string)[]
+    replacements: Record<string, number | string> | (number | string)[],
 ) {
 
     return template.replace(/\{([^{}]*)\}/g, (whole: string, index: string) => {

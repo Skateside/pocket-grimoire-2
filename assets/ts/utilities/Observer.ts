@@ -1,6 +1,6 @@
 import {
     ObserverHandler,
-    ObserverConverted
+    ObserverConverted,
 } from "../types/types";
 
 export default class Observer<TEventMap = {}> {
@@ -16,7 +16,7 @@ export default class Observer<TEventMap = {}> {
     }
 
     private convertObserverHandler(
-        handler: ObserverHandler
+        handler: ObserverHandler,
     ): ObserverConverted {
 
         // https://stackoverflow.com/a/65996495/557019
@@ -30,7 +30,7 @@ export default class Observer<TEventMap = {}> {
     }
 
     private unconvertObserverHandler(
-        handler: ObserverHandler
+        handler: ObserverHandler,
     ): ObserverConverted {
 
         const unconverted = this.observerMap.get(handler);
@@ -56,24 +56,24 @@ export default class Observer<TEventMap = {}> {
 
     on<K extends keyof TEventMap>(
         eventName: K,
-        handler: ObserverHandler<TEventMap[K]>
+        handler: ObserverHandler<TEventMap[K]>,
     ) {
 
         this.observerElement.addEventListener(
             eventName as string,
-            this.convertObserverHandler(handler)
+            this.convertObserverHandler(handler),
         );
 
     }
 
     off<K extends keyof TEventMap>(
         eventName: K,
-        handler: ObserverHandler<TEventMap[K]>
+        handler: ObserverHandler<TEventMap[K]>,
     ) {
 
         this.observerElement.removeEventListener(
             eventName as string,
-            this.unconvertObserverHandler(handler)
+            this.unconvertObserverHandler(handler),
         );
 
     }

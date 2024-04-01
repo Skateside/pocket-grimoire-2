@@ -51,6 +51,12 @@
             <summary>Role Selection</summary>
             <div>
 
+                <form class="js--role-select--count-form">
+                    <label for="role-select-count">Player count</label>
+                    <input type="range" name="role-select-count" id="role-select-count" class="js--role-select--count" min="5" max="20" step="1" value="10" data-output="#role-select-count-output">
+                    <output id="role-select-count-output" aria-hidden="true">10</output>
+                </form>
+
                 <form class="js--role-select--roles">
                     <fieldset class="js--role-select--team" data-team="townsfolk">
                         <legend data-text="Townsfolk ({count}/{max})">Townsfolk</legend>

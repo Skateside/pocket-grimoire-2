@@ -1,7 +1,7 @@
 import View from "./View";
 
 export default class EditionView extends View<{
-    "edition-selected": string
+    "edition-selected": string,
 }> {
 
     private form: HTMLFormElement;
@@ -12,7 +12,7 @@ export default class EditionView extends View<{
         this.form = document.getElementById("edition") as HTMLFormElement;
 
         this.inputs = [
-            ...document.querySelectorAll<HTMLInputElement>("[name=\"edition\"]")
+            ...document.querySelectorAll<HTMLInputElement>("[name=\"edition\"]"),
         ];
 
     }

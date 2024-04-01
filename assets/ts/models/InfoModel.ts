@@ -1,13 +1,13 @@
 import {
     IInfoData,
-    IColours
+    IColours,
 } from "../types/types";
 import Model from "./Model";
 
 export default class InfoModel extends Model<{
     "infos-update": null,
     "info-update": IInfoData,
-    "info-remove": number
+    "info-remove": number,
 }> {
 
     protected infos: IInfoData[] = [];
@@ -24,7 +24,7 @@ export default class InfoModel extends Model<{
         this.infos.push({
             text,
             colour,
-            type: "official"
+            type: "official",
         });
 
     }
@@ -34,7 +34,7 @@ export default class InfoModel extends Model<{
         this.infos.push({
             text,
             colour: "grey",
-            type: "homebrew"
+            type: "homebrew",
         });
 
     }
@@ -69,14 +69,14 @@ export default class InfoModel extends Model<{
 
             return {
                 official: [],
-                homebrew: []
+                homebrew: [],
             }
 
         }
 
         return Object.groupBy(
             infos.map((info, index) => ({ ...info, index })),
-            ({ type }) => type
+            ({ type }) => type,
         );
 
     }
@@ -84,7 +84,7 @@ export default class InfoModel extends Model<{
     resetInfos() {
 
         const {
-            infos
+            infos,
         } = this;
         let index = infos.length;
 

@@ -15,7 +15,7 @@ import {
 } from "../types/types";
 import {
     deepClone,
-    matches
+    matches,
 } from "../utilities/objects";
 import {
     times,
@@ -25,9 +25,11 @@ import {
 } from "../utilities/arrays";
 import {
     fetchFromStorage,
-    updateStorage
+    updateStorage,
 } from "../utilities/storage";
-import { defers } from "../utilities/global";
+import {
+    defers,
+} from "../utilities/global";
 import Model from "./Model";
 
 export default class RepositoryModel extends Model<{
@@ -48,7 +50,7 @@ export default class RepositoryModel extends Model<{
             scriptPos: -1,
             inPlay: 0,
             inBag: 0,
-            ...options
+            ...options,
         };
 
     }
@@ -112,7 +114,7 @@ export default class RepositoryModel extends Model<{
             merged[index] = {
                 id,
                 reason,
-                state: "theoretical"
+                state: "theoretical",
             };
 
             return merged;
@@ -222,10 +224,10 @@ export default class RepositoryModel extends Model<{
 
             const repoInfo: Record<string, any> = {
                 role: {
-                    id: data.role.id
+                    id: data.role.id,
                 },
                 scriptPos: data.scriptPos,
-                inPlay: data.inPlay
+                inPlay: data.inPlay,
             };
 
             if (data.origin === "augment") {
@@ -253,11 +255,11 @@ export default class RepositoryModel extends Model<{
     addOfficialRole(role: IRole) {
 
         const {
-            repository
+            repository,
         } = this;
         const constructor = this.constructor as typeof RepositoryModel;
         const {
-            id
+            id,
         } = role;
         let index = (
             id
@@ -276,7 +278,7 @@ export default class RepositoryModel extends Model<{
     addHomebrewRole(role: Partial<IRole>) {
 
         const {
-            repository
+            repository,
         } = this;
         const constructor = this.constructor as typeof RepositoryModel;
         const index = this.findDataIndex({ id: role.id });
@@ -288,7 +290,7 @@ export default class RepositoryModel extends Model<{
                     ...constructor.makeEmptyRole(),
                     ...role
                 }, {
-                    origin: "homebrew"
+                    origin: "homebrew",
                 })
             );
 
@@ -303,7 +305,7 @@ export default class RepositoryModel extends Model<{
                 ...repository[index],
                 ...{
                     origin: "augment",
-                    augment: role
+                    augment: role,
                 }
             };
 
@@ -315,7 +317,7 @@ export default class RepositoryModel extends Model<{
 
         return Object.fromEntries(
             this.repository.map(({ role }) => [
-                role.id, role
+                role.id, role,
             ])
         );
 
@@ -343,7 +345,7 @@ export default class RepositoryModel extends Model<{
     resetRepository() {
 
         const {
-            repository
+            repository,
         } = this;
         let index = repository.length;
 
@@ -395,7 +397,7 @@ export default class RepositoryModel extends Model<{
             data.scriptPos = index;
 
             const {
-                role
+                role,
             } = data;
 
             roles[role.id] = role;
@@ -564,7 +566,7 @@ export default class RepositoryModel extends Model<{
 
         return {
             first: this.getNight(script, "first"),
-            other: this.getNight(script, "other")
+            other: this.getNight(script, "other"),
         };
 
     }
@@ -576,7 +578,7 @@ export default class RepositoryModel extends Model<{
 
         return {
             first: nights.first.map((data) => constructor.getRoleData(data)),
-            other: nights.other.map((data) => constructor.getRoleData(data))
+            other: nights.other.map((data) => constructor.getRoleData(data)),
         };
 
     }

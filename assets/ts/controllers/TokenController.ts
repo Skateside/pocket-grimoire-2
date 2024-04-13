@@ -5,6 +5,9 @@ import {
     IRole,
 } from "../types/types";
 
+/**
+ * @deprecated
+ */
 export default class TokenController extends Controller<TokenModel, TokenView> {
 
     protected roles: Record<string, IRole> = Object.create(null);

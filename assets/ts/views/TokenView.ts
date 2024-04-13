@@ -4,6 +4,9 @@ import {
     ICoordinates,
 } from "../types/types";
 
+/**
+ * @deprecated
+ */
 export default class TokenView extends View {
 
     protected zIndex = 0;

@@ -6,6 +6,9 @@ import {
 } from "../types/types";
 import Model from "./Model";
 
+/**
+ * @deprecated
+ */
 export default class TokenModel extends Model {
 
     protected roles: IRoleToken[];

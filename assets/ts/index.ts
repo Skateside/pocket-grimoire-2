@@ -1,11 +1,13 @@
 import GlobalModel from "./models/GlobalModel";
 import RepositoryModel from "./models/RepositoryModel";
 import InfoModel from "./models/InfoModel";
+import GameNumbersModel from "./models/GameNumbersModel";
 // import TokenModel from "./models/TokenModel";
 import GlobalView from "./views/GlobalView";
 import NightOrderView from "./views/NightOrderView";
 import InfoView from "./views/InfoView";
 // import TokenView from "./views/TokenView";
+import RoleSelectViewModel from "./viewmodels/RoleSelectViewModel";
 import EditionView from "./views/EditionView";
 import RoleSelectView from "./views/RoleSelectView";
 import GlobalController from "./controllers/GlobalController";
@@ -35,13 +37,18 @@ Promise.all([
     const editionView = new EditionView();
     const roleSelectView = new RoleSelectView();
 
+    const roleSelectViewModel = new RoleSelectViewModel({
+        game: new GameNumbersModel(),
+        repo: repositoryModel,
+    });
+
     const globalController = new GlobalController(globalModel, globalView);
     const nightOrderController = new NightOrderController(repositoryModel, nightOrderView);
     const infoController = new InfoController(infoModel, infoView);
     // const tokenController = new TokenController(tokenModel, tokenView);
     // tokenController.setRoles(repositoryModel.getRoles());
     const editionController = new EditionController(repositoryModel, editionView);
-    const roleSelectController = new RoleSelectController(repositoryModel, roleSelectView);
+    const roleSelectController = new RoleSelectController(roleSelectViewModel, roleSelectView);
 
     globalController.render();
     nightOrderController.render();

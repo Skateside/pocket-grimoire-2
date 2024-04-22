@@ -7,6 +7,11 @@ export default class Model<EventMap = {}> extends Observer<EventMap> {
     }
 
     save() {
+        return;
+    }
+
+    ready() {
+        return;
     }
 
 }

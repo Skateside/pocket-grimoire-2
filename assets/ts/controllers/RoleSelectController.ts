@@ -1,8 +1,8 @@
-import RepositoryModel from "../models/RepositoryModel";
+import RoleSelectViewModel from "../viewmodels/RoleSelectViewModel";
 import RoleSelectView from "../views/RoleSelectView";
 import Controller from "./Controller";
 
-export default class RoleSelectController extends Controller<RepositoryModel, RoleSelectView> {
+export default class RoleSelectController extends Controller<RoleSelectViewModel, RoleSelectView> {
 
     render(): void {
 
@@ -12,25 +12,24 @@ export default class RoleSelectController extends Controller<RepositoryModel, Ro
             model,
             view,
         } = this;
-        const {
-            getGameNumbers,
-        } = RepositoryModel;
+        const gameModel = model.getModel("game");
+        const repoModel = model.getModel("repo");
 
-        model.on("script-update", () => {
-            view.drawSelection(model.getScriptRolesByTeam());
+        repoModel.on("script-update", () => {
+            view.drawSelection(repoModel.getScriptRolesByTeam());
         });
-        model.on("bag-update", () => {
-            view.drawBag(model.getInBagRoles());
+        repoModel.on("bag-update", () => {
+            view.drawBag(repoModel.getInBagRoles());
         });
 
         view.on("roles-selected", (bag) => {
-            model.setBag(bag);
+            repoModel.setBag(bag);
         });
         view.on("player-count-update", (number) => {
-            view.setGameNumbers(getGameNumbers(number));
+            view.setGameNumbers(gameModel.getNumbers(number));
         });
 
-        view.setGameNumbers(getGameNumbers(view.getPlayerCount()));
+        view.setGameNumbers(gameModel.getNumbers(view.getPlayerCount()));
 
     }
 

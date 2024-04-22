@@ -10,8 +10,8 @@ import {
     IScripts,
     IRepositoryNights,
     IRepositoryNightsRoles,
-    IGameNumbers,
-    IGameNumbersCollection,
+    // IGameNumbers,
+    // IGameNumbersCollection,
 } from "../types/types";
 import {
     deepClone,
@@ -123,6 +123,7 @@ export default class RepositoryModel extends Model<{
 
     }
 
+    /*
     static getGameNumbers(): IGameNumbersCollection;
     static getGameNumbers(players: INumeric): IGameNumbers;
     static getGameNumbers(players?: INumeric) {
@@ -162,6 +163,7 @@ export default class RepositoryModel extends Model<{
         return gameNumbers[playerCount];
 
     }
+    */
 
     constructor() {
 

@@ -1,7 +1,8 @@
 import Model from "../models/Model";
 import View from "../views/View";
+import ViewModel from "../viewmodels/ViewModel";
 
-export default class Controller<M extends Model, V extends View> {
+export default class Controller<M extends Model | ViewModel, V extends View> {
 
     protected model: M;
     protected view: V;
@@ -13,7 +14,7 @@ export default class Controller<M extends Model, V extends View> {
 
     render() {
 
-        // this.model.ready();
+        this.model.ready();
         this.view.ready();
 
     }

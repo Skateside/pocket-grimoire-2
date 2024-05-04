@@ -96,11 +96,11 @@ export type IData = {
 
 export type IRepository = IData[];
 
-export type ISeat = {
-    position: ICoordinates,
-    data?: IData,
-    name?: string,
-};
+// export type ISeat = {
+//     position: ICoordinates,
+//     data?: IData,
+//     name?: string,
+// };
 
 export type IScript = (string | (Partial<IRole> & Pick<IRole, "id">))[];
 
@@ -168,3 +168,32 @@ export type IGameNumbers = {
 export type IGameNumbersCollection = Record<number, IGameNumbers>;
 
 export type IDomLookupCache<T extends HTMLElement = HTMLElement> = (element: HTMLElement) => T;
+
+export type ISeat = {
+    coords: ICoordinates,
+    name: string,
+    roleId: string,
+};
+
+export type IReminder = {
+    id: string,
+    index: number,
+    coords: ICoordinates,
+};
+
+export type IStoreEntry<IDataType> = {
+    meta: IMeta,
+    data: IDataType,
+};
+
+export type IMeta = {
+    ignore?: boolean,
+};
+
+export type IStore = {
+    roles: IStoreEntry<Record<string, IRole>>,
+    augments: IStoreEntry<Record<string, Partial<IRole>>>,
+    script: IStoreEntry<string[]>,
+    seats: IStoreEntry<ISeat[]>,
+    reminders: IStoreEntry<IReminder[]>,
+};

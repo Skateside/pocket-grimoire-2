@@ -7,11 +7,35 @@ export default class Model<EventMap = {}> extends Observer<EventMap> {
 
     constructor() {
         super();
-        this.store = Store.get();
+        this.relayEvents();
+        // this.store = Store.get();
+    }
+
+    relayEvents() {
+        return;
     }
 
     load() {
-        return Promise.resolve();
+        // return Promise.resolve();
+    }
+
+    setStore(store: Store) {
+        this.store = store;
+        return this;
+    }
+
+    getStore() {
+
+        const {
+            store,
+        } = this;
+
+        if (!store) {
+            throw new Error("Store has not been set");
+        }
+
+        return store;
+
     }
 
     save() {

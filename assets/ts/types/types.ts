@@ -193,7 +193,17 @@ export type IMeta = {
 export type IStore = {
     roles: IStoreEntry<Record<string, IRole>>,
     augments: IStoreEntry<Record<string, Partial<IRole>>>,
-    script: IStoreEntry<string[]>,
+    script: IStoreEntry<IScript>,
+    scripts: IStoreEntry<IScripts>,
     seats: IStoreEntry<ISeat[]>,
     reminders: IStoreEntry<IReminder[]>,
+};
+
+export type IStoreEvents = {
+    "roles-set": Record<string, IRole>,
+    "augments-set": Record<string, Partial<IRole>>,
+    "script-set": IScript,
+    "scripts-set": IScripts,
+    "seats-set": ISeat[],
+    "reminders-set": IReminder[],
 };

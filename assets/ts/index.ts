@@ -1,3 +1,4 @@
+import Store from "./store/Store";
 import GlobalModel from "./models/GlobalModel";
 // import RepositoryModel from "./models/RepositoryModel";
 // import InfoModel from "./models/InfoModel";
@@ -8,7 +9,7 @@ import GlobalView from "./views/GlobalView";
 // // import TokenView from "./views/TokenView";
 // import EditionView from "./views/EditionView";
 // import RoleSelectView from "./views/RoleSelectView";
-// import GlobalController from "./controllers/GlobalController";
+import GlobalController from "./controllers/GlobalController";
 // import NightOrderController from "./controllers/NightOrderController";
 // import InfoController from "./controllers/InfoController";
 // // import TokenController from "./controllers/TokenController";
@@ -16,6 +17,22 @@ import GlobalView from "./views/GlobalView";
 // import RoleSelectController from "./controllers/RoleSelectController";
 import global from "./utilities/global";
 
+const store = new Store();
+const globalModel = new GlobalModel();
+
+store.load().then(() => {
+
+    globalModel.setStore(store);
+
+    const globalView = new GlobalView();
+
+    const globalController = new GlobalController(globalModel, globalView);
+
+    console.log({ globalController });
+
+});
+
+/*
 const globalModel = new GlobalModel();
 // const repositoryModel = new RepositoryModel();
 // const infoModel = new InfoModel();
@@ -60,6 +77,7 @@ Promise.all([
     // });
 
 });
+*/
 
 /*
 import Model from "./models/Model";

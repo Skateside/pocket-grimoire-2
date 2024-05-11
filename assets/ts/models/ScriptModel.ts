@@ -1,19 +1,93 @@
 import Model from "./Model";
 import {
-    defers,
-} from "../utilities/global";
+    IScript,
+} from "../types/types";
 
 export default class ScriptModel extends Model<{
+    "script-set": IScript,
 }> {
 
-    load(): Promise<void> {
+    static isMetaEntry(entry: any) {
+        return entry && typeof entry === "object" && entry.id === "_meta";
+    }
 
-        return Promise.all([
-            defers.scripts,
-        ]).then(([
-            scripts,
-        ]) => {
+    static isRole(entry: any) {
+
+        return (
+            entry
+            && typeof entry === "object"
+            && typeof entry.id === "string"
+            && entry.id !== "_meta"
+        );
+
+    }
+
+    static isObjectId(entry: any) {
+        return this.isRole(entry) && Object.keys(entry).length === 1;
+    }
+
+    relayEvents() {
+
+        const {
+            store,
+        } = this;
+
+        store.on("script-set", (data) => this.trigger("script-set", data));
+
+    }
+
+    setScript(script: IScript) {
+
+        const {
+            store,
+        } = this;
+
+        store.resetAugments();
+
+        const constructor = this.constructor as typeof ScriptModel;
+        const clone = [...script];
+        const metaIndex = clone.findIndex((entry) => {
+            return constructor.isMetaEntry(entry);
         });
+        const meta = (
+            metaIndex > -1
+            ? clone.splice(metaIndex, 1)[0]
+            : null
+        );
+        const ids = clone.map((entry) => {
+
+            if (typeof entry === "string") {
+                return entry;
+            }
+
+            if (constructor.isObjectId(entry)) {
+                return entry.id;
+            }
+
+            if (constructor.isRole(entry)) {
+
+                store.addAugment(entry.id, entry);
+                return entry.id;
+
+            }
+
+            return null;
+
+        });
+
+        store.setData("script", [meta, ...ids].filter(Boolean));
+
+    }
+
+    setScriptById(id: string) {
+
+        const scripts = this.store.getData("scripts");
+
+        if (!Object.hasOwn(scripts, id)) {
+            throw new ReferenceError(`Unrecognised script ID "${id}"`);
+        }
+
+        this.setScript(scripts[id]);
 
     }
 

@@ -33,8 +33,9 @@
 
         <details>
             <summary>Script Selection</summary>
-            <form id="edition">
-                <ul>
+            <form id="script">
+                <ul id="script-selection">
+                    <!--
                     <li>
                         <label for="edition-tb">
                             <input type="radio" name="edition" id="edition-tb" value="tb" required>
@@ -53,9 +54,18 @@
                             Sects and Violets
                         </label>
                     </li>
+                    -->
                 </ul>
                 <p><button type="submit">Select</button></p>
             </form>
+            <template id="script-select">
+                <li>
+                    <label class="js--script-select--label">
+                        <input type="radio" name="script" class="js--script-select--input">
+                        <span class="js--script-select--name"></span>
+                    </label>
+                </li>
+            </template>
         </details>
 
         <hr>
@@ -212,9 +222,15 @@
 
             }
         </script>
-        <script src="./assets/js/index.js"></script>
+        <script>
+            var PG = {
+                roles: [],
+                scripts: {},
+            };
+        </script>
         <script src="./assets/data/characters/en_GB.js"></script>
-        <script src="./assets/data/scripts.js"></script>
+        <script src="./assets/data/scripts/en_GB.js"></script>
+        <script src="./assets/js/index.js"></script>
 
     </body>
 </html>

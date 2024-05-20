@@ -1,17 +1,19 @@
 import Model from "./Model";
 import {
     IScript,
+    IMetaEntry,
+    IMinimumRole,
 } from "../types/types";
 
 export default class ScriptModel extends Model<{
     "script-set": IScript,
 }> {
 
-    static isMetaEntry(entry: any) {
+    static isMetaEntry(entry: any): entry is IMetaEntry {
         return entry && typeof entry === "object" && entry.id === "_meta";
     }
 
-    static isRole(entry: any) {
+    static isRole(entry: any): entry is IMinimumRole {
 
         return (
             entry
@@ -32,7 +34,27 @@ export default class ScriptModel extends Model<{
             store,
         } = this;
 
-        store.on("script-set", (data) => this.trigger("script-set", data));
+        // TODO: make this work - `this.store` won't exist at this point.
+        // store.on("script-set", (data) => this.trigger("script-set", data));
+
+    }
+
+    getScripts(): Record<string, IMetaEntry> {
+
+        const constructor = this.constructor as typeof ScriptModel;
+        const scripts = Object.create(null);
+
+        return Object.entries(this.store.getData("scripts")).reduce((scripts, [id, script]) => {
+
+            const metaIndex = script.findIndex((entry) => constructor.isMetaEntry(entry));
+
+            if (metaIndex > -1) {
+                scripts[id] = script[metaIndex];
+            }
+
+            return scripts;
+
+        }, Object.create(null));
 
     }
 

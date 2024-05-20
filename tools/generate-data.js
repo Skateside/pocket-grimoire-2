@@ -3,12 +3,17 @@ const fs = require("fs");
 const SOURCE_DATA = "./assets/data/";
 const SOURCE_CHARACTERS = `${SOURCE_DATA}characters/`;
 const SOURCE_JINXES = `${SOURCE_DATA}jinxes/`;
+const SOURCE_SCRIPTS = `${SOURCE_DATA}scripts/`;
 const DESTINATION_DATA = "./dist/assets/data/";
 const DESTINATION_CHARACTERS = `${DESTINATION_DATA}characters/`;
+const DESTINATION_SCRIPTS = `${DESTINATION_DATA}scripts/`;
 
 const makeDirectory = () => new Promise((resolve) => {
 
     fs.mkdirSync(DESTINATION_CHARACTERS, {
+        recursive: true,
+    });
+    fs.mkdirSync(DESTINATION_SCRIPTS, {
         recursive: true,
     });
     resolve();
@@ -251,19 +256,12 @@ const makeCharacters = (store) => new Promise((resolve, reject) => {
             });
 
             const jsFile = file.replace(/\.json$/, ".js");
-            const contents = `PG.setRoles(${JSON.stringify(langCharacters)});`;
-
-            fs.writeFile(DESTINATION_CHARACTERS + jsFile, contents, (err) => {
-
-                if (err) {
-                    return reject(err);
-                }
-
-                resolve();
-
-            });
-
+            const contents = `PG.roles=${JSON.stringify(langCharacters)};`;
+            fs.writeFileSync(DESTINATION_CHARACTERS + jsFile, contents);
+            
         });
+
+        resolve();
 
     });
 
@@ -271,26 +269,41 @@ const makeCharacters = (store) => new Promise((resolve, reject) => {
 
 const makeScripts = () => new Promise((resolve, reject) => {
 
-    fs.readFile(`${SOURCE_DATA}scripts.json`, (err, data) => {
+    const scripts = JSON.parse(fs.readFileSync(`${SOURCE_DATA}scripts.json`));
+
+    fs.readdir(SOURCE_CHARACTERS, (err, files) => {
 
         if (err) {
             return reject(err);
         }
 
-        const parsed = JSON.parse(data);
-        const contents = `PG.setScripts(${JSON.stringify(parsed)});`;
+        files.forEach((file) => {
 
-        fs.writeFile(`${DESTINATION_DATA}scripts.js`, contents, (err) => {
+            const langScripts = {};
+            const data = JSON.parse(fs.readFileSync(SOURCE_SCRIPTS + file));
 
-            if (err) {
-                return reject(err);
-            }
+            Object.entries(data.scripts).forEach(([id, name]) => {
 
-            resolve();
+                langScripts[id] = [
+                    {
+                        id: "_meta",
+                        name,
+                        author: data.author
+                    },
+                    ...scripts[id]
+                ];
+
+            });
+
+            const jsFile = file.replace(/\.json$/, ".js");
+            const contents = `PG.scripts=${JSON.stringify(langScripts)};`;
+            fs.writeFileSync(DESTINATION_SCRIPTS + jsFile, contents);
 
         });
 
     });
+
+    resolve();
 
 });
 

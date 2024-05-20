@@ -58,14 +58,14 @@ export type IRole = {
     team: ITeam,
     name: string,
     ability: string,
-    image: string,
-    edition: string,
-    firstNight: number,
-    firstNightReminder: string,
-    otherNight: number,
-    otherNightReminder: string,
-    setup: boolean,
-    reminders: string[],
+    image?: string | [string] | [string, string] | [string, string, string],
+    edition?: string,
+    firstNight?: number,
+    firstNightReminder?: string,
+    otherNight?: number,
+    otherNightReminder?: string,
+    setup?: boolean,
+    reminders?: string[],
     remindersGlobal?: string[],
     jinxes?: IJinx[],
     special?: ISpecial[],
@@ -102,7 +102,19 @@ export type IRepository = IData[];
 //     name?: string,
 // };
 
-export type IScript = (string | (Partial<IRole> & Pick<IRole, "id">))[];
+export type IMetaEntry = {
+    id: "_meta",
+    name: string,
+    author?: string,
+    logo?: string,
+    background?: string,
+    firstNight?: string[],
+    otherNight?: string[],
+};
+
+export type IMinimumRole = Partial<IRole> & Pick<IRole, "id">;
+
+export type IScript = (string | IMinimumRole | IMetaEntry)[];
 
 export type IScripts = Record<string, IScript>;
 
@@ -181,16 +193,33 @@ export type IReminder = {
     coords: ICoordinates,
 };
 
-export type IStoreEntry<IDataType> = {
-    meta: IMeta,
-    data: IDataType,
-};
-
 export type IMeta = {
     ignore?: boolean,
 };
 
 export type IStore = {
+    roles: Record<string, IRole>,
+    augments: Record<string, Partial<IRole>>,
+    script: IScript,
+    scripts: IScripts,
+    seats: ISeat[],
+    reminders: IReminder[],
+};
+
+// export type IStoreEntry<IDataType> = {
+//     meta: IMeta,
+//     data: IDataType,
+// };
+//*
+export type IStoreEntries = {
+    // [K in keyof IStore]: IStoreEntry<IStore[K]>
+    [K in keyof IStore]: {
+        meta: IMeta,
+        data: IStore[K],
+    }
+};
+/*/
+export type IStoreEntries = {
     roles: IStoreEntry<Record<string, IRole>>,
     augments: IStoreEntry<Record<string, Partial<IRole>>>,
     script: IStoreEntry<IScript>,
@@ -198,12 +227,12 @@ export type IStore = {
     seats: IStoreEntry<ISeat[]>,
     reminders: IStoreEntry<IReminder[]>,
 };
-
+//*/
 export type IStoreEvents = {
-    "roles-set": Record<string, IRole>,
-    "augments-set": Record<string, Partial<IRole>>,
-    "script-set": IScript,
-    "scripts-set": IScripts,
-    "seats-set": ISeat[],
-    "reminders-set": IReminder[],
+    [K in keyof IStore as `${K}-set`]: IStore[K]
+};
+
+export type IPG = {
+    roles: Record<string, IRole>,
+    scripts: IScripts,
 };

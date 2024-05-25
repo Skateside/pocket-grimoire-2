@@ -1,0 +1,10 @@
+{
+    "isdemon": "This is the **Demon**",
+    "isminion": "These are your **Minions**",
+    "notinplay": "These characters are **not in play**",
+    "nominatetoday": "Did you **nominate** today?",
+    "playeris": "**This player** is",
+    "votetoday": "Did you **vote** today?",
+    "youare": "**You** are",
+    "selectedyou": "This character **selected** you"
+}

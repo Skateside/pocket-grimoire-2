@@ -44,17 +44,21 @@ export default class ScriptModel extends Model<{
         const constructor = this.constructor as typeof ScriptModel;
         const scripts = Object.create(null);
 
-        return Object.entries(this.store.getData("scripts")).reduce((scripts, [id, script]) => {
+        return Object
+            .entries(this.store.getData("scripts"))
+            .reduce((scripts, [id, script]) => {
 
-            const metaIndex = script.findIndex((entry) => constructor.isMetaEntry(entry));
+                const metaIndex = script.findIndex((entry) => {
+                    return constructor.isMetaEntry(entry);
+                });
 
-            if (metaIndex > -1) {
-                scripts[id] = script[metaIndex];
-            }
+                if (metaIndex > -1) {
+                    scripts[id] = script[metaIndex];
+                }
 
-            return scripts;
+                return scripts;
 
-        }, Object.create(null));
+            }, Object.create(null));
 
     }
 

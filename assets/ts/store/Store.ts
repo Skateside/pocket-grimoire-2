@@ -137,7 +137,10 @@ export default class Store extends Observer<IStoreEvents> {
         return deepClone(this.store[key].meta);
     }
 
-    private setInternalData<K extends keyof IStoreEntries>(key: K, data: IStoreEntries[K]["data"]) {
+    private setInternalData<K extends keyof IStoreEntries>(
+        key: K,
+        data: IStoreEntries[K]["data"],
+    ) {
         // NOTE: this is giving me a ts(2322) but I think it should be fine.
         this.store[key].data = data;
     }

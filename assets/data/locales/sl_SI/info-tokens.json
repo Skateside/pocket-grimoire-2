@@ -1,10 +1,42 @@
-{
-    "isdemon": "To je **Demon**.",
-    "isminion": "To so tvoji **Sledilci**.",
-    "notinplay": "To so vloge, ki **niso v igri**.",
-    "nominatetoday": "Si **danes nominiral-a**?",
-    "playeris": "**Ta igralec** je",
-    "votetoday": "Si danes **glasoval-a**?",
-    "youare": "**Ti** si",
-    "selectedyou": "Ta vloga te je **izbrala**"
-}
+[
+    {
+        "id": "isdemon",
+        "text": "To je **Demon**.",
+        "colour": "red"
+    },
+    {
+        "id": "isminion",
+        "text": "To so tvoji **Sledilci**.",
+        "colour": "red"
+    },
+    {
+        "id": "notinplay",
+        "text": "To so vloge, ki **niso v igri**.",
+        "colour": "blue"
+    },
+    {
+        "id": "nominatetoday",
+        "text": "Si **danes nominiral-a**?",
+        "colour": "green"
+    },
+    {
+        "id": "playeris",
+        "text": "**Ta igralec** je",
+        "colour": "purple"
+    },
+    {
+        "id": "votetoday",
+        "text": "Si danes **glasoval-a**?",
+        "colour": "dark-purple"
+    },
+    {
+        "id": "youare",
+        "text": "**Ti** si",
+        "colour": "orange"
+    },
+    {
+        "id": "selectedyou",
+        "text": "Ta vloga te je **izbrala**",
+        "colour": "dark-orange"
+    }
+]

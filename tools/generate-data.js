@@ -8,6 +8,10 @@ const DESTINATION_DATA = "./dist/assets/data/";
 const DESTINATION_CHARACTERS = `${DESTINATION_DATA}characters/`;
 const DESTINATION_SCRIPTS = `${DESTINATION_DATA}scripts/`;
 
+// TODO: Change this so that it loops through the `assets/data/locales` folders
+// and creates a full data file that contains the roles, scripts, and info tokens.
+// Also: change en_GB so that it's formatted (to match the others).
+
 const makeDirectory = () => new Promise((resolve) => {
 
     fs.mkdirSync(DESTINATION_CHARACTERS, {

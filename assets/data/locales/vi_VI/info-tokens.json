@@ -1,10 +1,42 @@
-{
-    "isdemon": "Đây là **Quỷ**",
-    "isminion": "Đây là **Tay sai** của bạn",
-    "notinplay": "Những nhân vật sau **nằm ngoài cuộc**",
-    "nominatetoday": "Bạn có **biểu quyết** hôm nay không?",
-    "playeris": "**Người này** là",
-    "votetoday": "Bạn có **bỏ phiếu** hôm nay không?",
-    "youare": "**Bạn** là",
-    "selectedyou": "Nhân vật này **chọn** bạn"
-}
+[
+    {
+        "id": "isdemon",
+        "text": "Đây là **Quỷ**",
+        "colour": "red"
+    },
+    {
+        "id": "isminion",
+        "text": "Đây là **Tay sai** của bạn",
+        "colour": "red"
+    },
+    {
+        "id": "notinplay",
+        "text": "Những nhân vật sau **nằm ngoài cuộc**",
+        "colour": "blue"
+    },
+    {
+        "id": "nominatetoday",
+        "text": "Bạn có **biểu quyết** hôm nay không?",
+        "colour": "green"
+    },
+    {
+        "id": "playeris",
+        "text": "**Người này** là",
+        "colour": "purple"
+    },
+    {
+        "id": "votetoday",
+        "text": "Bạn có **bỏ phiếu** hôm nay không?",
+        "colour": "dark-purple"
+    },
+    {
+        "id": "youare",
+        "text": "**Bạn** là",
+        "colour": "orange"
+    },
+    {
+        "id": "selectedyou",
+        "text": "Nhân vật này **chọn** bạn",
+        "colour": "dark-orange"
+    }
+]

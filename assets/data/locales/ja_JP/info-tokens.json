@@ -1,10 +1,42 @@
-{
-    "isdemon": "これが**悪魔**です",
-    "isminion": "これが**ミニオン**です",
-    "notinplay": "これらのキャラクターは**プレーされていません**",
-    "nominatetoday": "本日**推薦**を行いましたか？",
-    "playeris": "**このプレイヤー**は",
-    "votetoday": "本日**投票**をしましたか？",
-    "youare": "**あなた**は",
-    "selectedyou": "このキャラクターはあなたを**選択**しました"
-}
+[
+    {
+        "id": "isdemon",
+        "text": "これが**悪魔**です",
+        "colour": "red"
+    },
+    {
+        "id": "isminion",
+        "text": "これが**ミニオン**です",
+        "colour": "red"
+    },
+    {
+        "id": "notinplay",
+        "text": "これらのキャラクターは**プレーされていません**",
+        "colour": "blue"
+    },
+    {
+        "id": "nominatetoday",
+        "text": "本日**推薦**を行いましたか？",
+        "colour": "green"
+    },
+    {
+        "id": "playeris",
+        "text": "**このプレイヤー**は",
+        "colour": "purple"
+    },
+    {
+        "id": "votetoday",
+        "text": "本日**投票**をしましたか？",
+        "colour": "dark-purple"
+    },
+    {
+        "id": "youare",
+        "text": "**あなた**は",
+        "colour": "orange"
+    },
+    {
+        "id": "selectedyou",
+        "text": "このキャラクターはあなたを**選択**しました",
+        "colour": "dark-orange"
+    }
+]

@@ -1,10 +1,42 @@
-{
-    "isdemon": "Det här är **Demonen**",
-    "isminion": "Det här är dina **Hantlangare**",
-    "notinplay": "De här rollerna är **inte i spel**",
-    "nominatetoday": "**Nominerade** du idag?",
-    "playeris": "**Den här spelaren** är",
-    "votetoday": "**Röstade** du idag?",
-    "youare": "**Du** är",
-    "selectedyou": "Denna roll **valde** dig"
-}
+[
+    {
+        "id": "isdemon",
+        "text": "Det här är **Demonen**",
+        "colour": "red"
+    },
+    {
+        "id": "isminion",
+        "text": "Det här är dina **Hantlangare**",
+        "colour": "red"
+    },
+    {
+        "id": "notinplay",
+        "text": "De här rollerna är **inte i spel**",
+        "colour": "blue"
+    },
+    {
+        "id": "nominatetoday",
+        "text": "**Nominerade** du idag?",
+        "colour": "green"
+    },
+    {
+        "id": "playeris",
+        "text": "**Den här spelaren** är",
+        "colour": "purple"
+    },
+    {
+        "id": "votetoday",
+        "text": "**Röstade** du idag?",
+        "colour": "dark-purple"
+    },
+    {
+        "id": "youare",
+        "text": "**Du** är",
+        "colour": "orange"
+    },
+    {
+        "id": "selectedyou",
+        "text": "Denna roll **valde** dig",
+        "colour": "dark-orange"
+    }
+]

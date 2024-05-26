@@ -1,10 +1,42 @@
-{
-    "isdemon": "זה **השד**",
-    "isminion": "אלה **המשרתים** שלך",
-    "notinplay": "הדמויות האלה **לא במשחק**",
-    "nominatetoday": "האם **הצבעת** היום?",
-    "playeris": "**השחקן הזה** הוא",
-    "votetoday": "האם **הצבעת** היום?",
-    "youare": "**אתה**",
-    "selectedyou": "הדמות הזו **בחרה** בך"
-}
+[
+    {
+        "id": "isdemon",
+        "text": "זה **השד**",
+        "colour": "red"
+    },
+    {
+        "id": "isminion",
+        "text": "אלה **המשרתים** שלך",
+        "colour": "red"
+    },
+    {
+        "id": "notinplay",
+        "text": "הדמויות האלה **לא במשחק**",
+        "colour": "blue"
+    },
+    {
+        "id": "nominatetoday",
+        "text": "האם **הצבעת** היום?",
+        "colour": "green"
+    },
+    {
+        "id": "playeris",
+        "text": "**השחקן הזה** הוא",
+        "colour": "purple"
+    },
+    {
+        "id": "votetoday",
+        "text": "האם **הצבעת** היום?",
+        "colour": "dark-purple"
+    },
+    {
+        "id": "youare",
+        "text": "**אתה**",
+        "colour": "orange"
+    },
+    {
+        "id": "selectedyou",
+        "text": "הדמות הזו **בחרה** בך",
+        "colour": "dark-orange"
+    }
+]

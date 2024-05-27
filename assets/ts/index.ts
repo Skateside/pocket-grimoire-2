@@ -18,7 +18,7 @@ import ScriptController from "./controllers/ScriptController";
 // // import TokenController from "./controllers/TokenController";
 // import EditionController from "./controllers/EditionController";
 // import RoleSelectController from "./controllers/RoleSelectController";
-import global from "./utilities/global";
+// import global from "./utilities/global";
 
 const store = new Store();
 const globalModel = new GlobalModel();
@@ -136,4 +136,4 @@ app.addController(new RoleSelectController(repositoryModel, new RoleSelectView()
 app.load();
 */
 
-(window as any).PG = global;
+// (window as any).PG = global;

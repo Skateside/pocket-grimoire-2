@@ -1,42 +1,11 @@
-[
-    {
-        "id": "isdemon",
-        "text": "Це - Ваш **Демон**",
-        "colour": "red"
-    },
-    {
-        "id": "isminion",
-        "text": "Це - Ваші **Міньони**",
-        "colour": "red"
-    },
-    {
-        "id": "notinplay",
-        "text": "Ці персонажі **не в грі**",
-        "colour": "blue"
-    },
-    {
-        "id": "nominatetoday",
-        "text": "Ви **номінували** сьогодні?",
-        "colour": "green"
-    },
-    {
-        "id": "playeris",
-        "text": "Персонаж цього **гравця",
-        "colour": "purple"
-    },
-    {
-        "id": "votetoday",
-        "text": "Ви **голосували** сьогодні?",
-        "colour": "dark-purple"
-    },
-    {
-        "id": "youare",
-        "text": "**Ви є**",
-        "colour": "orange"
-    },
-    {
-        "id": "selectedyou",
-        "text": "Вас **обрано** цим персонажем",
-        "colour": "dark-orange"
-    }
-]
+{
+    "isdemon": "Це - Ваш **Демон**",
+    "isminion": "Це - Ваші **Міньони**",
+    "notinplay": "Ці персонажі **не в грі**",
+    "nominatetoday": "Ви **номінували** сьогодні?",
+    "playeris": "Персонаж цього **гравця",
+    "votetoday": "Ви **голосували** сьогодні?",
+    "youare": "**Ви є**",
+    "selectedyou": "Вас **обрано** цим персонажем"
+}
+    

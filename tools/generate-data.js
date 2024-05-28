@@ -4,22 +4,19 @@ const SOURCE_DATA = "./assets/data/raw/";
 const LOCALES_DATA = "./assets/data/locales/";
 const DESTINATION_DATA = "./dist/assets/data/";
 
-// TODO: Change this so that it loops through the `assets/data/locales` folders
-// and creates a full data file that contains the roles, scripts, and info tokens.
-// Also: change en_GB so that it's formatted (to match the others).
+const makeDirectory = () => new Promise((resolve, reject) => {
 
-const makeDirectory = () => new Promise((resolve) => {
-
-    fs.mkdirSync(DESTINATION_DATA, {
+    fs.mkdir(DESTINATION_DATA, {
         recursive: true,
+    }, (err) => {
+
+        if (err) {
+            return reject(err);
+        }
+
+        resolve();
+
     });
-    // fs.mkdirSync(DESTINATION_CHARACTERS, {
-    //     recursive: true,
-    // });
-    // fs.mkdirSync(DESTINATION_SCRIPTS, {
-    //     recursive: true,
-    // });
-    resolve();
 
 });
 
@@ -91,19 +88,22 @@ const findNightOrder = () => new Promise((resolve, reject) => {
 
 });
 
-const nameToRole = (roles, name) => {
+const getInfoTokens = () => new Promise((resolve, reject) => {
 
-    // const role = roles.find(({ name: roleName }) => {
-    return roles.find(({ name: roleName }) => {
-            return name === roleName;
+    fs.readFile(`${SOURCE_DATA}info-tokens.json`, (err, data) => {
+
+        if (err) {
+            return reject(err);
+        }
+
+        resolve(JSON.parse(data));
+
     });
 
-    // if (!role) {
-    //     throw new ReferenceError(`Cannot find "${name}" role`);
-    // }
+});
 
-    // return role;
-
+const nameToRole = (roles, name) => {
+    return roles.find(({ name: roleName }) => name === roleName);
 };
 
 const hasOwn = (
@@ -198,7 +198,12 @@ const makeCompleteData = () => new Promise((resolve, reject) => {
 
 const deepClone = (object) => JSON.parse(JSON.stringify(object));
 
-const createData = (roles, nightOrder, scripts) => new Promise((resolve, reject) => {
+const createData = ({
+    roles,
+    nightOrder,
+    scripts,
+    infoTokens,
+}) => new Promise((resolve, reject) => {
 
     const nighted = deepClone(roles);
 
@@ -227,7 +232,7 @@ const createData = (roles, nightOrder, scripts) => new Promise((resolve, reject)
 
         let killLoop = false;
 
-        files.forEach((file) => {
+        files.forEach((file, index) => {
 
             if (killLoop) {
                 return;
@@ -308,6 +313,7 @@ const createData = (roles, nightOrder, scripts) => new Promise((resolve, reject)
             fileContents += `PG.scripts=${JSON.stringify(scriptClone)};`;
 
             // Localise the info tokens.
+            const tokens = deepClone(infoTokens);
             const info = readJson(`${LOCALES_DATA}${file}/info-tokens.json`, reject);
 
             if (!info) {
@@ -315,7 +321,17 @@ const createData = (roles, nightOrder, scripts) => new Promise((resolve, reject)
                 return;
             }
 
-            fileContents += `PG.info=${JSON.stringify(info)};`;
+            Object.entries(info).forEach(([id, text]) => {
+
+                const token = tokens.find(({ id: tokenId }) => tokenId === id);
+
+                if (token) {
+                    token.text = text;
+                }
+
+            });
+
+            fileContents += `PG.info=${JSON.stringify(tokens)};`;
 
             // Save the contents.
             fs.writeFile(`${DESTINATION_DATA}${file}.js`, fileContents, (err) => {
@@ -327,260 +343,34 @@ const createData = (roles, nightOrder, scripts) => new Promise((resolve, reject)
 
             });
 
-        });
-
-    });
-
-    resolve();
-
-});
-
-/*
-const makeMainData = (store) => Promise.all([
-
-    // Create the characters JSON file.
-    new Promise((resolve, reject) => {
-
-        fs.readFile(`${SOURCE_DATA}characters.json`, (err, data) => {
-
-            if (err) {
-                return reject(err);
-            }
-
-            const characters = JSON.parse(data);
-            store.characters = characters;
-            const enGB = characters.map(({
-                id,
-                name,
-                ability,
-                firstNightReminder,
-                otherNightReminder,
-                remindersGlobal = [],
-                reminders,
-            }) => ({
-                id,
-                name,
-                ability,
-                firstNightReminder,
-                otherNightReminder,
-                remindersGlobal,
-                reminders,
-            })).sort((a, b) => a.id.localeCompare(b.id));
-            const json = JSON.stringify(enGB, null, "    ");
-
-            fs.writeFile(`${SOURCE_CHARACTERS}en_GB.json`, json + "\n", (err) => {
-
-                if (err) {
-                    return reject(err);
-                }
-
+            if (index >= files.length - 1) {
                 resolve();
-
-            });
-
-        });
-
-    }),
-
-    // Create the jinxes JSON file.
-    new Promise((resolve, reject) => {
-
-        fs.readFile(`${SOURCE_DATA}characters.json`, (err, data) => {
-
-            if (err) {
-                return reject(err);
             }
 
-            const characters = JSON.parse(data);
-
-            fs.readFile(`${SOURCE_DATA}jinx.json`, (err, data) => {
-
-                if (err) {
-                    return reject(err);
-                }
-
-                const enGB = [];
-                const jinxes = JSON.parse(data);
-
-                jinxes.forEach(({ id, jinx }) => {
-
-                    const character = nameToCharacter(characters, id);
-
-                    jinx.forEach(({ id, reason }) => {
-
-                        const jinxCharacter = nameToCharacter(characters, id);
-                        enGB.push({
-                            target: character.id,
-                            trick: jinxCharacter.id,
-                            reason
-                        });
-
-                    });
-
-                });
-
-                const json = JSON.stringify(enGB, null, "    ");
-
-                fs.writeFile(`${SOURCE_JINXES}en_GB.json`, json, (err) => {
-
-                    if (err) {
-                        return reject(err);
-                    }
-
-                    resolve();
-
-                });
-
-            });
-
         });
-
-    }),
-
-]);
-
-const makeCharacters = (store) => new Promise((resolve, reject) => {
-
-    const characters = store.characters;
-    if (!characters) {
-        return reject(new Error("characters haven't been loaded"));
-    }
-
-    const nightOrder = store.nightOrder;
-    if (!nightOrder) {
-        return reject(new Error("nightOrder haven't been loaded"));
-    }
-
-    // Update the firstNight/otherNight properties to be up-to-date.
-    characters.forEach((character) => {
-
-        const firstNight = nightOrder.firstNight.indexOf(character.id) + 1;
-        if (firstNight) {
-            character.firstNight = firstNight;
-        }
-
-        const otherNight = nightOrder.otherNight.indexOf(character.id) + 1;
-        if (otherNight) {
-            character.otherNight = otherNight;
-        }
-
-    });
-
-    fs.readdir(SOURCE_CHARACTERS, (err, files) => {
-
-        if (err) {
-            return reject(err);
-        }
-
-        files.forEach((file) => {
-
-            const langCharacters = JSON.parse(JSON.stringify(characters));
-
-            const data = JSON.parse(fs.readFileSync(SOURCE_CHARACTERS + file));
-            data.forEach((datum) => {
-
-                const character = langCharacters.find(({ id }) => id === datum.id);
-
-                if (!character) {
-                    return reject(`Cannot find character "${datum.id}"`);
-                }
-
-                Object.assign(character, datum);
-
-            });
-
-            const jinxes = JSON.parse(fs.readFileSync(SOURCE_JINXES + file));
-            jinxes.forEach(({ target, trick, reason }) => {
-
-                const character = langCharacters.find(({ id }) => id === target);
-
-                if (!character) {
-                    return reject(`Cannot find character "${datum.id}"`);
-                }
-
-                if (!character.jinxes) {
-                    character.jinxes = [];
-                }
-
-                character.jinxes.push({ id: trick, reason });
-
-            });
-
-            const jsFile = file.replace(/\.json$/, ".js");
-            const contents = `PG.roles=${JSON.stringify(langCharacters)};`;
-            fs.writeFileSync(DESTINATION_CHARACTERS + jsFile, contents);
-            
-        });
-
-        resolve();
 
     });
 
 });
-
-const makeScripts = () => new Promise((resolve, reject) => {
-
-    const scripts = JSON.parse(fs.readFileSync(`${SOURCE_DATA}scripts.json`));
-
-    fs.readdir(SOURCE_CHARACTERS, (err, files) => {
-
-        if (err) {
-            return reject(err);
-        }
-
-        files.forEach((file) => {
-
-            const langScripts = {};
-            const data = JSON.parse(fs.readFileSync(SOURCE_SCRIPTS + file));
-
-            Object.entries(data.scripts).forEach(([id, name]) => {
-
-                langScripts[id] = [
-                    {
-                        id: "_meta",
-                        name,
-                        author: data.author
-                    },
-                    ...scripts[id]
-                ];
-
-            });
-
-            const jsFile = file.replace(/\.json$/, ".js");
-            const contents = `PG.scripts=${JSON.stringify(langScripts)};`;
-            fs.writeFileSync(DESTINATION_SCRIPTS + jsFile, contents);
-
-        });
-
-    });
-
-    resolve();
-
-});
-*/
 
 module.exports = () => {
-
-    // const store = Object.create(null);
 
     return Promise.all([
         makeCompleteData(),
         findNightOrder(),
         getScripts(),
+        getInfoTokens(),
         makeDirectory(),
     ]).then(([
         roles,
         nightOrder,
         scripts,
-    ]) => createData(roles, nightOrder, scripts));
-
-    // return Promise.all([
-    //     // makeDirectory(),
-    //     findNightOrder(store),
-    //     makeMainData(store),
-    // ]).then(() => Promise.all([
-    //     makeCharacters(store),
-    //     makeScripts(),
-    // ]));
+        infoTokens,
+    ]) => createData({
+        roles,
+        nightOrder,
+        scripts,
+        infoTokens,
+    }));
 
 };

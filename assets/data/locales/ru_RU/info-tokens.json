@@ -1,42 +1,11 @@
-[
-    {
-        "id": "isdemon",
-        "text": "Этот игрок - **Демон**",
-        "colour": "red"
-    },
-    {
-        "id": "isminion",
-        "text": "Это - ваши **Приспешники**",
-        "colour": "red"
-    },
-    {
-        "id": "notinplay",
-        "text": "Эти роли находятся **вне игры**",
-        "colour": "blue"
-    },
-    {
-        "id": "nominatetoday",
-        "text": "Вы сегодня **выдвигали?**",
-        "colour": "green"
-    },
-    {
-        "id": "playeris",
-        "text": "Роль этого **игрока**",
-        "colour": "purple"
-    },
-    {
-        "id": "votetoday",
-        "text": "Вы сегодня **голосовали?**",
-        "colour": "dark-purple"
-    },
-    {
-        "id": "youare",
-        "text": "**Ваша** роль",
-        "colour": "orange"
-    },
-    {
-        "id": "selectedyou",
-        "text": "Этот персонаж **выбрал** вас",
-        "colour": "dark-orange"
-    }
-]
+{
+    "isdemon": "Этот игрок - **Демон**",
+    "isminion": "Это - ваши **Приспешники**",
+    "notinplay": "Эти роли находятся **вне игры**",
+    "nominatetoday": "Вы сегодня **выдвигали?**",
+    "playeris": "Роль этого **игрока**",
+    "votetoday": "Вы сегодня **голосовали?**",
+    "youare": "**Ваша** роль",
+    "selectedyou": "Этот персонаж **выбрал** вас"
+}
+    

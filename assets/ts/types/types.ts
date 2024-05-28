@@ -134,6 +134,7 @@ export type IRepositoryNightsRoles = INights<IRole>;
 
 export type IColours = "blue" | "dark-orange" | "dark-purple" | "green" | "grey" | "orange" | "purple" | "red";
 
+/** @deprecated */
 export type IInfoData = {
     text: string,
     colour: IColours,
@@ -195,6 +196,7 @@ export type IReminder = {
 
 export type IMeta = {
     ignore?: boolean,
+    filter?: (entry: any) => boolean,
 };
 
 export type IStore = {
@@ -204,35 +206,29 @@ export type IStore = {
     scripts: IScripts,
     seats: ISeat[],
     reminders: IReminder[],
+    info: IInfoToken[],
 };
 
-// export type IStoreEntry<IDataType> = {
-//     meta: IMeta,
-//     data: IDataType,
-// };
-//*
-export type IStoreEntries = {
-    // [K in keyof IStore]: IStoreEntry<IStore[K]>
-    [K in keyof IStore]: {
-        meta: IMeta,
-        data: IStore[K],
-    }
+export type IStoreEntry<IDataType> = {
+    meta: IMeta,
+    data: IDataType,
 };
-/*/
 export type IStoreEntries = {
-    roles: IStoreEntry<Record<string, IRole>>,
-    augments: IStoreEntry<Record<string, Partial<IRole>>>,
-    script: IStoreEntry<IScript>,
-    scripts: IStoreEntry<IScripts>,
-    seats: IStoreEntry<ISeat[]>,
-    reminders: IStoreEntry<IReminder[]>,
+    [K in keyof IStore]: IStoreEntry<IStore[K]>
 };
-//*/
 export type IStoreEvents = {
     [K in keyof IStore as `${K}-set`]: IStore[K]
+};
+
+export type IInfoToken = {
+    id: string,
+    text: string,
+    colour?: IColours,
+    type: "official" | "homebrew",
 };
 
 export type IPG = {
     roles: Record<string, IRole>,
     scripts: IScripts,
+    info: IInfoToken[],
 };

@@ -1,42 +1,10 @@
-[
-    {
-        "id": "isdemon",
-        "text": "Voici le **Démon**",
-        "colour": "red"
-    },
-    {
-        "id": "isminion",
-        "text": "Voici tes **Sbires**",
-        "colour": "red"
-    },
-    {
-        "id": "notinplay",
-        "text": "Ces personnages ne sont **pas en jeu**",
-        "colour": "blue"
-    },
-    {
-        "id": "nominatetoday",
-        "text": "As-tu **nommé** aujourd'hui ?",
-        "colour": "green"
-    },
-    {
-        "id": "playeris",
-        "text": "**Ce joueur** est",
-        "colour": "purple"
-    },
-    {
-        "id": "votetoday",
-        "text": "As-tu **voté** aujourd'hui ?",
-        "colour": "dark-purple"
-    },
-    {
-        "id": "youare",
-        "text": "**Tu** es",
-        "colour": "orange"
-    },
-    {
-        "id": "selectedyou",
-        "text": "Ce personnage vous a **sélectionné**",
-        "colour": "dark-orange"
-    }
-]
+{
+    "isdemon": "Voici le **Démon**",
+    "isminion": "Voici tes **Sbires**",
+    "notinplay": "Ces personnages ne sont **pas en jeu**",
+    "nominatetoday": "As-tu **nommé** aujourd'hui ?",
+    "playeris": "**Ce joueur** est",
+    "votetoday": "As-tu **voté** aujourd'hui ?",
+    "youare": "**Tu** es",
+    "selectedyou": "Ce personnage vous a **sélectionné**"
+}

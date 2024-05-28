@@ -1,42 +1,11 @@
-[
-    {
-        "id": "isdemon",
-        "text": "這是**惡魔**",
-        "colour": "red"
-    },
-    {
-        "id": "isminion",
-        "text": "這些是你的**僕從**",
-        "colour": "red"
-    },
-    {
-        "id": "notinplay",
-        "text": "這些角色**不在遊戲中**",
-        "colour": "blue"
-    },
-    {
-        "id": "nominatetoday",
-        "text": "你今天**提名**了嗎?",
-        "colour": "green"
-    },
-    {
-        "id": "playeris",
-        "text": "**這位玩家是**",
-        "colour": "purple"
-    },
-    {
-        "id": "votetoday",
-        "text": "你今天**投票**了嗎?",
-        "colour": "dark-purple"
-    },
-    {
-        "id": "youare",
-        "text": "**你是**",
-        "colour": "orange"
-    },
-    {
-        "id": "selectedyou",
-        "text": "這個角色**選擇**了你",
-        "colour": "dark-orange"
-    }
-]
+{
+    "isdemon": "這是**惡魔**",
+    "isminion": "這些是你的**僕從**",
+    "notinplay": "這些角色**不在遊戲中**",
+    "nominatetoday": "你今天**提名**了嗎?",
+    "playeris": "**這位玩家是**",
+    "votetoday": "你今天**投票**了嗎?",
+    "youare": "**你是**",
+    "selectedyou": "這個角色**選擇**了你"
+}
+    

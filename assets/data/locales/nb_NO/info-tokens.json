@@ -1,42 +1,11 @@
-[
-    {
-        "id": "isdemon",
-        "text": "Dette er **Demonen**",
-        "colour": "red"
-    },
-    {
-        "id": "isminion",
-        "text": "Dette er dine **Lakeier**",
-        "colour": "red"
-    },
-    {
-        "id": "notinplay",
-        "text": "Disse rollene er **ikke i spill**",
-        "colour": "blue"
-    },
-    {
-        "id": "nominatetoday",
-        "text": "**Nominerte** du i dag?",
-        "colour": "green"
-    },
-    {
-        "id": "playeris",
-        "text": "**Denne spilleren** er",
-        "colour": "purple"
-    },
-    {
-        "id": "votetoday",
-        "text": "**Stemte** du i dag?",
-        "colour": "dark-purple"
-    },
-    {
-        "id": "youare",
-        "text": "**Du** er",
-        "colour": "orange"
-    },
-    {
-        "id": "selectedyou",
-        "text": "Denne rollen **valgte** deg",
-        "colour": "dark-orange"
-    }
-]
+{
+    "isdemon": "Dette er **Demonen**",
+    "isminion": "Dette er dine **Lakeier**",
+    "notinplay": "Disse rollene er **ikke i spill**",
+    "nominatetoday": "**Nominerte** du i dag?",
+    "playeris": "**Denne spilleren** er",
+    "votetoday": "**Stemte** du i dag?",
+    "youare": "**Du** er",
+    "selectedyou": "Denne rollen **valgte** deg"
+}
+    

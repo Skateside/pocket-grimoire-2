@@ -1,0 +1,50 @@
+[
+    {
+        "id": "isdemon",
+        "text": "This is the **Demon**",
+        "colour": "red",
+        "type": "official"
+    },
+    {
+        "id": "isminion",
+        "text": "These are your **Minions**",
+        "colour": "red",
+        "type": "official"
+    },
+    {
+        "id": "notinplay",
+        "text": "These characters are **not in play**",
+        "colour": "blue",
+        "type": "official"
+    },
+    {
+        "id": "nominatetoday",
+        "text": "Did you **nominate** today?",
+        "colour": "green",
+        "type": "official"
+    },
+    {
+        "id": "playeris",
+        "text": "**This player** is",
+        "colour": "purple",
+        "type": "official"
+    },
+    {
+        "id": "votetoday",
+        "text": "Did you **vote** today?",
+        "colour": "dark-purple",
+        "type": "official"
+    },
+    {
+        "id": "youare",
+        "text": "**You** are",
+        "colour": "orange",
+        "type": "official"
+    },
+    {
+        "id": "selectedyou",
+        "text": "This character **selected** you",
+        "colour": "dark-orange",
+        "type": "official"
+    }
+]

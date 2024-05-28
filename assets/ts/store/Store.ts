@@ -1,6 +1,7 @@
 import {
     IPG,
     IMeta,
+    IStore,
     IStoreEntries,
     IStoreEvents,
     IRole,
@@ -67,6 +68,14 @@ export default class Store extends Observer<IStoreEvents> {
                 meta: Object.create(null),
                 data: [],
             },
+            info: {
+                meta: {
+                    filter(entry) {
+                        return !entry.id;
+                    },
+                },
+                data: [],
+            },
         };
 
     }
@@ -77,6 +86,7 @@ export default class Store extends Observer<IStoreEvents> {
 
         this.setInternalData("roles", PG.roles);
         this.setInternalData("scripts", PG.scripts);
+        this.setInternalData("info", PG.info);
 
         /*
         return Promise.all([
@@ -122,7 +132,14 @@ export default class Store extends Observer<IStoreEvents> {
         const data = Object.fromEntries(
             Object.entries(this.store)
                 .filter(([key, entry]) => !entry.meta.ignore)
-                .map(([key, entry]) => [key, entry.data])
+                .map(([key, entry]) => [
+                    key,
+                    (
+                        (Array.isArray(entry.data) && entry.meta.filter)
+                        ? entry.data.filter(entry.meta.filter)
+                        : entry.data
+                    ),
+                ])
         );
 
         window.localStorage.setItem(constructor.KEY, JSON.stringify(data));
@@ -141,13 +158,15 @@ export default class Store extends Observer<IStoreEvents> {
         key: K,
         data: IStoreEntries[K]["data"],
     ) {
-        // NOTE: this is giving me a ts(2322) but I think it should be fine.
-        this.store[key].data = data;
+        this.store[key].data = data as IStore[K];
     }
 
-    setData<K extends keyof IStoreEntries>(key: K, data: IStoreEntries[K]["data"]) {
+    setData<K extends keyof IStoreEntries>(
+        key: K,
+        data: IStoreEntries[K]["data"],
+    ) {
 
-        this.setInternalData(key, data);
+        this.setInternalData(key, data as IStore[K]);
         this.trigger(`${key}-set`, data);
 
     }

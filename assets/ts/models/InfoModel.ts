@@ -1,9 +1,63 @@
 import {
-    IInfoData,
+    // IInfoData,
     IColours,
+    IObjectDiff,
+    IInfoToken,
 } from "../types/types";
 import Model from "./Model";
+import {
+    diff,
+    isEmpty,
+} from "../utilities/objects";
 
+export default class InfoModel extends Model<{
+    "info-update": IObjectDiff,
+}> {
+
+    protected infos: IInfoToken[];
+
+    setup(): void {
+        this.infos = this.store.getData("infos");
+    }
+
+    addStoreListeners(): void {
+        
+        const {
+            store,
+        } = this;
+
+        store.on("infos-set", (infos) => this.updateInfos(infos));
+
+    }
+
+    static makeDiff(infos: IInfoToken[]) {
+        return Object.fromEntries(infos.map(({ id, text }) => [id, text]));
+    }
+
+    updateInfos(infos: IInfoToken[]) {
+
+        const constructor = this.constructor as typeof InfoModel;
+        const oldTexts = constructor.makeDiff(this.infos);
+        const newTexts = constructor.makeDiff(infos);
+        const difference = diff(oldTexts, newTexts);
+
+        if (!isEmpty(difference)) {
+
+            this.trigger("info-update", difference);
+            this.infos.length = 0;
+            this.infos.push(...infos);
+
+        }
+
+    }
+
+    getInfos() {
+        return Object.groupBy(this.infos, ({ type }) => type);
+    }
+
+}
+
+/*
 export default class InfoModel extends Model<{
     "infos-update": null,
     "info-update": IInfoData,
@@ -108,3 +162,4 @@ export default class InfoModel extends Model<{
     }
 
 }
+*/

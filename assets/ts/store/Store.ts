@@ -5,6 +5,7 @@ import {
     IStoreEntries,
     IStoreEvents,
     IRole,
+    IInfoToken,
 } from "../types/types";
 import {
     deepClone,
@@ -68,10 +69,10 @@ export default class Store extends Observer<IStoreEvents> {
                 meta: Object.create(null),
                 data: [],
             },
-            info: {
+            infos: {
                 meta: {
                     filter(entry) {
-                        return !entry.id;
+                        return (entry as IInfoToken).type === "custom";
                     },
                 },
                 data: [],
@@ -86,7 +87,7 @@ export default class Store extends Observer<IStoreEvents> {
 
         this.setInternalData("roles", PG.roles);
         this.setInternalData("scripts", PG.scripts);
-        this.setInternalData("info", PG.info);
+        this.setInternalData("infos", PG.infos);
 
         /*
         return Promise.all([

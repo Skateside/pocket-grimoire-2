@@ -21,7 +21,7 @@ export default class ScriptView extends View {
         const contents = Object.entries(scripts).reduce((frag, [id, meta]) => {
 
             frag.append(
-                renderTemplate("#script-select", {
+                renderTemplate("#script-select-template", {
                     ".js--script-select--label"(element: HTMLLabelElement) {
                         element.htmlFor = `script-${id}`;
                     },

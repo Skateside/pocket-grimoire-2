@@ -1,6 +1,7 @@
 import View from "./View";
 import {
     IInfoData,
+    IInfoToken,
     IQuerySelectorOptions,
 } from "../types/types";
 import {
@@ -13,6 +14,52 @@ import {
     strip,
 } from "../utilities/markdown";
 
+export default class InfoView extends View<{
+}> {
+
+    protected official: HTMLElement;
+
+    discoverElements(): void {
+
+        const options: IQuerySelectorOptions = {
+            required: true
+        }
+
+        this.official = querySelectorCached("#info-token-official-holder", options)!;
+        // this.homebrew = querySelectorCached("#info-token-custom-holder", options)!;
+        // this.dialogs = querySelectorCached("#info-token-dialog-holder", options)!;
+        // this.addButton = querySelectorCached("#add-info-token", options)!;
+
+    }
+
+    renderInfos(infos: Record<IInfoToken["type"], IInfoToken[]>) {
+
+        const contents = infos.official.reduce((frag, { id, text, colour }) => {
+
+            frag.append(
+                renderTemplate("#info-token-template", {
+                    ".js--info-token--wrapper"(element) {
+                        element.dataset.id = id;
+                    },
+                    ".js--info-token--trigger"(element) {
+                        element.dataset.id = id;
+                        element.textContent = strip(text);
+                        element.style.setProperty("--bg", `var(--${colour})`);
+                    },
+                })
+            );
+
+            return frag;
+
+        }, document.createDocumentFragment());
+
+        this.official.append(contents);
+
+    }
+
+}
+
+/*
 export default class InfoView extends View<{
     "info-edit": null,
     "info-remove": number,
@@ -146,3 +193,4 @@ export default class InfoView extends View<{
     }
 
 }
+*/

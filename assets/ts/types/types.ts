@@ -206,7 +206,7 @@ export type IStore = {
     scripts: IScripts,
     seats: ISeat[],
     reminders: IReminder[],
-    info: IInfoToken[],
+    infos: IInfoToken[],
 };
 
 export type IStoreEntry<IDataType> = {
@@ -223,12 +223,19 @@ export type IStoreEvents = {
 export type IInfoToken = {
     id: string,
     text: string,
-    colour?: IColours,
-    type: "official" | "homebrew",
+    colour: IColours,
+    type: "official" | "custom",
 };
 
 export type IPG = {
     roles: Record<string, IRole>,
     scripts: IScripts,
-    info: IInfoToken[],
+    infos: IInfoToken[],
 };
+
+export type IObjectDiff = Record<string, {
+    value: any,
+    type: "new" | "update",
+} | {
+    type: "remove",
+}>;

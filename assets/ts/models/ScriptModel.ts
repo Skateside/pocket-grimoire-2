@@ -28,14 +28,24 @@ export default class ScriptModel extends Model<{
         return this.isRole(entry) && Object.keys(entry).length === 1;
     }
 
-    relayEvents() {
+    // relayEvents() {
 
+    //     const {
+    //         store,
+    //     } = this;
+
+    //     // TODO: make this work - `this.store` won't exist at this point.
+    //     // store.on("script-set", (data) => this.trigger("script-set", data));
+
+    // }
+
+    addStoreListeners(): void {
+        
         const {
             store,
         } = this;
 
-        // TODO: make this work - `this.store` won't exist at this point.
-        // store.on("script-set", (data) => this.trigger("script-set", data));
+        store.on("script-set", (script) => this.trigger("script-set", script));
 
     }
 

@@ -2,42 +2,37 @@ import Store from "./store/Store";
 import GlobalModel from "./models/GlobalModel";
 import ScriptModel from "./models/ScriptModel";
 // import RepositoryModel from "./models/RepositoryModel";
-// import InfoModel from "./models/InfoModel";
+import InfoModel from "./models/InfoModel";
 // // import TokenModel from "./models/TokenModel";
 import GlobalView from "./views/GlobalView";
 import ScriptView from "./views/ScriptView";
 // import NightOrderView from "./views/NightOrderView";
-// import InfoView from "./views/InfoView";
+import InfoView from "./views/InfoView";
 // // import TokenView from "./views/TokenView";
 // import EditionView from "./views/EditionView";
 // import RoleSelectView from "./views/RoleSelectView";
 import GlobalController from "./controllers/GlobalController";
 import ScriptController from "./controllers/ScriptController";
 // import NightOrderController from "./controllers/NightOrderController";
-// import InfoController from "./controllers/InfoController";
+import InfoController from "./controllers/InfoController";
 // // import TokenController from "./controllers/TokenController";
 // import EditionController from "./controllers/EditionController";
 // import RoleSelectController from "./controllers/RoleSelectController";
 // import global from "./utilities/global";
 
 const store = new Store();
-const globalModel = new GlobalModel();
-const scriptModel = new ScriptModel();
-
 store.load();//.then(() => {
 
-globalModel.setStore(store);
-scriptModel.setStore(store);
-
-const globalView = new GlobalView();
-const globalController = new GlobalController(globalModel, globalView);
+const globalController = new GlobalController(new GlobalModel(store), new GlobalView());
 globalController.render();
 
-const scriptView = new ScriptView();
-const scriptController = new ScriptController(scriptModel, scriptView);
+const scriptController = new ScriptController(new ScriptModel(store), new ScriptView());
 scriptController.render();
 
-console.log({ globalController, scriptController });
+const infoController = new InfoController(new InfoModel(store), new InfoView());
+infoController.render();
+
+console.log({ globalController, scriptController, infoController });
 
 // });
 

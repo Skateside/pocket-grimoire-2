@@ -13,24 +13,28 @@ export default class InfoController extends Controller<InfoModel, InfoView> {
             view,
         } = this;
 
-        view.drawHomebrew(model.getInfos().homebrew);
+        view.renderInfos(model.getInfos());
 
-        view.on("info-edit", () => {
-            // Trigger something that allows us to edit the info text.
-        });
-        view.on("info-remove", (index) => {
-            model.deleteInfo(index);
-        });
+        model.on("info-update", (infos) => console.log({ infos }));
 
-        model.on("infos-update", () => {
-            view.drawHomebrew(model.getInfos().homebrew);
-        });
-        model.on("info-update", (info) => {
-            view.updateHomebrew(info);
-        });
-        model.on("info-remove", (index) => {
-            view.removeHomebrewByIndex(index);
-        });
+        // view.drawHomebrew(model.getInfos().homebrew);
+
+        // view.on("info-edit", () => {
+        //     // Trigger something that allows us to edit the info text.
+        // });
+        // view.on("info-remove", (index) => {
+        //     model.deleteInfo(index);
+        // });
+
+        // model.on("infos-update", () => {
+        //     view.drawHomebrew(model.getInfos().homebrew);
+        // });
+        // model.on("info-update", (info) => {
+        //     view.updateHomebrew(info);
+        // });
+        // model.on("info-remove", (index) => {
+        //     view.removeHomebrewByIndex(index);
+        // });
 
     }
 

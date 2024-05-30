@@ -331,7 +331,7 @@ const createData = ({
 
             });
 
-            fileContents += `PG.info=${JSON.stringify(tokens)};`;
+            fileContents += `PG.infos=${JSON.stringify(tokens)};`;
 
             // Save the contents.
             fs.writeFile(`${DESTINATION_DATA}${file}.js`, fileContents, (err) => {

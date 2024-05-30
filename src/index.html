@@ -34,31 +34,10 @@
         <details>
             <summary>Script Selection</summary>
             <form id="script">
-                <ul id="script-selection">
-                    <!--
-                    <li>
-                        <label for="edition-tb">
-                            <input type="radio" name="edition" id="edition-tb" value="tb" required>
-                            Trouble Brewing
-                        </label>
-                    </li>
-                    <li>
-                        <label for="edition-bmr">
-                            <input type="radio" name="edition" id="edition-bmr" value="bmr">
-                            Bad Moon Rising
-                        </label>
-                    </li>
-                    <li>
-                        <label for="edition-snv">
-                            <input type="radio" name="edition" id="edition-snv" value="snv">
-                            Sects and Violets
-                        </label>
-                    </li>
-                    -->
-                </ul>
+                <ul id="script-selection"></ul>
                 <p><button type="submit">Select</button></p>
             </form>
-            <template id="script-select">
+            <template id="script-select-template">
                 <li>
                     <label class="js--script-select--label">
                         <input type="radio" name="script" class="js--script-select--input">
@@ -68,7 +47,7 @@
             </template>
         </details>
 
-        <hr>
+        <!-- <hr>
 
         <details>
             <summary>Role Selection</summary>
@@ -113,7 +92,7 @@
                         </div>
                         <label class="js--role-select--label">
                             <input type="checkbox" class="js--role-select--checkbox">
-                            <!-- <img class="js--role-select--image"> -->
+                            <!- - <img class="js--role-select--image"> - ->
                             <span class="js--role-select--name"></span>
                             <span class="js--role-select--ability"></span>
                         </label>
@@ -128,9 +107,9 @@
                 </template>
 
             </div>
-        </details>
+        </details> -->
 
-        <hr>
+        <!-- <hr>
 
         <details>
             <summary>Grimoire</summary>
@@ -138,9 +117,9 @@
                 <div class="grimoire js--grimoire--pad">
                 </div>
             </div>
-        </details>
+        </details> -->
 
-        <hr>
+        <!-- <hr>
 
         <details>
             <summary>Night Order</summary>
@@ -165,18 +144,25 @@
                     <li class="js--night-order-entry--wrapper">
                         <p><strong class="js--night-order-entry--name"></strong></p>
                         <p class="js--night-order-entry--text"></p>
-                        <!-- <img class="js--night-order-entry--image"> -->
+                        <!- - <img class="js--night-order-entry--image"> - ->
                     </li>
                 </template>
 
             </div>
-        </details>
+        </details> -->
 
         <hr>
 
         <details>
             <summary>Info Tokens</summary>
             <div>
+
+                <ul id="info-token-official-holder"></ul>
+                <template id="info-token-template">
+                    <li class="js--info-token--wrapper">
+                        <button type="button" class="js--info-token--trigger"></button>
+                    </li>
+                </template>
 
                 <ul id="info-token-custom-holder"></ul>
                 <div id="info-token-dialog-holder"></div>
@@ -226,7 +212,7 @@
             var PG = {
                 roles: [],
                 scripts: {},
-                info: [],
+                infos: [],
             };
         </script>
         <script src="./assets/data/en_GB.js"></script>

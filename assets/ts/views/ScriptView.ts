@@ -9,11 +9,21 @@ import {
 
 export default class ScriptView extends View {
 
+    protected scriptForm: HTMLFormElement;
     protected scriptSelection: HTMLElement;
 
     discoverElements(): void {
 
-        this.scriptSelection = findOrDie("#script-selection");
+        this.scriptForm = findOrDie("#script-select-form");
+        this.scriptSelection = findOrDie("#script-select-list");
+
+    }
+
+    addListeners(): void {
+
+        this.scriptForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+        });
 
     }
 

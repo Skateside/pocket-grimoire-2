@@ -118,6 +118,7 @@ export type IScript = (string | IMinimumRole | IMetaEntry)[];
 
 export type IScripts = Record<string, IScript>;
 
+/** @deprecated */
 export type IQuerySelectorOptions = Partial<{
     required: boolean,
     root: HTMLElement | Document | null,
@@ -133,14 +134,6 @@ export type IRepositoryNights = INights<IData>;
 export type IRepositoryNightsRoles = INights<IRole>;
 
 export type IColours = "blue" | "dark-orange" | "dark-purple" | "green" | "grey" | "orange" | "purple" | "red";
-
-/** @deprecated */
-export type IInfoData = {
-    text: string,
-    colour: IColours,
-    type: "official" | "homebrew",
-    index?: number,
-}
 
 export type ICoordinates = {
     x: number,
@@ -194,9 +187,10 @@ export type IReminder = {
     coords: ICoordinates,
 };
 
-export type IMeta = {
+export type IMeta<DataType = any> = {
     ignore?: boolean,
     filter?: (entry: any) => boolean,
+    load?: (current: DataType, stored: DataType) => DataType,
 };
 
 export type IStore = {
@@ -209,9 +203,9 @@ export type IStore = {
     infos: IInfoToken[],
 };
 
-export type IStoreEntry<IDataType> = {
-    meta: IMeta,
-    data: IDataType,
+export type IStoreEntry<DataType> = {
+    meta: IMeta<DataType>,
+    data: DataType,
 };
 export type IStoreEntries = {
     [K in keyof IStore]: IStoreEntry<IStore[K]>

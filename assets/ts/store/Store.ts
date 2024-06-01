@@ -11,24 +11,8 @@ import {
     deepClone,
 } from "../utilities/objects";
 import Observer from "../utilities/Observer";
-// import {
-//     defers,
-// } from "../utilities/global";
 
-// NOTE: Maybe this should be a Model and everything else should be a ViewModel?
 export default class Store extends Observer<IStoreEvents> {
-
-    // protected static instance: Store;
-
-    // static get() {
-
-    //     if (!this.instance) {
-    //         this.instance = new this();
-    //     }
-
-    //     return this.instance;
-
-    // }
 
     static get KEY() {
         return "pg";
@@ -74,6 +58,9 @@ export default class Store extends Observer<IStoreEvents> {
                     filter(entry) {
                         return (entry as IInfoToken).type === "custom";
                     },
+                    load(current, stored) {
+                        return current.concat(...stored);
+                    }
                 },
                 data: [],
             },
@@ -89,41 +76,25 @@ export default class Store extends Observer<IStoreEvents> {
         this.setInternalData("scripts", PG.scripts);
         this.setInternalData("infos", PG.infos);
 
-        /*
-        return Promise.all([
-            defers.roles,
-            defers.scripts,
-        ]).then(([
-            roles,
-            scripts,
-        ]) => {
+        const constructor = this.constructor as typeof Store;
+        const stored = JSON.parse(window.localStorage.getItem(constructor.KEY));
 
-            // NOTE: It would be nice if the data didn't need changing here.
-            this.setData(
-                "roles",
-                Object.fromEntries(roles.map((role) => [role.id, role])),
-            );
-            this.setData("scripts", scripts);
+        Object
+            .entries(stored || {})
+            .forEach(<K extends keyof IStore>([key, data]: [K, IStore[K]]) => {
 
-        });
-        */
+                const ref = this.store[key];
 
-        // const constructor = this.constructor as typeof Store;
-        // const raw = window.localStorage.getItem(constructor.KEY);
+                if (ref.meta.load) {
 
-        // if (raw === null) {
-        //     return;
-        // }
+                    this.setInternalData(
+                        key,
+                        ref.meta.load(this.getData(key) as IStore[K], data)
+                    );
 
-        // const data = JSON.parse(raw);
+                }
 
-        // Object
-        //     .entries(data)
-        //     .forEach(<K extends keyof IStore>([key, value]: [K, IStore[K]["data"]]) => {
-        //         this.setData(key, value);
-        //     });
-
-        // return data;
+            });
 
     }
 
@@ -147,7 +118,7 @@ export default class Store extends Observer<IStoreEvents> {
 
     }
 
-    setMeta(key: keyof IStoreEntries, meta: Partial<IMeta>) {
+    setMeta(key: keyof IStoreEntries, meta: IMeta) {
         this.store[key].meta = meta;
     }
 
@@ -168,6 +139,7 @@ export default class Store extends Observer<IStoreEvents> {
     ) {
 
         this.setInternalData(key, data as IStore[K]);
+        this.save();
         this.trigger(`${key}-set`, data);
 
     }

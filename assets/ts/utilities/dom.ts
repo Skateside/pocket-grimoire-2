@@ -43,6 +43,7 @@ export function identify(
 
 }
 
+/** @deprecated */
 export function querySelector<T extends HTMLElement>(
     selector: string,
     options: IQuerySelectorOptions = {}
@@ -72,10 +73,34 @@ export function querySelector<T extends HTMLElement>(
 
 }
 
+/** @deprecated */
 export const querySelectorCached = memoise(
     querySelector,
     (selector, options) => `#${identify(options?.root || null)} ${selector}`
 );
+
+export function findOrDie<T extends HTMLElement>(
+    selector: string,
+    root: HTMLElement | Document | null = document,
+) {
+
+    if (!root) {
+        throw new TypeError("Cannot look up element - root is missing");
+    }
+
+    const element = root.querySelector<T>(selector);
+
+    if (!element) {
+
+        throw new ReferenceError(
+            `Cannot find element matching selector "${selector}"`
+        );
+
+    }
+
+    return element;
+
+}
 
 export function updateChildren(
     content: HTMLElement | DocumentFragment,

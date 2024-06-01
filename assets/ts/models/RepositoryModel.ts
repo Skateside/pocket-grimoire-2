@@ -32,6 +32,9 @@ import {
 } from "../utilities/global";
 import Model from "./Model";
 
+/**
+ * @deprecated
+ */
 export default class RepositoryModel extends Model<{
     "script-update": undefined,
     "inplay-update": undefined,
@@ -163,6 +166,8 @@ export default class RepositoryModel extends Model<{
 
     }
 
+    // Commented out to let TypeScript validation pass.
+    /*
     constructor() {
 
         super();
@@ -171,6 +176,7 @@ export default class RepositoryModel extends Model<{
         this.seats = [];
 
     }
+    */
 
     load() {
 

@@ -1,4 +1,6 @@
-import { IObjectDiff } from "../types/types";
+import {
+    IObjectDiff,
+} from "../types/types";
 
 export function matches(
     check: Record<PropertyKey, any> | null,
@@ -17,12 +19,24 @@ export function deepClone<T extends Record<PropertyKey, any>>(object: T): T {
     return JSON.parse(JSON.stringify(object));
 }
 
-export function diff(
+export function isPrimative(object: unknown): boolean {
+
+    const type = typeof object;
+
+    return (
+        object === undefined
+        || object === null
+        || ["boolean", "number", "string"].includes(type)
+    );
+
+}
+
+export function diff<T extends any = any>(
     source: Record<PropertyKey, any>,
     update: Record<PropertyKey, any>,
 ) {
 
-    const diff: IObjectDiff = Object.create(null);
+    const diff: IObjectDiff<T> = Object.create(null);
 
     Object.keys(source).forEach((key) => {
 
@@ -40,10 +54,25 @@ export function diff(
             return;
         }
 
-        if (source[key] !== value) {
-            diff[key] = { value, type: "update" };
+        const item = source[key];
+
+        if (
+            (
+                isPrimative(item)
+                && isPrimative(value)
+                && item === value
+            )
+            || (
+                typeof item === "object"
+                && typeof value === "object"
+                && matches(item, value)
+                && matches(value, item)
+            )
+        ) {
             return;
         }
+
+        diff[key] = { value, type: "update" };
 
     });
 

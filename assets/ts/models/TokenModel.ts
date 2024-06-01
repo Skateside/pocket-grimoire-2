@@ -14,6 +14,8 @@ export default class TokenModel extends Model {
     protected roles: IRoleToken[];
     protected reminders: IReminderToken[];
 
+    // Commented out to allow TypeScript validation to pass.
+    /*
     constructor() {
 
         super();
@@ -21,6 +23,7 @@ export default class TokenModel extends Model {
         this.reminders = [];
 
     }
+    */
 
     static enwrapRole(role: IRole): IRoleToken {
 

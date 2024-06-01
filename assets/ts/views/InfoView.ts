@@ -1,13 +1,11 @@
 import View from "./View";
 import {
-    IInfoData,
     IInfoToken,
-    IQuerySelectorOptions,
+    IObjectDiff,
 } from "../types/types";
 import {
-    querySelectorCached,
+    findOrDie,
     renderTemplate,
-    updateChildren,
 } from "../utilities/dom";
 import {
     toHTML,
@@ -15,182 +13,205 @@ import {
 } from "../utilities/markdown";
 
 export default class InfoView extends View<{
+    "info-update": {
+        id: string,
+        text: string,
+    },
 }> {
 
+    protected wrapper: HTMLElement;
     protected official: HTMLElement;
+    protected custom: HTMLElement;
+    protected dialog: HTMLDialogElement;
+    protected dialogText: HTMLElement;
+    protected addButton: HTMLButtonElement;
+    protected form: HTMLFormElement;
+    protected idInput: HTMLInputElement;
+    protected textInput: HTMLInputElement;
 
     discoverElements(): void {
 
-        const options: IQuerySelectorOptions = {
-            required: true
-        }
-
-        this.official = querySelectorCached("#info-token-official-holder", options)!;
-        // this.homebrew = querySelectorCached("#info-token-custom-holder", options)!;
-        // this.dialogs = querySelectorCached("#info-token-dialog-holder", options)!;
-        // this.addButton = querySelectorCached("#add-info-token", options)!;
-
-    }
-
-    renderInfos(infos: Record<IInfoToken["type"], IInfoToken[]>) {
-
-        const contents = infos.official.reduce((frag, { id, text, colour }) => {
-
-            frag.append(
-                renderTemplate("#info-token-template", {
-                    ".js--info-token--wrapper"(element) {
-                        element.dataset.id = id;
-                    },
-                    ".js--info-token--trigger"(element) {
-                        element.dataset.id = id;
-                        element.textContent = strip(text);
-                        element.style.setProperty("--bg", `var(--${colour})`);
-                    },
-                })
-            );
-
-            return frag;
-
-        }, document.createDocumentFragment());
-
-        this.official.append(contents);
+        this.wrapper = findOrDie("#info-token-wrapper");
+        this.official = findOrDie("#info-token-official-holder");
+        this.custom = findOrDie("#info-token-custom-holder");
+        this.dialog = findOrDie("#info-token-dialog");
+        this.dialogText = findOrDie("#info-token-dialog-text");
+        this.addButton = findOrDie("#info-token-add");
+        this.form = findOrDie("#info-token-form");
+        this.idInput = findOrDie("#info-token-custom-id");
+        this.textInput = findOrDie("#info-token-custom-text");
 
     }
 
-}
-
-/*
-export default class InfoView extends View<{
-    "info-edit": null,
-    "info-remove": number,
-}> {
-
-    // protected official: HTMLElement;
-    protected homebrew: HTMLElement;
-    protected dialogs: HTMLElement;
-    protected addButton: HTMLElement;
-
-    static makeDialogId(info: IInfoData) {
-        return `info-token--${info.index}`;
-    }
-
-    discoverElements() {
-
-        const options: IQuerySelectorOptions = {
-            required: true
-        }
-
-        // this.official = querySelectorCached("#info-token-button-holder", options);
-        this.homebrew = querySelectorCached("#info-token-custom-holder", options)!;
-        this.dialogs = querySelectorCached("#info-token-dialog-holder", options)!;
-        this.addButton = querySelectorCached("#add-info-token", options)!;
-
-    }
-
-    removeHomebrewByIndex(index: number) {
-
-        if (Number.isNaN(index)) {
-            throw new TypeError("NaN given to removeHomebrewByIndex");
-        }
+    addListeners(): void {
 
         const {
-            dialogs,
-            homebrew,
+            wrapper,
+            dialog,
+            dialogText,
+            addButton,
+            form,
+            idInput,
+            textInput,
         } = this;
 
-        dialogs.querySelector(`#info-token--${index}`)?.remove();
-        homebrew.querySelector(`[data-dialog="#info-token--${index}"]`)
-            ?.closest(".js--info-token--wrapper")
-            ?.remove();
+        wrapper.addEventListener("click", ({ target }) => {
+
+            const htmlTarget = target as HTMLElement;
+
+            if (htmlTarget.classList.contains("js--info-token--trigger")) {
+
+                const {
+                    id,
+                    text,
+                    type,
+                    colour,
+                } = htmlTarget.dataset as IInfoToken;
+
+                dialog.style.setProperty("--colour", `var(--${colour})`);
+                dialog.classList.toggle("is-custom", type === "custom");
+                dialog.dataset.id = id;
+                dialog.dataset.text = text;
+                dialogText.innerHTML = toHTML(text);
+
+            }
+
+        });
+
+        addButton.addEventListener("click", () => {
+
+            idInput.value = "";
+            textInput.value = "";
+            form.hidden = false;
+
+        });
+
+        form.addEventListener("submit", (e) => {
+
+            e.preventDefault();
+            this.trigger("info-update", {
+                id: idInput.value,
+                text: textInput.value,
+            });
+            form.reset();
+
+        });
+
+        form.addEventListener("reset", () => {
+
+            idInput.value = "";
+            form.hidden = true;
+
+        });
+
+        dialog.addEventListener("click", ({ target }) => {
+
+            const htmlTarget = (target as HTMLElement)
+                .closest<HTMLButtonElement>("[data-action]");
+
+            if (!htmlTarget) {
+                return;
+            }
+
+            switch (htmlTarget.dataset.action) {
+
+            case "edit":
+                idInput.value = dialog.dataset.id;
+                textInput.value = dialog.dataset.text;
+                form.hidden = false;
+                dialog.close();
+                break;
+
+            case "delete":
+                this.trigger("info-update", {
+                    id: dialog.dataset.id,
+                    text: "",
+                });
+                form.reset();
+                dialog.close();
+                break;
+
+            }
+
+        });
 
     }
 
-    drawHomebrew(infos: IInfoData[]) {
-        infos.forEach((info) => this.drawHomebrewEntry(info));
-    }
+    static renderInfoTrigger(info: IInfoToken) {
 
-    drawHomebrewEntry(info: IInfoData) {
-
-        const {
-            index,
-        } = info;
-
-        // Maybe something is needed here to generate the index if it's not yet
-        // set.
-        if (typeof index === "number") {
-            this.removeHomebrewByIndex(index);
-        }
-
-        const constructor = this.constructor as typeof InfoView;
-        const dialogId = constructor.makeDialogId(info);
-
-        this.dialogs.append(
-            renderTemplate("#info-token-dialog-template", {
-                ".js--info-token--dialog"(element) {
-
-                    element.id = dialogId;
-                    element.style.setProperty(
-                        "--colour",
-                        `var(--${info.colour})`,
-                    );
-
-                },
-                ".js--info-token--actions"(element) {
-                    element.querySelectorAll("button").forEach((button) => {
-                        button.dataset.index = String(info.index);
-                    });
-                },
-            })
-        );
-
-        this.homebrew.append(
-            renderTemplate("#info-token-button-template", {
-                ".js--info-token--wrapper"(element) { // <li>
-                    element.dataset.index = String(info.index);
-                },
-                ".js--info-token--button"(element) {
-                    element.dataset.dialog = `#${dialogId}`;
-                },
-            })
-        );
-
-        this.updateHomebrew(info);
-
-    }
-
-    updateHomebrew(info: IInfoData) {
-
-        const constructor = this.constructor as typeof InfoView;
-        const dialogId = constructor.makeDialogId(info);
-
-        const dialog = this.dialogs.querySelector<HTMLElement>(`#${dialogId}`);
-        const homebrew = this.homebrew.querySelector<HTMLElement>(
-            `.js--info-token--wrapper[dataset-index="${info.index}"]`
-        );
-
-        if (!dialog || !homebrew) {
-            return;
-        }
-
-        updateChildren(dialog, {
-            ".js--info-token--dialog-text"(element) {
-                element.innerHTML = toHTML(info.text);
+        return renderTemplate("#info-token-template", {
+            ".js--info-token--wrapper"(element) {
+                element.dataset.id = info.id;
+            },
+            ".js--info-token--trigger"(element) {
+                Object.assign(element.dataset, info);
+                element.textContent = strip(info.text);
+                element.style.setProperty("--bg", `var(--${info.colour})`);
             },
         });
 
-        updateChildren(homebrew, {
-            ".js--info-token--button"(element) {
+    }
 
-                element.textContent = strip(info.text);
-                element.style.setProperty(
-                    "--bg-colour",
-                    `var(--${info.colour})`
-                );
+    renderInfos(infos: Partial<Record<IInfoToken["type"], IInfoToken[]>>) {
 
-            },
+        const constructor = this.constructor as typeof InfoView;
+
+        this.official.append(
+            (infos.official || []).reduce((frag, info) => {
+
+                frag.append(constructor.renderInfoTrigger(info));
+                return frag;
+
+            }, document.createDocumentFragment())
+        );
+
+        this.custom.append(
+            (infos.custom || []).reduce((frag, info) => {
+
+                frag.append(constructor.renderInfoTrigger(info));
+                return frag;
+
+            }, document.createDocumentFragment())
+        );
+
+    }
+
+    updateInfos(update: IObjectDiff<IInfoToken>) {
+
+        const constructor = this.constructor as typeof InfoView;
+        const {
+            custom,
+        } = this;
+
+        Object.entries(update).forEach(([id, diff]) => {
+
+            const existing = (
+                (diff.type === "update" || diff.type === "remove")
+                ? custom.querySelector(
+                    `.js--info-token--wrapper[data-id="${id}"]`
+                )
+                : null
+            );
+            const render = (
+                (diff.type === "new" || diff.type === "update")
+                ? constructor.renderInfoTrigger(diff.value)
+                : null
+            );
+
+            if (diff.type === "new" || (diff.type === "update" && !existing)) {
+                return custom.append(render);
+            }
+
+            if (diff.type === "update") {
+                return existing.replaceWith(render);
+            }
+
+            if (diff.type === "remove" && existing) {
+                existing.remove();
+            }
+
         });
 
     }
 
 }
-*/

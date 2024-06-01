@@ -3,6 +3,7 @@ import {
     IMetaEntry,
 } from "../types/types";
 import {
+    findOrDie,
     renderTemplate,
 } from "../utilities/dom";
 
@@ -12,7 +13,7 @@ export default class ScriptView extends View {
 
     discoverElements(): void {
 
-        this.scriptSelection = document.querySelector("#script-selection");
+        this.scriptSelection = findOrDie("#script-selection");
 
     }
 

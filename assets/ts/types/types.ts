@@ -233,8 +233,8 @@ export type IPG = {
     infos: IInfoToken[],
 };
 
-export type IObjectDiff = Record<string, {
-    value: any,
+export type IObjectDiff<T extends any = any> = Record<string, {
+    value: T,
     type: "new" | "update",
 } | {
     type: "remove",

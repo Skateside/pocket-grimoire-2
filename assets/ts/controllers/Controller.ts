@@ -13,7 +13,7 @@ export default class Controller<M extends Model, V extends View> {
 
     render() {
 
-        // this.model.ready();
+        this.model.ready();
         this.view.ready();
 
     }

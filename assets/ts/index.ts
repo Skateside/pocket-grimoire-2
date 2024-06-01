@@ -20,6 +20,7 @@ import InfoController from "./controllers/InfoController";
 // import RoleSelectController from "./controllers/RoleSelectController";
 // import global from "./utilities/global";
 
+/*
 const store = new Store();
 store.load();//.then(() => {
 
@@ -33,8 +34,60 @@ const infoController = new InfoController(new InfoModel(store), new InfoView());
 infoController.render();
 
 console.log({ globalController, scriptController, infoController });
+*/
 
 // });
+
+import Controller from "./controllers/Controller";
+import Model from "./models/Model";
+import View from "./views/View";
+
+class App {
+
+    protected store: Store;
+    protected constrollers: Controller<Model, View>[];
+
+    constructor(store: Store) {
+
+        this.store = store;
+        this.constrollers = [];
+
+    }
+
+    addController(controller: Controller<Model, View>) {
+        this.constrollers.push(controller);
+        return this;
+    }
+
+    addMVC<M extends Model, V extends View>(
+        Model: new (store: Store) => M,
+        View: new () => V,
+        Controller: new (model: M, view: V) => Controller<M, V>,
+    ) {
+
+        return this.addController(
+            new Controller(new Model(this.store), new View())
+        );
+
+    }
+
+    run() {
+
+        this.store.load();
+        this.constrollers.forEach((controller) => controller.render());
+
+    }
+
+}
+
+const app = new App(new Store());
+app
+    .addMVC(GlobalModel, GlobalView, GlobalController)
+    .addMVC(ScriptModel, ScriptView, ScriptController)
+    .addMVC(InfoModel, InfoView, InfoController)
+    .run();
+
+console.log({ app });
 
 /*
 const globalModel = new GlobalModel();

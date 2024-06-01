@@ -18,7 +18,8 @@ export default class InfoModel extends Model<{
 
     protected infos: IInfoToken[];
 
-    setup(): void {
+    ready(): void {
+        super.ready();
         this.infos = this.store.getData("infos");
     }
 
@@ -77,7 +78,7 @@ export default class InfoModel extends Model<{
 
         const customInfo = {
             id: info.id || randomId("cit-"),
-            text: info.text,
+            text: info.text || "",
             colour: "grey",
             type: "custom",
         } as IInfoToken;

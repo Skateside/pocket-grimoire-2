@@ -20,8 +20,6 @@ export default class InfoView extends View<{
 }> {
 
     protected wrapper: HTMLElement;
-    protected official: HTMLElement;
-    protected custom: HTMLElement;
     protected dialog: HTMLDialogElement;
     protected dialogText: HTMLElement;
     protected addButton: HTMLButtonElement;
@@ -32,8 +30,6 @@ export default class InfoView extends View<{
     discoverElements(): void {
 
         this.wrapper = findOrDie("#info-token-wrapper");
-        this.official = findOrDie("#info-token-official-holder");
-        this.custom = findOrDie("#info-token-custom-holder");
         this.dialog = findOrDie("#info-token-dialog");
         this.dialogText = findOrDie("#info-token-dialog-text");
         this.addButton = findOrDie("#info-token-add");
@@ -156,32 +152,25 @@ export default class InfoView extends View<{
 
         const constructor = this.constructor as typeof InfoView;
 
-        this.official.append(
-            (infos.official || []).reduce((frag, info) => {
+        Object.entries(infos).forEach(([type, infos]) => {
 
-                frag.append(constructor.renderInfoTrigger(info));
-                return frag;
+            findOrDie(`[data-type="${type}"]`, this.wrapper).append(
+                infos.reduce((frag, info) => {
 
-            }, document.createDocumentFragment())
-        );
+                    frag.append(constructor.renderInfoTrigger(info));
+                    return frag;
 
-        this.custom.append(
-            (infos.custom || []).reduce((frag, info) => {
+                }, document.createDocumentFragment())
+            );
 
-                frag.append(constructor.renderInfoTrigger(info));
-                return frag;
-
-            }, document.createDocumentFragment())
-        );
+        });
 
     }
 
     updateInfos(update: IObjectDiff<IInfoToken>) {
 
         const constructor = this.constructor as typeof InfoView;
-        const {
-            custom,
-        } = this;
+        const custom = this.wrapper.querySelector("[data-type=\"custom\"]");
 
         Object.entries(update).forEach(([id, diff]) => {
 

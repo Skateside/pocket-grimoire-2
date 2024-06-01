@@ -25,7 +25,8 @@ export function randomId(prefix = "") {
         .crypto
         .getRandomValues(new Uint32Array(1))[0]
         .toString(36);
+    const date = Date.now().toString(36);
 
-    return `${prefix}${random}`;
+    return `${prefix}${random}${date}`;
 
 }

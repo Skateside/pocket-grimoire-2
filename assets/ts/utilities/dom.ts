@@ -5,9 +5,12 @@ import {
 import {
     memoise,
 } from "./functions";
+import {
+    randomId,
+} from "./strings";
 
-let identifyCounter = 0;
-
+// TODO: When we remove `querySelector()` and `querySelectorCached()`, get rid
+// of the option for `element` to be Document here.
 export function identify(
     element: Element | Document | null,
     prefix = "anonymous-"
@@ -29,10 +32,7 @@ export function identify(
     if (!id) {
 
         do {
-
-            id = `${prefix}${identifyCounter}`;
-            identifyCounter += 1;
-
+            id = randomId(prefix);
         } while (document.getElementById(id));
 
         element.id = id;
@@ -43,7 +43,8 @@ export function identify(
 
 }
 
-/** @deprecated */
+/** @deprecated use {@link findOrDie} instead */
+// TODO: When this is removed, update `idenify()`
 export function querySelector<T extends HTMLElement>(
     selector: string,
     options: IQuerySelectorOptions = {}
@@ -73,7 +74,7 @@ export function querySelector<T extends HTMLElement>(
 
 }
 
-/** @deprecated */
+/** @deprecated use {@link findOrDie} instead and save the result */
 export const querySelectorCached = memoise(
     querySelector,
     (selector, options) => `#${identify(options?.root || null)} ${selector}`

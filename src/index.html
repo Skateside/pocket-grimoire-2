@@ -175,7 +175,7 @@
             <summary>Info Tokens</summary>
             <div>
 
-                <ul id="info-token-official-holder"></ul>
+                <ul data-type="official"></ul>
                 <template id="info-token-template">
                     <li class="js--info-token--wrapper">
                         <button type="button" class="js--info-token--trigger" data-dialog="#info-token-dialog"></button>
@@ -198,7 +198,7 @@
                     </p>
                 </form>
 
-                <ul id="info-token-custom-holder"></ul>
+                <ul data-type="custom"></ul>
 
                 <!-- NOTE: `data-close="backdrop"` to hide on clicking backdrop -->
                 <dialog id="info-token-dialog" class="dialog dialog--hide">
@@ -217,10 +217,6 @@
 
             </div>
         </details>
-
-        <hr>
-
-        <!-- <h2>Tokens</h2> -->
 
         <script>
             if (!Object.groupBy) {

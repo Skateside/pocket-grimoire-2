@@ -92,17 +92,6 @@ export default class GlobalView extends View {
 
         });
 
-        // document.body.addEventListener("click", ({ target }) => {
-
-        //     if (target.hasAttribute("data-dialog") && !target.dialog) {
-
-        //         target.dialog = Dialog.createFromTrigger(target);
-        //         target.dialog.show();
-
-        //     }
-
-        // });
-
     }
 
     updateRangeOutput(input: HTMLInputElement) {

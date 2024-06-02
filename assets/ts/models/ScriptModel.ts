@@ -28,19 +28,21 @@ export default class ScriptModel extends Model<{
         return this.isRole(entry) && Object.keys(entry).length === 1;
     }
 
-    // relayEvents() {
+    static makeCustomEntry(): [string, IScript] {
 
-    //     const {
-    //         store,
-    //     } = this;
+        return [
+            "_custom_",
+            [{
+                id: "_meta",
+                name: "--custom--",
+                author: "",
+            }]
+        ];
 
-    //     // TODO: make this work - `this.store` won't exist at this point.
-    //     // store.on("script-set", (data) => this.trigger("script-set", data));
-
-    // }
+    }
 
     addStoreListeners(): void {
-        
+
         const {
             store,
         } = this;
@@ -49,13 +51,18 @@ export default class ScriptModel extends Model<{
 
     }
 
-    getScripts(): Record<string, IMetaEntry> {
+    getScripts(includeCustom = false): Record<string, IMetaEntry> {
 
         const constructor = this.constructor as typeof ScriptModel;
-        const scripts = Object.create(null);
+        const allScripts = this.store.getData("scripts");
+
+        if (includeCustom) {
+            const [id, custom] = constructor.makeCustomEntry();
+            allScripts[id] = custom;
+        }
 
         return Object
-            .entries(this.store.getData("scripts"))
+            .entries(allScripts)
             .reduce((scripts, [id, script]) => {
 
                 const metaIndex = script.findIndex((entry) => {

@@ -16,7 +16,7 @@ export default class ScriptController extends Controller<ScriptModel, ScriptView
             view,
         } = this;
 
-        view.drawScripts(model.getScripts());
+        view.drawScripts(model.getScripts(true));
 
     }
 

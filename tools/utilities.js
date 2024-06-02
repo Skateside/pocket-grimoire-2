@@ -44,12 +44,12 @@ const readJSON = (source) => new Promise((resolve, reject) => {
 
 });
 
-const readJSONSync = (path, reject = () => {}) => {
+const readJSONSync = (path) => {
 
     try {
         return JSON.parse(fs.readFileSync(path));
     } catch (ignore) {
-        reject(`Unable to read "${path}"`);
+        throw new Error(`Unable to read "${path}"`);
     }
 
     return null;
@@ -62,6 +62,26 @@ const nameToRole = (roles, name) => {
 
 const nameToRoleCached = memoise(nameToRole, (ignore, name) => name);
 
+const createCompleteMarker = (size, resolve) => {
+
+    if (size < 1) {
+        resolve();
+    }
+
+    const list = new Array(size);
+
+    return (index) => {
+
+        list[index] = true;
+
+        if (!list.includes(undefined)) {
+            resolve();
+        }
+
+    };
+
+};
+
 module.exports = {
     hasOwn,
     memoise,
@@ -70,4 +90,5 @@ module.exports = {
     readJSONSync,
     nameToRole,
     nameToRoleCached,
+    createCompleteMarker,
 };

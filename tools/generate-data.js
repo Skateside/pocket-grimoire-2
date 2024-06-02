@@ -5,6 +5,7 @@ const {
     readJSONSync,
     nameToRole,
     nameToRoleCached,
+    createCompleteMarker,
 } = require("./utilities.js");
 
 const SOURCE_DATA = "./assets/data/raw/";
@@ -54,7 +55,7 @@ const findNightOrder = () => Promise.all([
 
 });
 
-const makeCompleteData = () => Promise.all([
+const combineRolesAndJinxes = () => Promise.all([
     readJSON(`${SOURCE_DATA}roles.json`),
     readJSON(`${SOURCE_DATA}jinxes.json`),
 ]).then(([
@@ -95,16 +96,10 @@ const makeCompleteData = () => Promise.all([
 
 });
 
-const createData = ({
-    roles,
-    nightOrder,
-    scripts,
-    infoTokens,
-}) => new Promise((resolve, reject) => {
+const setNightOrders = (roles, nightOrder) => {
 
     const nighted = deepClone(roles);
 
-    // Update the "firstNight" and "otherNight" values for the roles.
     ["firstNight", "otherNight"].forEach((key) => {
 
         nightOrder[key].forEach((name, index) => {
@@ -121,128 +116,143 @@ const createData = ({
 
     });
 
-    fs.readdir(LOCALES_DATA, (err, files) => {
+    return nighted;
 
-        if (err) {
-            return reject(err);
+};
+
+const localiseRoles = (roles, locale) => {
+
+    const localised = deepClone(roles);
+    const text = readJSONSync(`${LOCALES_DATA}${locale}/roles.json`);
+
+    text.forEach(({
+        id,
+        name,
+        ability,
+        firstNightReminder,
+        otherNightReminder,
+        remindersGlobal,
+        reminders,
+    }) => {
+
+        const role = localised.find(({ id: charId }) => charId === id);
+        Object.assign(role, {
+            name,
+            ability,
+            firstNightReminder,
+            otherNightReminder,
+            remindersGlobal,
+            reminders,
+        });
+
+    });
+
+    return localised;
+
+};
+
+const localiseJinxes = (roles, locale) => {
+
+    const jinxes = readJSONSync(`${LOCALES_DATA}${locale}/jinxes.json`);
+
+    jinxes.forEach(({
+        target: targetId,
+        trick: trickId,
+        reason,
+    }) => {
+
+        const target = roles.find(({ id }) => id === targetId);
+        const jinx = target.jinxes.find(({ id }) => id === trickId);
+        jinx.reason = reason;
+
+    });
+
+    return roles;
+
+};
+
+const localiseScripts = (scripts, locale) => {
+
+    const localisedScripts = deepClone(scripts);
+    const scriptNames = readJSONSync(`${LOCALES_DATA}${locale}/scripts.json`);
+
+    Object.entries(scriptNames.scripts).forEach(([id, name]) => {
+
+        localisedScripts[id].unshift({
+            id: "_meta",
+            name,
+            author: scriptNames.author,
+        });
+
+    });
+
+    return localisedScripts;
+
+};
+
+const localiseInfoTokens = (infoTokens, locale) => {
+
+    const tokens = deepClone(infoTokens);
+    const info = readJSONSync(`${LOCALES_DATA}${locale}/info-tokens.json`);
+
+    Object.entries(info).forEach(([id, text]) => {
+
+        const token = tokens.find(({ id: tokenId }) => tokenId === id);
+
+        if (token) {
+            token.text = text;
         }
 
-        let killLoop = false;
+    });
 
-        files.forEach((file, index) => {
+    return tokens;
 
-            if (killLoop) {
-                return;
-            }
+};
 
-            // Localise the roles.
-            const characters = deepClone(nighted);
-            const text = readJSONSync(`${LOCALES_DATA}${file}/roles.json`, reject);
+const createData = ({
+    roles,
+    nightOrder,
+    scripts,
+    infoTokens,
+}) => new Promise((resolve) => {
 
-            if (!text) {
-                killLoop = true;
-                return;
-            }
+    const nighted = setNightOrders(roles, nightOrder);
 
-            text.forEach(({
-                id,
-                name,
-                ability,
-                firstNightReminder,
-                otherNightReminder,
-                remindersGlobal,
-                reminders,
-            }) => {
+    fs.readdir(LOCALES_DATA, (err, locales) => {
 
-                const role = characters.find(({ id: charId }) => charId === id);
-                Object.assign(role, {
-                    name,
-                    ability,
-                    firstNightReminder,
-                    otherNightReminder,
-                    remindersGlobal,
-                    reminders,
-                });
+        if (err) {
+            throw err;
+        }
 
-            });
+        const markResolved = createCompleteMarker(locales.length, resolve);
 
-            // Localise the jinxes.
-            const jinxes = readJSONSync(`${LOCALES_DATA}${file}/jinxes.json`, reject);
+        locales.forEach((locale, index) => {
 
-            if (!jinxes) {
-                killLoop = true;
-                return;
-            }
+            let fileContents = "";
 
-            jinxes.forEach(({
-                target: targetId,
-                trick: trickId,
-                reason,
-            }) => {
+            const localisedRoles = localiseRoles(nighted, locale);
+            const localisedFullRoles = localiseJinxes(localisedRoles, locale);
+            fileContents += `PG.roles=${JSON.stringify(localisedFullRoles)};`;
 
-                const target = characters.find(({ id }) => id === targetId);
-                const jinx = target.jinxes.find(({ id }) => id === trickId);
-                jinx.reason = reason;
+            const localisedScripts = localiseScripts(scripts, locale);
+            fileContents += `PG.scripts=${JSON.stringify(localisedScripts)};`;
 
-            });
+            const localisedInfoTokens = localiseInfoTokens(infoTokens, locale);
+            fileContents += `PG.infos=${JSON.stringify(localisedInfoTokens)};`;
 
-            let fileContents = `PG.roles=${JSON.stringify(characters)};`;
+            fs.writeFile(
+                `${DESTINATION_DATA}${locale}.js`,
+                fileContents,
+                (err) => {
 
-            // Localise the scripts.
-            const scriptClone = deepClone(scripts);
-            const scriptNames = readJSONSync(`${LOCALES_DATA}${file}/scripts.json`, reject);
+                    if (err) {
+                        throw err;
+                    }
 
-            if (!scriptNames) {
-                killLoop = true;
-                return;
-            }
+                    markResolved(index);
 
-            Object.entries(scriptNames.scripts).forEach(([id, name]) => {
-
-                scriptClone[id].unshift({
-                    id: "_meta",
-                    name,
-                    author: scriptNames.author,
-                });
-
-            });
-
-            fileContents += `PG.scripts=${JSON.stringify(scriptClone)};`;
-
-            // Localise the info tokens.
-            const tokens = deepClone(infoTokens);
-            const info = readJSONSync(`${LOCALES_DATA}${file}/info-tokens.json`, reject);
-
-            if (!info) {
-                killLoop = true;
-                return;
-            }
-
-            Object.entries(info).forEach(([id, text]) => {
-
-                const token = tokens.find(({ id: tokenId }) => tokenId === id);
-
-                if (token) {
-                    token.text = text;
-                }
-
-            });
-
-            fileContents += `PG.infos=${JSON.stringify(tokens)};`;
-
-            // Save the contents.
-            fs.writeFile(`${DESTINATION_DATA}${file}.js`, fileContents, (err) => {
-
-                if (err) {
-                    killLoop = true;
-                    return reject(err);
-                }
-
-            });
-
-            if (index >= files.length - 1) {
-                resolve();
-            }
+                },
+            );
 
         });
 
@@ -251,7 +261,7 @@ const createData = ({
 });
 
 module.exports = () => Promise.all([
-    makeCompleteData(),
+    combineRolesAndJinxes(),
     findNightOrder(),
     readJSON(`${SOURCE_DATA}scripts.json`),
     readJSON(`${SOURCE_DATA}info-tokens.json`),

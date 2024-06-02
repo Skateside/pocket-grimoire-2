@@ -28,19 +28,6 @@ export default class ScriptModel extends Model<{
         return this.isRole(entry) && Object.keys(entry).length === 1;
     }
 
-    static makeCustomEntry(): [string, IScript] {
-
-        return [
-            "_custom_",
-            [{
-                id: "_meta",
-                name: "--custom--",
-                author: "",
-            }]
-        ];
-
-    }
-
     addStoreListeners(): void {
 
         const {
@@ -51,15 +38,10 @@ export default class ScriptModel extends Model<{
 
     }
 
-    getScripts(includeCustom = false): Record<string, IMetaEntry> {
+    getScripts(): Record<string, IMetaEntry> {
 
         const constructor = this.constructor as typeof ScriptModel;
         const allScripts = this.store.getData("scripts");
-
-        if (includeCustom) {
-            const [id, custom] = constructor.makeCustomEntry();
-            allScripts[id] = custom;
-        }
 
         return Object
             .entries(allScripts)

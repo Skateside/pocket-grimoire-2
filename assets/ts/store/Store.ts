@@ -25,6 +25,12 @@ export default class Store extends Observer<IStoreEvents> {
         super();
 
         this.store = {
+            i18n: {
+                meta: {
+                    ignore: true,
+                },
+                data: Object.create(null),
+            },
             roles: {
                 meta: {
                     ignore: true,
@@ -72,6 +78,7 @@ export default class Store extends Observer<IStoreEvents> {
 
         const PG = (window as any).PG as IPG;
 
+        this.setInternalData("i18n", PG.i18n);
         this.setInternalData("roles", PG.roles);
         this.setInternalData("scripts", PG.scripts);
         this.setInternalData("infos", PG.infos);

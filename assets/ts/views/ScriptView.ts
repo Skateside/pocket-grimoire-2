@@ -9,19 +9,25 @@ import {
 
 export default class ScriptView extends View {
 
-    protected scriptForm: HTMLFormElement;
+    protected scriptSelectForm: HTMLFormElement;
     protected scriptSelection: HTMLElement;
+    protected scriptUploadForm: HTMLFormElement;
 
     discoverElements(): void {
 
-        this.scriptForm = findOrDie("#script-select-form");
+        this.scriptSelectForm = findOrDie("#script-select-form");
         this.scriptSelection = findOrDie("#script-select-list");
+        this.scriptUploadForm = findOrDie("#script-custom-form");
 
     }
 
     addListeners(): void {
 
-        this.scriptForm.addEventListener("submit", (e) => {
+        this.scriptSelectForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+        });
+
+        this.scriptUploadForm.addEventListener("submit", (e) => {
             e.preventDefault();
         });
 

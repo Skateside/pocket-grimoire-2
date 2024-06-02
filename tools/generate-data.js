@@ -120,6 +120,10 @@ const setNightOrders = (roles, nightOrder) => {
 
 };
 
+const localiseText = (locale) => {
+    return readJSONSync(`${LOCALES_DATA}${locale}/i18n.json`);
+};
+
 const localiseRoles = (roles, locale) => {
 
     const localised = deepClone(roles);
@@ -229,6 +233,9 @@ const createData = ({
         locales.forEach((locale, index) => {
 
             let fileContents = "";
+
+            const localisedText = localiseText(locale);
+            fileContents += `PG.i18n=${JSON.stringify(localisedText)};`;
 
             const localisedRoles = localiseRoles(nighted, locale);
             const localisedFullRoles = localiseJinxes(localisedRoles, locale);

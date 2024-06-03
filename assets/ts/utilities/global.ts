@@ -1,3 +1,5 @@
+/** @deprecated */
+
 import {
     defer,
 } from "./promises";

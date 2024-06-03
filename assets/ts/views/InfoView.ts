@@ -11,6 +11,7 @@ import {
     toHTML,
     strip,
 } from "../utilities/markdown";
+import Dialog from "../classes/Dialog";
 
 export default class InfoView extends View<{
     "info-update": {
@@ -20,22 +21,24 @@ export default class InfoView extends View<{
 }> {
 
     protected wrapper: HTMLElement;
-    protected dialog: HTMLDialogElement;
+    protected dialogElement: HTMLDialogElement;
     protected dialogText: HTMLElement;
     protected addButton: HTMLButtonElement;
     protected form: HTMLFormElement;
     protected idInput: HTMLInputElement;
     protected textInput: HTMLInputElement;
+    protected dialog: Dialog;
 
     discoverElements(): void {
 
         this.wrapper = findOrDie("#info-token-wrapper");
-        this.dialog = findOrDie("#info-token-dialog");
+        this.dialogElement = findOrDie("#info-token-dialog");
         this.dialogText = findOrDie("#info-token-dialog-text");
         this.addButton = findOrDie("#info-token-add");
         this.form = findOrDie("#info-token-form");
         this.idInput = findOrDie("#info-token-custom-id");
         this.textInput = findOrDie("#info-token-custom-text");
+        this.dialog = Dialog.create(this.dialogElement);
 
     }
 
@@ -44,6 +47,7 @@ export default class InfoView extends View<{
         const {
             wrapper,
             dialog,
+            dialogElement,
             dialogText,
             addButton,
             form,
@@ -64,10 +68,10 @@ export default class InfoView extends View<{
                     colour,
                 } = htmlTarget.dataset as IInfoToken;
 
-                dialog.style.setProperty("--colour", `var(--${colour})`);
-                dialog.classList.toggle("is-custom", type === "custom");
-                dialog.dataset.id = id;
-                dialog.dataset.text = text;
+                dialogElement.style.setProperty("--colour", `var(--${colour})`);
+                dialogElement.classList.toggle("is-custom", type === "custom");
+                dialogElement.dataset.id = id;
+                dialogElement.dataset.text = text;
                 dialogText.innerHTML = toHTML(text);
 
             }
@@ -100,7 +104,7 @@ export default class InfoView extends View<{
 
         });
 
-        dialog.addEventListener("click", ({ target }) => {
+        dialogElement.addEventListener("click", ({ target }) => {
 
             const htmlTarget = (target as HTMLElement)
                 .closest<HTMLButtonElement>("[data-action]");
@@ -112,19 +116,19 @@ export default class InfoView extends View<{
             switch (htmlTarget.dataset.action) {
 
             case "edit":
-                idInput.value = dialog.dataset.id;
-                textInput.value = dialog.dataset.text;
+                idInput.value = dialogElement.dataset.id;
+                textInput.value = dialogElement.dataset.text;
                 form.hidden = false;
-                dialog.close();
+                dialog.hide();
                 break;
 
             case "delete":
                 this.trigger("info-update", {
-                    id: dialog.dataset.id,
+                    id: dialogElement.dataset.id,
                     text: "",
                 });
                 form.reset();
-                dialog.close();
+                dialog.hide();
                 break;
 
             }

@@ -1,5 +1,5 @@
-import Observer from "../utilities/Observer";
-import Store from "../store/Store";
+import Observer from "../classes/Observer";
+import Store from "../classes/Store";
 
 export default class Model<EventMap = {}> extends Observer<EventMap> {
 

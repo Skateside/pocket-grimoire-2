@@ -1,5 +1,6 @@
 import Model from "./Model";
 
+/** @deprecated */
 export default class GlobalModel extends Model {
 
     load(): Promise<void> {

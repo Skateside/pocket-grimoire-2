@@ -6,6 +6,7 @@ import {
     makeLookupCache,
 } from "../utilities/dom";
 
+/** @deprecated */
 export default class GlobalView extends View {
 
     protected getOutputFromRange: IDomLookupCache<HTMLOutputElement>;

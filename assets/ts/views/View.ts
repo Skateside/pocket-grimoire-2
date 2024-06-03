@@ -1,4 +1,4 @@
-import Observer from "../utilities/Observer";
+import Observer from "../classes/Observer";
 
 export default class View<EventMap = {}> extends Observer<EventMap> {
 

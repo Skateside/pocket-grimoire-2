@@ -1,3 +1,5 @@
+/** @deprecated */
+
 import {
     IDefer,
 } from "../types/types";

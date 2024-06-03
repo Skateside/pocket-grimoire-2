@@ -120,8 +120,9 @@ const setNightOrders = (roles, nightOrder) => {
 
 };
 
-const localiseText = (locale) => {
-    return readJSONSync(`${LOCALES_DATA}${locale}/i18n.json`);
+const localiseText = (i18n, locale) => {
+    const localised = readJSONSync(`${LOCALES_DATA}${locale}/i18n.json`);
+    return Object.assign({}, i18n, localised);
 };
 
 const localiseRoles = (roles, locale) => {
@@ -214,6 +215,7 @@ const localiseInfoTokens = (infoTokens, locale) => {
 };
 
 const createData = ({
+    i18n,
     roles,
     nightOrder,
     scripts,
@@ -234,7 +236,7 @@ const createData = ({
 
             let fileContents = "";
 
-            const localisedText = localiseText(locale);
+            const localisedText = localiseText(i18n, locale);
             fileContents += `PG.i18n=${JSON.stringify(localisedText)};`;
 
             const localisedRoles = localiseRoles(nighted, locale);
@@ -268,17 +270,20 @@ const createData = ({
 });
 
 module.exports = () => Promise.all([
+    readJSON(`${SOURCE_DATA}i18n.json`),
     combineRolesAndJinxes(),
     findNightOrder(),
     readJSON(`${SOURCE_DATA}scripts.json`),
     readJSON(`${SOURCE_DATA}info-tokens.json`),
     makeDirectory(),
 ]).then(([
+    i18n,
     roles,
     nightOrder,
     scripts,
     infoTokens,
 ]) => createData({
+    i18n,
     roles,
     nightOrder,
     scripts,

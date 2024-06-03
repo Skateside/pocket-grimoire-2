@@ -80,7 +80,9 @@ export function diff<T extends any = any>(
 
 }
 
-export function isEmpty(object: Record<PropertyKey, any>): object is Record<PropertyKey, never> {
+export function isEmpty(
+    object: Record<PropertyKey, any>,
+): object is Record<PropertyKey, never> {
 
     for (const property in object) {
         if (Object.hasOwn(object, property)) {

@@ -30,3 +30,15 @@ export function randomId(prefix = "") {
     return `${prefix}${random}${date}`;
 
 }
+
+export function wordlist(text: string) {
+
+    const trimmed = text.trim();
+
+    return (
+        trimmed
+        ? [...new Set(trimmed.split(/\s+/))]
+        : []
+    );
+
+}

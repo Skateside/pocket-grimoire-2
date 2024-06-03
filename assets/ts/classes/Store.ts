@@ -10,7 +10,7 @@ import {
 import {
     deepClone,
 } from "../utilities/objects";
-import Observer from "../utilities/Observer";
+import Observer from "./Observer";
 
 export default class Store extends Observer<IStoreEvents> {
 

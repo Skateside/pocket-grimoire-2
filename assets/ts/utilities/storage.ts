@@ -1,3 +1,5 @@
+/** @deprecated */
+
 import {
     deepClone,
 } from "./objects";

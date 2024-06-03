@@ -6,18 +6,21 @@ import {
     findOrDie,
     renderTemplate,
 } from "../utilities/dom";
+import Tabs from "../classes/Tabs";
 
 export default class ScriptView extends View {
 
     protected scriptSelectForm: HTMLFormElement;
     protected scriptSelection: HTMLElement;
     protected scriptUploadForm: HTMLFormElement;
+    protected tabs: Tabs;
 
     discoverElements(): void {
 
         this.scriptSelectForm = findOrDie("#script-select-form");
         this.scriptSelection = findOrDie("#script-select-list");
         this.scriptUploadForm = findOrDie("#script-custom-form");
+        this.tabs = new Tabs(findOrDie("#script-tabs"));
 
     }
 

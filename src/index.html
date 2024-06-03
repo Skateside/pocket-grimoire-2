@@ -51,28 +51,50 @@
 
         <details>
             <summary>Script Selection</summary>
-            <!-- TODO: put these two forms into tabs -->
-            <form id="script-select-form">
-                <ul id="script-select-list"></ul>
-                <p><button type="submit">Select</button></p>
-            </form>
-            <form id="script-custom-form">
-                <ul>
-                    <li>
-                        <label for="script-custom-upload">Upload a custom script</label>
-                        <input type="file" name="upload" id="script-custom-upload">
-                    </li>
-                    <li>
-                        <label for="script-custom-url">Enter a URL</label>
-                        <input type="url" name="url" id="script-custom-url">
-                    </li>
-                    <li>
-                        <label for="script-custom-paste">Pase from clipboard</label>
-                        <textarea rows="3" cols="10" name="paste" id="script-custom-paste"></textarea>
-                    </li>
-                </ul>
-                <p><button type="submit">Select</button></p>
-            </form>
+
+            <div role="tablist" id="script-tabs">
+                <button
+                    type="button"
+                    role="tab"
+                    id="script-official-tab"
+                    aria-selected="true"
+                    aria-controls="script-official-panel"
+                >Official Scripts</button>
+                <button
+                    type="button"
+                    role="tab"
+                    id="script-custom-tab"
+                    aria-selected="false"
+                    aria-controls="script-custom-panel"
+                    tabindex="-1"
+                >Custom Scripts</button>
+            </div>
+
+            <div role="tabpanel" id="script-official-panel" aria-labelledby="script-official-tab" tabindex="0">
+                <form id="script-select-form">
+                    <ul id="script-select-list"></ul>
+                    <p><button type="submit">Select</button></p>
+                </form>
+            </div>
+            <div role="tabpanel" id="script-custom-panel" aria-labelledby="script-custom-tab" tabindex="0" hidden>
+                <form id="script-custom-form">
+                    <ul>
+                        <li>
+                            <label for="script-custom-upload">Upload a custom script</label>
+                            <input type="file" name="upload" id="script-custom-upload">
+                        </li>
+                        <li>
+                            <label for="script-custom-url">Enter a URL</label>
+                            <input type="url" name="url" id="script-custom-url">
+                        </li>
+                        <li>
+                            <label for="script-custom-paste">Pase from clipboard</label>
+                            <textarea rows="3" cols="10" name="paste" id="script-custom-paste"></textarea>
+                        </li>
+                    </ul>
+                    <p><button type="submit">Select</button></p>
+                </form>
+            </div>
             <template id="script-select-template">
                 <li>
                     <label class="js--script-select--label">

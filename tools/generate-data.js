@@ -110,7 +110,7 @@ const setNightOrders = (roles, nightOrder) => {
                 return;
             }
 
-            role[key] = index;
+            role[key] = index + 1;
 
         });
 

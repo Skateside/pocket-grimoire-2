@@ -1,12 +1,14 @@
 import Model from "./Model";
+import Store from "../classes/Store";
 import {
+    IRole,
     IScript,
     IMetaEntry,
     IMinimumRole,
 } from "../types/types";
 
 export default class ScriptModel extends Model<{
-    "script-set": IScript,
+    // "script-set": IScript,
 }> {
 
     static isMetaEntry(entry: any): entry is IMetaEntry {
@@ -28,15 +30,17 @@ export default class ScriptModel extends Model<{
         return this.isRole(entry) && Object.keys(entry).length === 1;
     }
 
-    addStoreListeners(): void {
+    // NOTE: The ScriptController probably doesn't need to know that the script
+    // has been selected.
+    // addStoreListeners(): void {
 
-        const {
-            store,
-        } = this;
+    //     const {
+    //         store,
+    //     } = this;
 
-        store.on("script-set", (script) => this.trigger("script-set", script));
+    //     store.on("script-set", (script) => this.trigger("script-set", script));
 
-    }
+    // }
 
     getScripts(): Record<string, IMetaEntry> {
 
@@ -61,6 +65,83 @@ export default class ScriptModel extends Model<{
 
     }
 
+    static extractMeta(script: IScript) {
+
+        const metaIndex = script.findIndex((entry) => {
+            return this.isMetaEntry(entry);
+        });
+
+        return (
+            metaIndex > -1
+            ? script.splice(metaIndex, 1)[0]
+            : {
+                id: "_meta",
+                name: "",
+            }
+        )  as IMetaEntry;
+
+    }
+
+    static identifyRoles(script: IScript, store: Store) {
+
+        const ids = script.map((entry) => {
+
+            if (typeof entry === "string") {
+                return entry;
+            }
+
+            if (this.isObjectId(entry)) {
+                return entry.id;
+            }
+
+            if (this.isRole(entry)) {
+
+                store.addAugment(entry.id, entry);
+                return entry.id;
+
+            }
+
+            return null;
+
+        }).filter(Boolean);
+
+        store.getMechanicalRoleIds().forEach((id) => {
+
+            if (!ids.includes(id)) {
+                ids.push(id);
+            }
+
+        });
+
+        return ids.map((id) => store.getRole(id));
+
+    }
+
+    static createNightOrder(
+        roles: IRole[],
+        type: "firstNight" | "otherNight",
+    ): string[] {
+
+        return roles
+            .filter((role) => role[type] > 0)
+            .sort((roleA, roleB) => roleA[type] - roleB[type])
+            .map(({ id }) => id);
+
+    }
+
+    static setNightOrder(meta: IMetaEntry, roles: IRole[]) {
+
+        meta.firstNight = (
+            meta.firstNight || this.createNightOrder(roles, "firstNight")
+        );
+        meta.otherNight = (
+            meta.otherNight || this.createNightOrder(roles, "otherNight")
+        );
+
+        return meta;
+
+    }
+
     setScript(script: IScript) {
 
         const {
@@ -71,36 +152,14 @@ export default class ScriptModel extends Model<{
 
         const constructor = this.constructor as typeof ScriptModel;
         const clone = [...script];
-        const metaIndex = clone.findIndex((entry) => {
-            return constructor.isMetaEntry(entry);
-        });
-        const meta = (
-            metaIndex > -1
-            ? clone.splice(metaIndex, 1)[0]
-            : null
+        const meta = constructor.extractMeta(clone);
+        const roles = constructor.identifyRoles(clone, store);
+
+        constructor.setNightOrder(meta, roles);
+        store.setData(
+            "script",
+            [meta, ...roles.filter((role) => !store.isMechanicalRole(role))],
         );
-        const ids = clone.map((entry) => {
-
-            if (typeof entry === "string") {
-                return entry;
-            }
-
-            if (constructor.isObjectId(entry)) {
-                return entry.id;
-            }
-
-            if (constructor.isRole(entry)) {
-
-                store.addAugment(entry.id, entry);
-                return entry.id;
-
-            }
-
-            return null;
-
-        });
-
-        store.setData("script", [meta, ...ids].filter(Boolean));
 
     }
 

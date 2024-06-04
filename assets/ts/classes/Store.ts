@@ -79,7 +79,10 @@ export default class Store extends Observer<IStoreEvents> {
         const PG = (window as any).PG as IPG;
 
         this.setInternalData("i18n", PG.i18n);
-        this.setInternalData("roles", PG.roles);
+        this.setInternalData(
+            "roles",
+            Object.fromEntries(PG.roles.map((role) => [role.id, role])),
+        );
         this.setInternalData("scripts", PG.scripts);
         this.setInternalData("infos", PG.infos);
 
@@ -166,6 +169,47 @@ export default class Store extends Observer<IStoreEvents> {
         augments[id] = augment;
 
         this.setInternalData("augments", augments);
+
+    }
+
+    getMechanicalRoleIds() {
+
+        return Object.entries(this.store.roles.data)
+            .filter(([ignore, { edition }]) => edition === "-pg-")
+            .map(([id]) => id);
+
+    }
+
+    isMechanicalRole(role: IRole) {
+        return role.edition === "-pg-";
+    }
+
+    getRole(id: string) {
+
+        const roles = this.store.roles.data;
+        const augments = this.store.augments.data;
+
+        if (!Object.hasOwn(roles, id)) {
+            throw new ReferenceError(`Unable to identify role with ID "${id}"`);
+        }
+
+        const role = deepClone(roles[id]);
+        const augment = deepClone(augments[id] || {});
+
+        if (augment) {
+
+            if (augment.jinxes) {
+
+                role.jinxes = (role.jinxes || []).concat(...augment.jinxes);
+                delete augment.jinxes;
+
+            }
+
+            Object.assign(role, augment);
+
+        }
+
+        return role;
 
     }
 

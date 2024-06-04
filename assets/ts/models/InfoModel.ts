@@ -87,7 +87,7 @@ export default class InfoModel extends Model<{
 
     }
 
-    getInfos() {
+    getInfosByType() {
         return Object.groupBy(this.infos, ({ type }) => type);
     }
 

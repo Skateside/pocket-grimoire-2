@@ -8,29 +8,45 @@ import {
 } from "../utilities/dom";
 import Tabs from "../classes/Tabs";
 
-export default class ScriptView extends View {
+export default class ScriptView extends View<{
+    "script-select": string,
+}> {
 
     protected scriptSelectForm: HTMLFormElement;
     protected scriptSelection: HTMLElement;
-    protected scriptUploadForm: HTMLFormElement;
+    protected scriptCustomForm: HTMLFormElement;
     protected tabs: Tabs;
 
     discoverElements(): void {
 
         this.scriptSelectForm = findOrDie("#script-select-form");
         this.scriptSelection = findOrDie("#script-select-list");
-        this.scriptUploadForm = findOrDie("#script-custom-form");
+        this.scriptCustomForm = findOrDie("#script-custom-form");
         this.tabs = new Tabs(findOrDie("#script-tabs"));
 
     }
 
     addListeners(): void {
 
-        this.scriptSelectForm.addEventListener("submit", (e) => {
+        const {
+            scriptSelectForm,
+            scriptCustomForm,
+        } = this;
+
+        scriptSelectForm.addEventListener("submit", (e) => {
+
             e.preventDefault();
+            // this.trigger("script-select", 
+            const input = scriptSelectForm.querySelector<HTMLInputElement>(":checked");
+            const value = input?.value || "";
+
+            if (value) {
+                this.trigger("script-select", value);
+            }
+
         });
 
-        this.scriptUploadForm.addEventListener("submit", (e) => {
+        scriptCustomForm.addEventListener("submit", (e) => {
             e.preventDefault();
         });
 
@@ -38,26 +54,29 @@ export default class ScriptView extends View {
 
     drawScripts(scripts: Record<string, IMetaEntry>) {
 
-        const contents = Object.entries(scripts).reduce((frag, [id, meta]) => {
+        const contents = Object
+            .entries(scripts)
+            .reduce((frag, [id, meta], index) => {
 
-            frag.append(
-                renderTemplate("#script-select-template", {
-                    ".js--script-select--label"(element: HTMLLabelElement) {
-                        element.htmlFor = `script-${id}`;
-                    },
-                    ".js--script-select--input"(element: HTMLInputElement) {
-                        element.id = `script-${id}`;
-                        element.value = id;
-                    },
-                    ".js--script-select--name"(element) {
-                        element.textContent = meta.name;
-                    }
-                })
-            );
+                frag.append(
+                    renderTemplate("#script-select-template", {
+                        ".js--script-select--label"(element: HTMLLabelElement) {
+                            element.htmlFor = `script-${id}`;
+                        },
+                        ".js--script-select--input"(element: HTMLInputElement) {
+                            element.id = `script-${id}`;
+                            element.value = id;
+                            element.required = index === 0;
+                        },
+                        ".js--script-select--name"(element) {
+                            element.textContent = meta.name;
+                        }
+                    })
+                );
 
-            return frag;
+                return frag;
 
-        }, document.createDocumentFragment());
+            }, document.createDocumentFragment());
 
         this.scriptSelection.append(contents);
 

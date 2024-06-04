@@ -52,12 +52,20 @@ const readJSONSync = (path) => {
         throw new Error(`Unable to read "${path}"`);
     }
 
-    return null;
-
 };
 
 const nameToRole = (roles, name) => {
+
+    const nameMap = {
+        "DAWN": "Dawn",
+        "DUSK": "Dusk",
+        "DEMON": "Demon Info",
+        "MINION": "Minion Info",
+    };
+    name = nameMap[name] || name;
+
     return roles.find(({ name: roleName }) => name === roleName);
+
 };
 
 const nameToRoleCached = memoise(nameToRole, (ignore, name) => name);

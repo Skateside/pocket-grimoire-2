@@ -18,6 +18,8 @@ export default class ScriptController extends Controller<ScriptModel, ScriptView
 
         view.drawScripts(model.getScripts());
 
+        view.on("script-select", (scriptId) => model.setScriptById(scriptId));
+
     }
 
 }

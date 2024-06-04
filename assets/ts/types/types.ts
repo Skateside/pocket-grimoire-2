@@ -229,7 +229,8 @@ export type IInfoToken = {
 
 export type IPG = {
     i18n: Record<string, string>,
-    roles: Record<string, IRole>,
+    // roles: Record<string, IRole>,
+    roles: IRole[],
     scripts: IScripts,
     infos: IInfoToken[],
 };

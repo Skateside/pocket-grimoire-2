@@ -36,7 +36,6 @@ export default class ScriptView extends View<{
         scriptSelectForm.addEventListener("submit", (e) => {
 
             e.preventDefault();
-            // this.trigger("script-select", 
             const input = scriptSelectForm.querySelector<HTMLInputElement>(":checked");
             const value = input?.value || "";
 

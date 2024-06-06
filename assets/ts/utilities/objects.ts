@@ -93,3 +93,24 @@ export function isEmpty(
     return true;
 
 }
+
+export function update<T extends Record<PropertyKey, any>>(
+    source: T,
+    extend: Record<PropertyKey, any>,
+): T {
+
+    Object
+        .entries(extend)
+        .forEach(<K extends keyof T>([key, value]: [K, T[K]]) => {
+
+            if (value === undefined) {
+                delete source[key];
+            } else {
+                source[key] = value;
+            }
+
+        });
+
+    return source;
+
+}

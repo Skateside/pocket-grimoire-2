@@ -423,7 +423,7 @@ export default class RepositoryModel extends Model<{
 
         });
 
-        this.trigger("script-update");
+        this.trigger("script-update", undefined);
 
     }
 
@@ -483,7 +483,7 @@ export default class RepositoryModel extends Model<{
 
         });
 
-        this.trigger("bag-update");
+        this.trigger("bag-update", undefined);
 
     }
 

@@ -1,16 +1,18 @@
 import {
     IPG,
-    IMeta,
     IStore,
     IStoreEntries,
     IStoreEvents,
     IRole,
-    IInfoToken,
 } from "../types/types";
 import {
     deepClone,
+    update,
 } from "../utilities/objects";
 import Observer from "./Observer";
+import StoreEntry from "./StoreEntry";
+import StoreEntryUnsavable from "./StoreEntryUnsavable";
+import StoreEntryInfo from "./StoreEntryInfo";
 
 export default class Store extends Observer<IStoreEvents> {
 
@@ -25,66 +27,34 @@ export default class Store extends Observer<IStoreEvents> {
         super();
 
         this.store = {
-            i18n: {
-                meta: {
-                    ignore: true,
-                },
-                data: Object.create(null),
-            },
-            roles: {
-                meta: {
-                    ignore: true,
-                },
-                data: Object.create(null),
-            },
-            augments: {
-                meta: Object.create(null),
-                data: Object.create(null),
-            },
-            script: {
-                meta: Object.create(null),
-                data: [],
-            },
-            scripts: {
-                meta: {
-                    ignore: true,
-                },
-                data: Object.create(null),
-            },
-            seats: {
-                meta: Object.create(null),
-                data: [],
-            },
-            reminders: {
-                meta: Object.create(null),
-                data: [],
-            },
-            infos: {
-                meta: {
-                    filter(entry) {
-                        return (entry as IInfoToken).type === "custom";
-                    },
-                    load(current, stored) {
-                        return current.concat(...stored);
-                    }
-                },
-                data: [],
-            },
+            i18n: new StoreEntryUnsavable<IStore["i18n"]>({}),
+            roles: new StoreEntryUnsavable<IStore["roles"]>({}),
+            augments: new StoreEntry<IStore["augments"]>({}),
+            script: new StoreEntry<IStore["script"]>([]),
+            scripts: new StoreEntryUnsavable<IStore["scripts"]>({}),
+            seats: new StoreEntryUnsavable<IStore["seats"]>([]),
+            reminders: new StoreEntryUnsavable<IStore["reminders"]>([]),
+            infos: new StoreEntryInfo<IStore["infos"]>([]),
         };
 
     }
 
-    load() {
+    ready() {
 
         const PG = (window as any).PG as IPG;
+        const {
+            i18n,
+            roles,
+            scripts,
+            infos,
+        } = this.store;
 
-        this.setInternalData("i18n", PG.i18n);
-        this.setInternalData(
-            "roles",
-            Object.fromEntries(PG.roles.map((role) => [role.id, role])),
+        i18n.setData(PG.i18n);
+        roles.setData(
+            Object.fromEntries(PG.roles.map((role) => [role.id, role]))
         );
-        this.setInternalData("scripts", PG.scripts);
-        this.setInternalData("infos", PG.infos);
+        scripts.setData(PG.scripts);
+        infos.setData(PG.infos);
 
         const constructor = this.constructor as typeof Store;
         const stored = JSON.parse(window.localStorage.getItem(constructor.KEY));
@@ -94,88 +64,112 @@ export default class Store extends Observer<IStoreEvents> {
             .forEach(<K extends keyof IStore>([key, data]: [K, IStore[K]]) => {
 
                 const ref = this.store[key];
-
-                if (ref.meta.load) {
-
-                    this.setInternalData(
-                        key,
-                        ref.meta.load(this.getData(key) as IStore[K], data)
-                    );
-
-                }
+                
+                ref.setData(ref.load(data));
 
             });
 
     }
 
-    save() {
+    private read() {
 
         const constructor = this.constructor as typeof Store;
-        const data = Object.fromEntries(
-            Object.entries(this.store)
-                .filter(([key, entry]) => !entry.meta.ignore)
-                .map(([key, entry]) => [
-                    key,
-                    (
-                        (Array.isArray(entry.data) && entry.meta.filter)
-                        ? entry.data.filter(entry.meta.filter)
-                        : entry.data
-                    ),
-                ])
+        const stored = JSON.parse(
+            window.localStorage.getItem(constructor.KEY) || "{}"
         );
 
+        return stored as Partial<IStore>;
+
+    }
+
+    private write(data: Partial<IStore>) {
+
+        const constructor = this.constructor as typeof Store;
         window.localStorage.setItem(constructor.KEY, JSON.stringify(data));
 
     }
 
-    setMeta(key: keyof IStoreEntries, meta: IMeta) {
-        this.store[key].meta = meta;
+    update(data: Partial<IStore>) {
+        // NOTE: Potential future bug - this will override data for arrays.
+        this.write(update(this.read(), data));
     }
 
-    getMeta(key: keyof IStoreEntries) {
-        return deepClone(this.store[key].meta);
-    }
+    save(key: keyof IStore) {
 
-    private setInternalData<K extends keyof IStoreEntries>(
-        key: K,
-        data: IStoreEntries[K]["data"],
-    ) {
-        this.store[key].data = data as IStore[K];
-    }
+        const saved = this.store[key].save();
 
-    setData<K extends keyof IStoreEntries>(
-        key: K,
-        data: IStoreEntries[K]["data"],
-    ) {
+        if (!saved) {
+            return;
+        }
 
-        this.setInternalData(key, data as IStore[K]);
-        this.save();
-        this.trigger(`${key}-set`, data);
+        this.update({ [key]: saved });
 
     }
 
-    getData<K extends keyof IStoreEntries>(key: K): IStoreEntries[K]["data"] {
-        return deepClone(this.store[key].data);
+    saveAll() {
+
+        Object.keys(this.store).forEach((key) => {
+            this.save(key as keyof IStore);
+        });
+
     }
 
-    resetAugments() {
-        this.setInternalData("augments", Object.create(null));
+    load<K extends keyof IStore>(key: K) {
+        return this.store[key].load(this.read()[key] as IStore[K]);
     }
 
-    addAugment(id: string, augment: Partial<IRole>) {
+    loadAll() {
 
-        const augments = this.getData("augments");
+        return Object.fromEntries(
+            Object.keys(this.store).map((key) => [
+                key,
+                this.load(key as keyof IStore)
+            ])
+        );
 
-        augments[id] = augment;
+    }
 
-        this.setInternalData("augments", augments);
+    reset(key: keyof IStore) {
+
+        this.update({
+            [key]: this.store[key].reset(),
+        });
+
+    }
+
+    resetAll() {
+
+        Object.keys(this.store).forEach((key) => {
+            this.reset(key as keyof IStore);
+        });
+
+    }
+
+    setData<K extends keyof IStore>(key: K, data: IStore[K]) {
+
+        this.store[key].setData(data);
+        this.save(key);
+        this.trigger(`${key}-set`, data as IStoreEvents[`${K}-set`]);
+
+    }
+
+    getData<K extends keyof IStoreEntries>(key: K) {
+        return this.store[key].getData();
+    }
+
+    extendData<K extends keyof IStore>(key: K, extend: Partial<IStore[K]>) {
+
+        const store = this.store[key];
+
+        // NOTE: Potential future bug - this will override data for arrays.
+        store.setData(update(store.getData(), extend));
 
     }
 
     getMechanicalRoleIds() {
 
-        return Object.entries(this.store.roles.data)
-            .filter(([ignore, { edition }]) => edition === "-pg-")
+        return Object.entries(this.store.roles.getData())
+            .filter(([ignore, role]) => this.isMechanicalRole(role))
             .map(([id]) => id);
 
     }
@@ -186,8 +180,8 @@ export default class Store extends Observer<IStoreEvents> {
 
     getRole(id: string) {
 
-        const roles = this.store.roles.data;
-        const augments = this.store.augments.data;
+        const roles = this.store.roles.getData();
+        const augments = this.store.augments.getData();
 
         if (!Object.hasOwn(roles, id)) {
             throw new ReferenceError(`Unable to identify role with ID "${id}"`);

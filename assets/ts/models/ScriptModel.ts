@@ -96,7 +96,7 @@ export default class ScriptModel extends Model<{
 
             if (this.isRole(entry)) {
 
-                store.addAugment(entry.id, entry);
+                store.extendData("augments", { [entry.id]: entry })
                 return entry.id;
 
             }
@@ -131,12 +131,15 @@ export default class ScriptModel extends Model<{
 
     static setNightOrder(meta: IMetaEntry, roles: IRole[]) {
 
-        meta.firstNight = (
-            meta.firstNight || this.createNightOrder(roles, "firstNight")
-        );
-        meta.otherNight = (
-            meta.otherNight || this.createNightOrder(roles, "otherNight")
-        );
+        const ids = roles.map(({ id }) => id);
+
+        ["firstNight", "otherNight"].forEach(<K extends "firstNight" | "otherNight">(type: K) => {
+
+            meta[type] = (
+                meta[type] || this.createNightOrder(roles, type)
+            ).filter((id) => ids.includes(id));
+
+        });
 
         return meta;
 
@@ -148,7 +151,7 @@ export default class ScriptModel extends Model<{
             store,
         } = this;
 
-        store.resetAugments();
+        store.reset("augments");
 
         const constructor = this.constructor as typeof ScriptModel;
         const clone = [...script];

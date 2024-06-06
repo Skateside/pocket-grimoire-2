@@ -43,7 +43,7 @@ export default class App {
 
     run() {
 
-        this.store.load();
+        this.store.ready();
         this.constrollers.forEach((controller) => controller.render());
 
     }

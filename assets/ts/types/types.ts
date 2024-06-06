@@ -187,11 +187,11 @@ export type IReminder = {
     coords: ICoordinates,
 };
 
-export type IMeta<DataType = any> = {
-    ignore?: boolean,
-    filter?: (entry: any) => boolean,
-    load?: (current: DataType, stored: DataType) => DataType,
-};
+// export type IMeta<DataType = any> = {
+//     ignore?: boolean,
+//     filter?: (entry: any) => boolean,
+//     load?: (current: DataType, stored: DataType) => DataType,
+// };
 
 // NOTE: although we probably won't have "customScript" in the file `i18n`
 // object, the idea that each key should be explicitly mentioned like this is a
@@ -209,16 +209,23 @@ export type IStore = {
     infos: IInfoToken[],
 };
 
-export type IStoreEntry<DataType> = {
-    meta: IMeta<DataType>,
-    data: DataType,
+export type IStoreEntry<T> = {
+    setData(data: T): void,
+    getData(): T,
+    reset(): T,
+    load(stored: T): T,
+    save(): T | null,
 };
+
 export type IStoreEntries = {
     [K in keyof IStore]: IStoreEntry<IStore[K]>
 };
+
 export type IStoreEvents = {
     [K in keyof IStore as `${K}-set`]: IStore[K]
 };
+
+export type IStoreEntryData = any[] | Record<string, any>;
 
 export type IInfoToken = {
     id: string,
@@ -229,7 +236,6 @@ export type IInfoToken = {
 
 export type IPG = {
     i18n: Record<string, string>,
-    // roles: Record<string, IRole>,
     roles: IRole[],
     scripts: IScripts,
     infos: IInfoToken[],

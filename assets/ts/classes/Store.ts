@@ -4,7 +4,7 @@ import {
     IStoreEntries,
     IStoreEvents,
     IRole,
-} from "../types/types";
+} from "../types/data";
 import {
     deepClone,
     update,
@@ -64,7 +64,7 @@ export default class Store extends Observer<IStoreEvents> {
             .forEach(<K extends keyof IStore>([key, data]: [K, IStore[K]]) => {
 
                 const ref = this.store[key];
-                
+
                 ref.setData(ref.load(data));
 
             });
@@ -89,9 +89,14 @@ export default class Store extends Observer<IStoreEvents> {
 
     }
 
-    update(data: Partial<IStore>) {
+    update<K extends keyof IStore>(key: K, data: Partial<IStore[K]>) {
+
         // NOTE: Potential future bug - this will override data for arrays.
-        this.write(update(this.read(), data));
+        const existing = this.read();
+        update(existing[key] || {}, data);
+
+        this.write(existing);
+
     }
 
     save(key: keyof IStore) {
@@ -102,7 +107,7 @@ export default class Store extends Observer<IStoreEvents> {
             return;
         }
 
-        this.update({ [key]: saved });
+        this.update(key, saved);
 
     }
 
@@ -130,11 +135,7 @@ export default class Store extends Observer<IStoreEvents> {
     }
 
     reset(key: keyof IStore) {
-
-        this.update({
-            [key]: this.store[key].reset(),
-        });
-
+        this.update(key, this.store[key].reset());
     }
 
     resetAll() {
@@ -183,11 +184,11 @@ export default class Store extends Observer<IStoreEvents> {
         const roles = this.store.roles.getData();
         const augments = this.store.augments.getData();
 
-        if (!Object.hasOwn(roles, id)) {
+        if (!Object.hasOwn(roles, id) && !Object.hasOwn(augments, id)) {
             throw new ReferenceError(`Unable to identify role with ID "${id}"`);
         }
 
-        const role = deepClone(roles[id]);
+        const role = deepClone(roles[id] || {}) as IRole;
         const augment = deepClone(augments[id] || {});
 
         if (augment) {

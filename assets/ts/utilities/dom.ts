@@ -1,7 +1,7 @@
 import {
     IQuerySelectorOptions,
     IDomLookupCache,
-} from "../types/types";
+} from "../types/utilities";
 import {
     memoise,
 } from "./functions";

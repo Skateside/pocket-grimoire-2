@@ -6,7 +6,7 @@ import {
 import {
     IRepositoryNightsRoles,
     IRole,
-} from "../types/types";
+} from "../types/data";
 
 export default class NightOrderView extends View<{
 }> {

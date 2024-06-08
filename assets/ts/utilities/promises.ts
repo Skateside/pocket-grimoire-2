@@ -2,7 +2,7 @@
 
 import {
     IDefer,
-} from "../types/types";
+} from "../types/utilities";
 
 export function defer<T extends any = any>() {
 

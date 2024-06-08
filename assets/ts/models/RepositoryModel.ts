@@ -1,5 +1,7 @@
 import {
     INumeric,
+} from "../types/utilities";
+import {
     IRepository,
     IRole,
     IData,
@@ -12,7 +14,7 @@ import {
     IRepositoryNightsRoles,
     IGameNumbers,
     IGameNumbersCollection,
-} from "../types/types";
+} from "../types/data";
 import {
     deepClone,
     matches,

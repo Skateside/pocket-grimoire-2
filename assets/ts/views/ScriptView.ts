@@ -1,55 +1,114 @@
 import View from "./View";
 import {
     IMetaEntry,
-} from "../types/types";
+    IScript,
+} from "../types/data";
 import {
     findOrDie,
     renderTemplate,
 } from "../utilities/dom";
 import Tabs from "../classes/Tabs";
+import InputProcessor from "../classes/InputProcessor";
+import FileInputProcessor from "../classes/FileInputProcessor";
+import URLInputProcessor from "../classes/URLInputProcessor";
+import PasteInputProcessor from "../classes/PasteInputProcessor";
 
 export default class ScriptView extends View<{
-    "script-select": string,
+    "script-select": IScript,
+    "script-id-select": string,
 }> {
 
-    protected scriptSelectForm: HTMLFormElement;
-    protected scriptSelection: HTMLElement;
-    protected scriptCustomForm: HTMLFormElement;
+    protected selectForm: HTMLFormElement;
+    protected customForm: HTMLFormElement;
+    protected selection: HTMLElement;
+    protected fields: Record<string, InputProcessor>;
     protected tabs: Tabs;
 
-    discoverElements(): void {
+    discoverElements() {
 
-        this.scriptSelectForm = findOrDie("#script-select-form");
-        this.scriptSelection = findOrDie("#script-select-list");
-        this.scriptCustomForm = findOrDie("#script-custom-form");
+        this.selectForm = findOrDie("#script-select-form");
+        this.customForm = findOrDie("#script-custom-form");
+        this.selection = findOrDie("#script-select-list");
+        this.fields = {
+            upload: new FileInputProcessor(findOrDie("#script-custom-upload")),
+            url: new URLInputProcessor(findOrDie("#script-custom-url")),
+            paste: new PasteInputProcessor(findOrDie("#script-custom-paste")),
+        };
         this.tabs = new Tabs(findOrDie("#script-tabs"));
+
+        this.setFieldsActive(this.fields.upload.getInput());
 
     }
 
-    addListeners(): void {
+    addListeners() {
 
         const {
-            scriptSelectForm,
-            scriptCustomForm,
+            selectForm,
+            customForm,
+            fields,
         } = this;
 
-        scriptSelectForm.addEventListener("submit", (e) => {
+        selectForm.addEventListener("submit", (e) => {
 
             e.preventDefault();
-            const input = scriptSelectForm.querySelector<HTMLInputElement>(":checked");
+            const input = selectForm.querySelector<HTMLInputElement>(":checked");
             const value = input?.value || "";
 
             if (value) {
-                this.trigger("script-select", value);
+                this.trigger("script-id-select", value);
             }
 
         });
 
-        scriptCustomForm.addEventListener("submit", (e) => {
+        customForm.addEventListener("submit", (e) => {
+
             e.preventDefault();
+            this.processCustom();
+
+        });
+
+        Object.values(fields).forEach((field) => {
+
+            const input = field.getInput();
+
+            input.addEventListener("input", () => {
+                this.setFieldsActive(input);
+            });
+
         });
 
     }
+
+    setFieldsActive(input: HTMLElement) {
+
+        Object.values(this.fields).forEach((field) => {
+
+            const isActive = field.is(input);
+
+            field.setActive(isActive);
+            field.setRequired(isActive);
+            field.setCustomValidity("");
+
+        });
+
+    }
+
+    // setInputStates(isOffline: boolean) {
+
+    //     const {
+    //         url,
+    //     } = this.fields;
+
+    //     url.setEnabled(!isOffline);
+
+    //     if (isOffline) {
+
+    //         url.setActive(false);
+    //         url.setRequired(false);
+
+    //     }
+
+    // }
 
     drawScripts(scripts: Record<string, IMetaEntry>) {
 
@@ -77,7 +136,44 @@ export default class ScriptView extends View<{
 
             }, document.createDocumentFragment());
 
-        this.scriptSelection.append(contents);
+        this.selection.append(contents);
+
+    }
+
+    processCustom() {
+
+        const fields = Object.values(this.fields);
+        fields.forEach((field) => field.setCustomValidity(""));
+        const field = fields.find((field) => field.isActive());
+
+        if (!field) {
+            return;
+        }
+
+        field.process().then(
+            (script) => this.trigger("script-select", script),
+            (reason) => {
+                field.setCustomValidity(reason);
+                this.customForm.reportValidity();
+            },
+        );
+
+    }
+
+    showCustomError(error: string) {
+
+        const {
+            fields,
+            customForm,
+        } = this;
+        const field = Object.values(fields).find((field) => field.isActive());
+
+        if (!field) {
+            throw new Error(error);
+        }
+
+        field.setCustomValidity(error);
+        customForm.reportValidity();
 
     }
 

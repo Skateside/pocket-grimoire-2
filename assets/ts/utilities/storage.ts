@@ -5,7 +5,7 @@ import {
 } from "./objects";
 import {
     IStorage,
-} from "../types/types";
+} from "../types/utilities";
 
 const defaults: IStorage = {
     // lookup: Object.create(null),

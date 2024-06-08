@@ -1,14 +1,15 @@
 import Model from "./Model";
 import Store from "../classes/Store";
+import ScriptValidator from "../classes/ScriptValidator";
 import {
     IRole,
     IScript,
     IMetaEntry,
     IMinimumRole,
-} from "../types/types";
+} from "../types/data";
 
 export default class ScriptModel extends Model<{
-    // "script-set": IScript,
+    "script-error": string,
 }> {
 
     static isMetaEntry(entry: any): entry is IMetaEntry {
@@ -30,16 +31,18 @@ export default class ScriptModel extends Model<{
         return this.isRole(entry) && Object.keys(entry).length === 1;
     }
 
-    // NOTE: The ScriptController probably doesn't need to know that the script
-    // has been selected.
-    // addStoreListeners(): void {
+    protected validator: ScriptValidator;
 
-    //     const {
-    //         store,
-    //     } = this;
+    ready() {
 
-    //     store.on("script-set", (script) => this.trigger("script-set", script));
+        super.ready();
+        this.validator = new ScriptValidator();
+        this.validator.setMessages(this.store.getData("i18n"));
 
+    }
+
+    // isOffline() {
+    //     return this.store.getData("config").offline;
     // }
 
     getScripts(): Record<string, IMetaEntry> {
@@ -67,6 +70,10 @@ export default class ScriptModel extends Model<{
 
     static extractMeta(script: IScript) {
 
+        if (!Array.isArray(script)) {
+            return;
+        }
+
         const metaIndex = script.findIndex((entry) => {
             return this.isMetaEntry(entry);
         });
@@ -83,6 +90,10 @@ export default class ScriptModel extends Model<{
     }
 
     static identifyRoles(script: IScript, store: Store) {
+
+        if (!Array.isArray(script)) {
+            return;
+        }
 
         const ids = script.map((entry) => {
 
@@ -117,6 +128,30 @@ export default class ScriptModel extends Model<{
 
     }
 
+    static setJinxStates(roles: IRole[]) {
+
+        const ids = roles.map(({ id }) => id);
+
+        roles.forEach(({ jinxes }) => {
+
+            if (!jinxes || !jinxes.length) {
+                return;
+            }
+
+            jinxes.forEach((jinx) => {
+
+                jinx.state = (
+                    ids.includes(jinx.id)
+                    ? "potential"
+                    : "theoretical"
+                );
+
+            });
+
+        });
+
+    }
+
     static createNightOrder(
         roles: IRole[],
         type: "firstNight" | "otherNight",
@@ -133,13 +168,15 @@ export default class ScriptModel extends Model<{
 
         const ids = roles.map(({ id }) => id);
 
-        ["firstNight", "otherNight"].forEach(<K extends "firstNight" | "otherNight">(type: K) => {
+        ["firstNight", "otherNight"].forEach(
+            <K extends "firstNight" | "otherNight">(type: K) => {
 
-            meta[type] = (
-                meta[type] || this.createNightOrder(roles, type)
-            ).filter((id) => ids.includes(id));
+                meta[type] = (
+                    meta[type] || this.createNightOrder(roles, type)
+                ).filter((id) => ids.includes(id));
 
-        });
+            }
+        );
 
         return meta;
 
@@ -151,13 +188,23 @@ export default class ScriptModel extends Model<{
             store,
         } = this;
 
+        const augments = store.getData("augments");
         store.reset("augments");
 
         const constructor = this.constructor as typeof ScriptModel;
-        const clone = [...script];
-        const meta = constructor.extractMeta(clone);
-        const roles = constructor.identifyRoles(clone, store);
+        const meta = constructor.extractMeta(script);
+        const roles = constructor.identifyRoles(script, store);
+        const test = this.validator.test(roles);
 
+        if (typeof test === "string") {
+
+            store.update("augments", augments);
+            this.trigger("script-error", test);
+            return;
+
+        }
+
+        constructor.setJinxStates(roles);
         constructor.setNightOrder(meta, roles);
         store.setData(
             "script",
@@ -179,4 +226,3 @@ export default class ScriptModel extends Model<{
     }
 
 }
-

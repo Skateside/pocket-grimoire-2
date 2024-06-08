@@ -1,6 +1,6 @@
 import {
     INumeric,
-} from "../types/types";
+} from "../types/utilities";
 
 /**
  * Converts the given number to its positive integer.

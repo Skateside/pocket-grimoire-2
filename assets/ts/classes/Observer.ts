@@ -1,7 +1,7 @@
 import {
     ObserverHandler,
     ObserverConverted,
-} from "../types/types";
+} from "../types/classes";
 
 export default class Observer<TEventMap = {}> {
 

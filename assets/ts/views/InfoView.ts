@@ -1,8 +1,10 @@
 import View from "./View";
 import {
     IInfoToken,
+} from "../types/data";
+import {
     IObjectDiff,
-} from "../types/types";
+} from "../types/utilities";
 import {
     findOrDie,
     renderTemplate,

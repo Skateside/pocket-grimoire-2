@@ -1,7 +1,9 @@
 import {
     IObjectDiff,
+} from "../types/utilities";
+import {
     IInfoToken,
-} from "../types/types";
+} from "../types/data";
 import Model from "./Model";
 import {
     diff,
@@ -18,12 +20,12 @@ export default class InfoModel extends Model<{
 
     protected infos: IInfoToken[];
 
-    ready(): void {
+    ready() {
         super.ready();
         this.infos = this.store.getData("infos");
     }
 
-    addStoreListeners(): void {
+    addStoreListeners() {
 
         const {
             store,

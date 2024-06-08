@@ -1,7 +1,7 @@
 import View from "./View";
 import {
     IDomLookupCache,
-} from "../types/types";
+} from "../types/utilities";
 import {
     makeLookupCache,
 } from "../utilities/dom";

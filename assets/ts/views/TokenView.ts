@@ -2,7 +2,7 @@ import View from "./View";
 import {
     IRole,
     ICoordinates,
-} from "../types/types";
+} from "../types/data";
 
 /**
  * @deprecated

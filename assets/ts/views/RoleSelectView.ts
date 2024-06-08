@@ -1,12 +1,14 @@
 import View from "./View";
 import {
     INumeric,
+    IDomLookupCache,
+} from "../types/utilities";
+import {
     ICoreTeam,
     IPlayTeam,
     IRole,
     IGameNumbers,
-    IDomLookupCache,
-} from "../types/types";
+} from "../types/data";
 import {
     renderTemplate,
     serialiseForm,

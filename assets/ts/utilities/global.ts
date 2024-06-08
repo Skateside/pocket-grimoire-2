@@ -6,7 +6,7 @@ import {
 import {
     IRole,
     IScripts,
-} from "../types/types";
+} from "../types/data";
 
 export const defers = {
     roles: defer<IRole[]>(),

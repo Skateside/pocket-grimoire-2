@@ -1,6 +1,6 @@
 import {
     IObjectDiff,
-} from "../types/types";
+} from "../types/utilities";
 
 export function matches(
     check: Record<PropertyKey, any> | null,

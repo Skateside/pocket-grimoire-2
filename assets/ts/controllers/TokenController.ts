@@ -3,7 +3,7 @@ import TokenModel from "../models/TokenModel";
 import TokenView from "../views/TokenView";
 import {
     IRole,
-} from "../types/types";
+} from "../types/data";
 
 /**
  * @deprecated

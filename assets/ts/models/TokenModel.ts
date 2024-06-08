@@ -3,7 +3,7 @@ import {
     IRole,
     IReminderToken,
     ICoordinates,
-} from "../types/types";
+} from "../types/data";
 import Model from "./Model";
 
 /**

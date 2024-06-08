@@ -1,6 +1,6 @@
 import {
     IInfoToken,
-} from "../types/types";
+} from "../types/data";
 import StoreEntry from "./StoreEntry";
 
 export default class StoreEntryInfo<T extends IInfoToken[]> extends StoreEntry<T> {

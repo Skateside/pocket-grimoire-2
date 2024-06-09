@@ -30,7 +30,7 @@ export default class NightOrderView extends View<{
 
     }
 
-    updateNights(nights: Record<INights, IObjectDiff<INightOrderData>>) {
+    updateNights(nights: Record<INights, IObjectDiff<INightOrderDatum>>) {
 
         Object.entries(nights).forEach(([night, update]) => {
             this.updateNight(night as INights, update);
@@ -38,50 +38,86 @@ export default class NightOrderView extends View<{
 
     }
 
-// NOTE: Have I confused `data` and `datum` here?
-    updateNight(night: INights, update: IObjectDiff<INightOrderData>) {
-console.log({ night, update });
+    insertRender(render: DocumentFragment, parent: HTMLElement, order: number) {
 
-        Object.entries(update).forEach(([id, diff]) => {
+        let index = order;
+        let reference = null;
+
+        while (index > 0) {
+            index -= 1;
+            reference = parent.querySelector(`[data-order="${index}"]`);
+        }
+
+        parent.insertBefore(render, reference);
+
+    }
+
+// NOTE: Have I confused `data` and `datum` here?
+    updateNight(night: INights, updates: IObjectDiff<INightOrderDatum>) {
+
+        Object.entries(updates).forEach(([id, update]) => {
+
+            const selector = [
+                ".js--night-order-entry--wrapper",
+                `[data-id="${id}"]`,
+            ];
+            let order = 0;
+
+            if (update.type === "new" || update.type === "update") {
+
+                order = update.value.order + 1;
+                selector.push(`[data-order="${order}"]`);
+
+            }
+
+            const existing = (
+                (update.type === "update" || update.type === "remove")
+                ? this[night].querySelector(selector.join(""))
+                : null
+            );
+            const render = (
+                (update.type === "new" || update.type === "update")
+                ? this.drawEntry(update.value.role, order, night)
+                : null
+            );
+
+            if (
+                update.type === "new"
+                || (update.type === "update" && !existing)
+            ) {
+                return this.insertRender(render, this[night], order);
+            }
+
+            if (update.type === "update") {
+                return existing.replaceWith(render);
+            }
+
+            if (update.type === "remove" && existing) {
+                existing.remove();
+            }
+
         });
 
-        // Object.entries(update).forEach(([id, diff]) => {
-
-        //     const existing = (
-        //         (diff.type === "update" || diff.type === "remove")
-        //         ? this[night].querySelector(
-        //             `.js--info-token--wrapper[data-id="${id}"]`
-        //         )
-        //         : null
-        //     );
-        //     const render = (
-        //         (diff.type === "new" || diff.type === "update")
-        //         ? this.drawEntry(diff.value.role, night)
-        //         : null
-        //     );
-
-
-        // });
-
     }
 
-    drawNights({ firstNight, otherNight }: Record<INights, IRole[]>) {
+    // drawNights({ firstNight, otherNight }: Record<INights, IRole[]>) {
 
-        this.firstNight.replaceChildren(
-            ...firstNight.map((role) => this.drawEntry(role, "firstNight"))
-        );
+    //     this.firstNight.replaceChildren(
+    //         ...firstNight.map((role) => this.drawEntry(role, "firstNight"))
+    //     );
 
-        this.otherNight.replaceChildren(
-            ...otherNight.map((role) => this.drawEntry(role, "otherNight"))
-        );
+    //     this.otherNight.replaceChildren(
+    //         ...otherNight.map((role) => this.drawEntry(role, "otherNight"))
+    //     );
 
-    }
+    // }
 
-    drawEntry(role: IRole, type: INights) {
+    drawEntry(role: IRole, index: number, type: INights) {
 
         return renderTemplate("#night-order-entry", {
             ".js--night-order-entry--wrapper"(element) {
                 element.dataset.id = role.id;
+                element.dataset.order = String(index);
             },
             ".js--night-order-entry--name"(element) {
                 element.textContent = role.name;

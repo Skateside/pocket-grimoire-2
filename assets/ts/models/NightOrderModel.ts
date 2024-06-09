@@ -17,16 +17,18 @@ import {
 
 export default class NightOrderModel extends Model<{
     // "script-set": Record<INights, IRole[]>,
-    "update": Record<INights, IObjectDiff<INightOrderData>>,
+    "update": Record<INights, IObjectDiff<INightOrderDatum>>,
 }> {
 
     protected data: Record<INights, INightOrderData>;
 
     ready() {
-        
+
         super.ready();
 
         this.data = {
+            // firstNight: [],
+            // otherNight: [],
             firstNight: Object.create(null),
             otherNight: Object.create(null),
         };
@@ -34,7 +36,7 @@ export default class NightOrderModel extends Model<{
     }
 
     addStoreListeners() {
-        
+
         const {
             store,
         } = this;
@@ -84,8 +86,8 @@ export default class NightOrderModel extends Model<{
         // });
 
         const oldData = deepClone(data);
-        // data.firstNight = first.map((id) => this.makeData(id));
-        // data.otherNight = other.map((id) => this.makeData(id));
+        // data.firstNight = first.map((id, index) => this.makeData(id, index));
+        // data.otherNight = other.map((id, index) => this.makeData(id, index));
 
         data.firstNight = Object.fromEntries(
             first.map((id, index) => [id, this.makeData(id, index)])
@@ -95,13 +97,22 @@ export default class NightOrderModel extends Model<{
         );
 
 // NOTE: Have I confused `data` and `datum` here?
+// console.group("Working out differences");
         const difference = Object.fromEntries(
-            Object.entries(oldData).map(([night, info]: [INights, INightOrderData]) => [
-                night,
-                diff<INightOrderData>(info, data[night]),
-            ])
-        ) as Record<INights, IObjectDiff<INightOrderData>>;
-        console.log({ difference });
+            // Object.entries(oldData).map(([night, info]: [INights, INightOrderData]) => [
+            //     night,
+            //     diff<INightOrderData>(info, data[night]),
+            // ])
+            Object.entries(oldData).map(([night, info]: [INights, INightOrderData]) => {
+// console.log({ night, info, "data[night]": data[night] });
+                return [
+                    night,
+                    diff<INightOrderDatum>(info, data[night]),
+                ];
+            })
+        ) as Record<INights, IObjectDiff<INightOrderDatum>>;
+// console.groupEnd();
+        // console.log({ difference });
         this.trigger("update", difference);
 
         // const constructor = this.constructor as typeof NightOrderModel;

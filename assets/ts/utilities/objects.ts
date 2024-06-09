@@ -43,13 +43,12 @@ function setDiffKey(diff: IObjectDiff, key: string, entry: IObjectDiffEntry) {
 }
 
 export function diff<T extends any = any>(
-    source: Record<PropertyKey, any>,
-    update: Record<PropertyKey, any>,
+    source: Record<PropertyKey, any> | any[],
+    update: Record<PropertyKey, any> | any[],
 ) {
 
-    const isArray = Array.isArray(source);
     const diff: IObjectDiff<T> = (
-        isArray
+        Array.isArray(source)
         ? []
         : Object.create(null)
     );
@@ -70,7 +69,11 @@ export function diff<T extends any = any>(
             return;
         }
 
-        const item = source[key];
+        const item = (
+            Array.isArray(source)
+            ? source[Number(key)]
+            : source[key]
+        );
 
         if (
             (

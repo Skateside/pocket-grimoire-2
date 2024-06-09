@@ -1,123 +1,125 @@
 import View from "./View";
 import {
-    querySelectorCached,
     findOrDie,
     renderTemplate,
 } from "../utilities/dom";
 import {
-    // IRepositoryNightsRoles,
     IRole,
     INights,
-    INightOrderData,
     INightOrderDatum,
 } from "../types/data";
 import {
-    IObjectDiff,
-} from "../types/utilities";
+    replace,
+} from "../utilities/arrays";
+
+type INightOrderEntry = {
+    id: string,
+    added: boolean,
+    dead: boolean,
+    element: HTMLElement,
+    placeholder: Comment,
+};
 
 export default class NightOrderView extends View<{
 }> {
 
     protected firstNight: HTMLElement;
     protected otherNight: HTMLElement;
-    protected showNotInPlay: HTMLInputElement;
+    protected showAllInput: HTMLInputElement;
+    protected showDeadInput: HTMLInputElement;
+    protected entries: Record<INights, INightOrderEntry[]>;
+    protected showNotAdded: boolean;
+    protected showDead: boolean;
 
     discoverElements() {
 
-        this.firstNight = findOrDie("#first-night")!;
-        this.otherNight = findOrDie("#other-night")!;
-        this.showNotInPlay = findOrDie<HTMLInputElement>("#show-all")!;
+        this.firstNight = findOrDie("#first-night");
+        this.otherNight = findOrDie("#other-night");
+        this.showAllInput = findOrDie<HTMLInputElement>("#show-all");
+        this.showDeadInput = findOrDie<HTMLInputElement>("#show-dead");
+
+        this.entries = {
+            firstNight: [],
+            otherNight: [],
+        };
+        this.showNotAdded = false;
+        this.showDead = false;
 
     }
 
-    updateNights(nights: Record<INights, IObjectDiff<INightOrderDatum>>) {
+    addListeners() {
 
-        Object.entries(nights).forEach(([night, update]) => {
-            this.updateNight(night as INights, update);
+        const {
+            showAllInput,
+            showDeadInput,
+        } = this;
+
+        showAllInput.addEventListener("change", () => {
+
+            const {
+                checked,
+            } = showAllInput;
+
+            this.showNotAdded = checked;
+
+            if (checked && !showDeadInput.checked) {
+                showDeadInput.checked = true;
+            }
+
+            this.showEntries();
+
         });
 
-    }
+        showDeadInput.addEventListener("change", () => {
 
-    insertRender(render: DocumentFragment, parent: HTMLElement, order: number) {
-
-        let index = order;
-        let reference = null;
-
-        while (index > 0) {
-            index -= 1;
-            reference = parent.querySelector(`[data-order="${index}"]`);
-        }
-
-        parent.insertBefore(render, reference);
-
-    }
-
-// NOTE: Have I confused `data` and `datum` here?
-    updateNight(night: INights, updates: IObjectDiff<INightOrderDatum>) {
-
-        Object.entries(updates).forEach(([id, update]) => {
-
-            const selector = [
-                ".js--night-order-entry--wrapper",
-                `[data-id="${id}"]`,
-            ];
-            let order = 0;
-
-            if (update.type === "new" || update.type === "update") {
-
-                order = update.value.order + 1;
-                selector.push(`[data-order="${order}"]`);
-
-            }
-
-            const existing = (
-                (update.type === "update" || update.type === "remove")
-                ? this[night].querySelector(selector.join(""))
-                : null
-            );
-            const render = (
-                (update.type === "new" || update.type === "update")
-                ? this.drawEntry(update.value.role, order, night)
-                : null
-            );
-
-            if (
-                update.type === "new"
-                || (update.type === "update" && !existing)
-            ) {
-                return this.insertRender(render, this[night], order);
-            }
-
-            if (update.type === "update") {
-                return existing.replaceWith(render);
-            }
-
-            if (update.type === "remove" && existing) {
-                existing.remove();
-            }
+            this.showDead = showDeadInput.checked;
+            this.showEntries();
 
         });
 
     }
 
-    // drawNights({ firstNight, otherNight }: Record<INights, IRole[]>) {
+    drawNights(nights: Record<INights, INightOrderDatum[]>) {
 
-    //     this.firstNight.replaceChildren(
-    //         ...firstNight.map((role) => this.drawEntry(role, "firstNight"))
-    //     );
+        Object
+            .entries(nights)
+            .forEach(([night, data]: [INights, INightOrderDatum[]]) => {
 
-    //     this.otherNight.replaceChildren(
-    //         ...otherNight.map((role) => this.drawEntry(role, "otherNight"))
-    //     );
+                const entries = data.map((datum) => {
+                    return this.createEntry(datum, night);
+                });
 
-    // }
+                replace(this.entries[night], entries);
+                this[night].replaceChildren(
+                    ...entries.map(({ placeholder }) => placeholder)
+                );
 
-    drawEntry(role: IRole, index: number, type: INights) {
+            });
+
+        this.showEntries();
+        this.updateAllRenders();
+
+    }
+
+    createEntry(datum: INightOrderDatum, night: INights): INightOrderEntry {
+
+        const entry = this.drawEntry(datum.role, night);
+
+        return {
+            id: datum.role.id,
+            added: datum.added > 0 || datum.role.edition === "-pg-",
+            dead: datum.dead > 0,
+            element: entry.firstElementChild as HTMLElement,
+            placeholder: document.createComment(datum.role.id),
+        };
+
+    }
+
+    drawEntry(role: IRole, type: INights) {
 
         return renderTemplate("#night-order-entry", {
             ".js--night-order-entry--wrapper"(element) {
                 element.dataset.id = role.id;
-                element.dataset.order = String(index);
             },
             ".js--night-order-entry--name"(element) {
                 element.textContent = role.name;
@@ -133,55 +135,66 @@ export default class NightOrderView extends View<{
 
     }
 
-    /*
-    static markInPlay(element: HTMLElement, ids: string[]) {
-
-        element.classList.toggle(
-            "is-playing",
-            ids.includes(element.dataset.id || ""),
-        );
-
-    }
-    */
-
-    /*
-    markInPlay(roles: IRole[]) {
-
-        const constructor = this.constructor as typeof NightOrderView;
-        const ids = roles.map(({ id }) => id);
-
-        this.firstNight
-            .querySelectorAll<HTMLElement>(".js--night-order-entry--wrapper")
-            .forEach((element) => {
-                constructor.markInPlay(element, ids);
-            });
-
-        this.otherNights
-            .querySelectorAll<HTMLElement>(".js--night-order-entry--wrapper")
-            .forEach((element) => {
-                constructor.markInPlay(element, ids);
-            });
-
-    }
-    */
-
-    /*
-    addListeners() {
+    showEntries() {
 
         const {
-            firstNight,
-            otherNights,
-            showNotInPlay,
+            showNotAdded,
+            showDead,
         } = this;
 
-        showNotInPlay.addEventListener("change", () => {
+        Object.entries(this.entries).forEach(([night, entries]) => {
 
-            firstNight.classList.toggle("is-show-all", showNotInPlay.checked);
-            otherNights.classList.toggle("is-show-all", showNotInPlay.checked);
+            night = night as INights;
+
+            entries.forEach(({ added, dead, element, placeholder }) => {
+
+                const shouldShow = (
+                    (added && !dead)
+                    || (!added && showNotAdded)
+                    || (dead && showDead)
+                );
+
+                if (shouldShow && placeholder.parentElement) {
+                    placeholder.replaceWith(element);
+                } else if (!shouldShow && element.parentElement) {
+                    element.replaceWith(placeholder);
+                }
+
+            });
 
         });
 
     }
-    */
+
+    updateRender(entry: INightOrderEntry) {
+
+        entry.element.classList.toggle("is-added", entry.added);
+        entry.element.classList.toggle("is-dead", entry.dead);
+
+    }
+
+    updateRenderById(id: string) {
+
+        Object.values(this.entries).forEach((entries) => {
+
+            const entry = entries.find((entry) => entry.id == id);
+
+            if (!entry) {
+                return;
+            }
+
+            this.updateRender(entry);
+
+        });
+
+    }
+
+    updateAllRenders() {
+
+        Object.values(this.entries).forEach((entries) => {
+            entries.forEach((entry) => this.updateRender(entry));
+        });
+
+    }
 
 }

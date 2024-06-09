@@ -164,12 +164,9 @@ export type INights = "firstNight" | "otherNight";
 
 export type INightOrderDatum = {
     role: IRole,
-    order: number,
-    dead: boolean,
-    added: boolean,
+    dead: number,
+    added: number,
 };
-
-export type INightOrderData = Record<string, INightOrderDatum>;
 
 
 // -- Deprecated after this ------------------------------------------------- //

@@ -13,8 +13,7 @@ export default class NightOrderController extends Controller<NightOrderModel, Ni
             view,
         } = this;
 
-        // model.on("script-set", (nights) => view.drawNights(nights));
-        model.on("update", (updates) => view.updateNights(updates));
+        model.on("script-set", (nights) => view.drawNights(nights));
 
         // view.drawNights(model.getScriptNightsRoles());
         // view.markInPlay(model.getInPlayRoles());

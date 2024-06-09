@@ -2,33 +2,21 @@ import Model from "./Model";
 import {
     IScript,
     INights,
-    // IRole,
     IMetaEntry,
-    INightOrderData,
     INightOrderDatum,
 } from "../types/data";
-import {
-    IObjectDiff,
-} from "../types/utilities";
-import {
-    deepClone,
-    diff,
-} from "../utilities/objects";
 
 export default class NightOrderModel extends Model<{
-    // "script-set": Record<INights, IRole[]>,
-    "update": Record<INights, IObjectDiff<INightOrderDatum>>,
+    "script-set": Record<INights, INightOrderDatum[]>,
 }> {
 
-    protected data: Record<INights, INightOrderData>;
+    protected data: Record<INights, INightOrderDatum[]>;
 
     ready() {
 
         super.ready();
 
         this.data = {
-            // firstNight: [],
-            // otherNight: [],
             firstNight: Object.create(null),
             otherNight: Object.create(null),
         };
@@ -42,18 +30,12 @@ export default class NightOrderModel extends Model<{
         } = this;
 
         store.on("script-set", (script) => this.processNightOrder(script));
+        // TODO: listen for player dead toggle
+        // TODO: listen for role added
 
     }
 
     processNightOrder(script: IScript) {
-
-        const {
-            store,
-            data,
-        } = this;
-
-        // data.firstNight.length = 0;
-        // data.otherNight.length = 0;
 
         const meta = script.find((entry) => {
             return typeof entry === "object" && entry.id === "_meta";
@@ -64,88 +46,24 @@ export default class NightOrderModel extends Model<{
         }
 
         const {
-            firstNight: first,
-            otherNight: other,
-        } = meta;
+            data,
+        } = this;
 
-        // const firstNight = first.map((id) => store.getRole(id));
-        // const otherNight = other.map((id) => store.getRole(id));
+        data.firstNight = meta.firstNight.map((id) => this.makeData(id));
+        data.otherNight = meta.otherNight.map((id) => this.makeData(id));
 
-        // data.firstNight.length = 0;
-        // data.firstNight.push(
-        //     ...first.map((id) => ({
-        //         role: store.getRole(id),
-        //         dead: false,
-        //         added: false,
-        //     }))
-        // );
-
-        // this.trigger("script-set", {
-        //     firstNight,
-        //     otherNight,
-        // });
-
-        const oldData = deepClone(data);
-        // data.firstNight = first.map((id, index) => this.makeData(id, index));
-        // data.otherNight = other.map((id, index) => this.makeData(id, index));
-
-        data.firstNight = Object.fromEntries(
-            first.map((id, index) => [id, this.makeData(id, index)])
-        );
-        data.otherNight = Object.fromEntries(
-            other.map((id, index) => [id, this.makeData(id, index)])
-        );
-
-// NOTE: Have I confused `data` and `datum` here?
-// console.group("Working out differences");
-        const difference = Object.fromEntries(
-            // Object.entries(oldData).map(([night, info]: [INights, INightOrderData]) => [
-            //     night,
-            //     diff<INightOrderData>(info, data[night]),
-            // ])
-            Object.entries(oldData).map(([night, info]: [INights, INightOrderData]) => {
-// console.log({ night, info, "data[night]": data[night] });
-                return [
-                    night,
-                    diff<INightOrderDatum>(info, data[night]),
-                ];
-            })
-        ) as Record<INights, IObjectDiff<INightOrderDatum>>;
-// console.groupEnd();
-        // console.log({ difference });
-        this.trigger("update", difference);
-
-        // const constructor = this.constructor as typeof NightOrderModel;
-        // constructor.setNight(data.firstNight, first.map((id) => store.getRole(id)));
-        // constructor.setNight(data.otherNight, other.map((id) => store.getRole(id)));
-
-
-
+        this.trigger("script-set", data);
 
     }
 
-    makeData(roleId: string, index: number): INightOrderDatum {
+    makeData(roleId: string): INightOrderDatum {
 
         return {
             role: this.store.getRole(roleId),
-            order: index,
-            dead: false,
-            added: false,
+            dead: 0,
+            added: 0,
         };
 
     }
-
-    // static setNight(night: INightOrderData[], roles: IRole[]) {
-
-    //     night.length = 0;
-    //     night.push(
-    //         ...roles.map((role) => ({
-    //             role,
-    //             dead: false,
-    //             added: false,
-    //         }))
-    //     );
-
-    // }
 
 }

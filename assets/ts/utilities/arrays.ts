@@ -16,3 +16,12 @@ export function shuffle<T extends any>(array: T[]) {
         .map(({ value }) => value);
 
 }
+
+export function replace(array: any[], contents: any[]) {
+
+    array.length = 0;
+    array.push(...contents);
+
+    return array;
+
+}

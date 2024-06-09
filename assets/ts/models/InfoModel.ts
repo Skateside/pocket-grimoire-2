@@ -6,6 +6,9 @@ import {
 } from "../types/data";
 import Model from "./Model";
 import {
+    replace,
+} from "../utilities/arrays";
+import {
     diff,
     isEmpty,
     deepClone,
@@ -48,9 +51,8 @@ export default class InfoModel extends Model<{
 
         if (!isEmpty(difference)) {
 
+            replace(this.infos, infos);
             this.trigger("info-update", difference);
-            this.infos.length = 0;
-            this.infos.push(...infos);
 
         }
 

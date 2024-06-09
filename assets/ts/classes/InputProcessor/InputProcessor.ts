@@ -1,6 +1,6 @@
 import {
     IScript,
-} from "../types/data";
+} from "../../types/data";
 
 export default abstract class InputProcessor<
     Input extends HTMLInputElement | HTMLTextAreaElement = HTMLInputElement | HTMLTextAreaElement

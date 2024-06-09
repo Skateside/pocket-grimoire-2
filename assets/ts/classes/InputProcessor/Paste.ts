@@ -1,9 +1,9 @@
 import InputProcessor from "./InputProcessor";
 import {
     IScript,
-} from "../types/data";
+} from "../../types/data";
 
-export default class PasteInputProcessor extends InputProcessor<HTMLTextAreaElement> {
+export default class Paste extends InputProcessor<HTMLTextAreaElement> {
 
     process() {
 

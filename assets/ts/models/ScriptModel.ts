@@ -41,10 +41,6 @@ export default class ScriptModel extends Model<{
 
     }
 
-    // isOffline() {
-    //     return this.store.getData("config").offline;
-    // }
-
     getScripts(): Record<string, IMetaEntry> {
 
         const constructor = this.constructor as typeof ScriptModel;

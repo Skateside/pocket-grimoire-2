@@ -1,13 +1,13 @@
 import InputProcessor from "./InputProcessor";
 import {
     IScript,
-} from "../types/data";
+} from "../../types/data";
 
-export default class URLInputProcessor extends InputProcessor<HTMLInputElement> {
+export default class URL extends InputProcessor<HTMLInputElement> {
 
     process() {
 
-        if (!(/^https?:$/).test((new URL(window.location.href)).protocol)) {
+        if (!(/^https?:$/).test((new window.URL(window.location.href)).protocol)) {
             return Promise.reject(this.input.dataset.errorOffline || "offline");
         }
 

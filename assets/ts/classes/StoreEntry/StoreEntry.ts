@@ -1,10 +1,10 @@
 import {
     IStoreEntry,
     IStoreEntryData,
-} from "../types/data";
+} from "../../types/data";
 import {
     deepClone,
-} from "../utilities/objects";
+} from "../../utilities/objects";
 
 export default class StoreEntry<T extends IStoreEntryData> implements IStoreEntry<T> {
 

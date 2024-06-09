@@ -10,9 +10,9 @@ import {
     update,
 } from "../utilities/objects";
 import Observer from "./Observer";
-import StoreEntry from "./StoreEntry";
-import StoreEntryUnsavable from "./StoreEntryUnsavable";
-import StoreEntryInfo from "./StoreEntryInfo";
+import StoreEntry from "./StoreEntry/StoreEntry";
+import Unsavable from "./StoreEntry/Unsavable";
+import Info from "./StoreEntry/Info";
 
 export default class Store extends Observer<IStoreEvents> {
 
@@ -27,14 +27,14 @@ export default class Store extends Observer<IStoreEvents> {
         super();
 
         this.store = {
-            i18n: new StoreEntryUnsavable<IStore["i18n"]>({}),
-            roles: new StoreEntryUnsavable<IStore["roles"]>({}),
+            i18n: new Unsavable<IStore["i18n"]>({}),
+            roles: new Unsavable<IStore["roles"]>({}),
             augments: new StoreEntry<IStore["augments"]>({}),
             script: new StoreEntry<IStore["script"]>([]),
-            scripts: new StoreEntryUnsavable<IStore["scripts"]>({}),
-            seats: new StoreEntryUnsavable<IStore["seats"]>([]),
-            reminders: new StoreEntryUnsavable<IStore["reminders"]>([]),
-            infos: new StoreEntryInfo<IStore["infos"]>([]),
+            scripts: new Unsavable<IStore["scripts"]>({}),
+            seats: new Unsavable<IStore["seats"]>([]),
+            reminders: new Unsavable<IStore["reminders"]>([]),
+            infos: new Info<IStore["infos"]>([]),
         };
 
     }

@@ -1,12 +1,12 @@
 import InputProcessor from "./InputProcessor";
 import {
     IScript,
-} from "../types/data";
+} from "../../types/data";
 import {
     readUTF8,
-} from "../utilities/strings";
+} from "../../utilities/strings";
 
-export default class FileInputProcessor extends InputProcessor<HTMLInputElement> {
+export default class File extends InputProcessor<HTMLInputElement> {
 
     process() {
 

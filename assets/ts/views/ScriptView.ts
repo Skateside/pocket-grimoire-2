@@ -8,10 +8,10 @@ import {
     renderTemplate,
 } from "../utilities/dom";
 import Tabs from "../classes/Tabs";
-import InputProcessor from "../classes/InputProcessor";
-import FileInputProcessor from "../classes/FileInputProcessor";
-import URLInputProcessor from "../classes/URLInputProcessor";
-import PasteInputProcessor from "../classes/PasteInputProcessor";
+import InputProcessor from "../classes/InputProcessor/InputProcessor";
+import File from "../classes/InputProcessor/File";
+import URL from "../classes/InputProcessor/URL";
+import Paste from "../classes/InputProcessor/Paste";
 
 export default class ScriptView extends View<{
     "script-select": IScript,
@@ -30,9 +30,9 @@ export default class ScriptView extends View<{
         this.customForm = findOrDie("#script-custom-form");
         this.selection = findOrDie("#script-select-list");
         this.fields = {
-            upload: new FileInputProcessor(findOrDie("#script-custom-upload")),
-            url: new URLInputProcessor(findOrDie("#script-custom-url")),
-            paste: new PasteInputProcessor(findOrDie("#script-custom-paste")),
+            upload: new File(findOrDie("#script-custom-upload")),
+            url: new URL(findOrDie("#script-custom-url")),
+            paste: new Paste(findOrDie("#script-custom-paste")),
         };
         this.tabs = new Tabs(findOrDie("#script-tabs"));
 

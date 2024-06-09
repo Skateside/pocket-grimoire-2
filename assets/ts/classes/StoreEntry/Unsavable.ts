@@ -1,9 +1,9 @@
 import {
     IStoreEntryData,
-} from "../types/data";
+} from "../../types/data";
 import StoreEntry from "./StoreEntry";
 
-export default class StoreEntryUnsavable<T extends IStoreEntryData> extends StoreEntry<T> {
+export default class Unsavable<T extends IStoreEntryData> extends StoreEntry<T> {
 
     save(): T | null {
         return null;

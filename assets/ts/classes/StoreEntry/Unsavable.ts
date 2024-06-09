@@ -1,6 +1,6 @@
 import {
     IStoreEntryData,
-} from "../../types/data";
+} from "../../types/classes";
 import StoreEntry from "./StoreEntry";
 
 export default class Unsavable<T extends IStoreEntryData> extends StoreEntry<T> {

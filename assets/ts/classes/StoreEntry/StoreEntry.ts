@@ -1,7 +1,7 @@
 import {
     IStoreEntry,
     IStoreEntryData,
-} from "../../types/data";
+} from "../../types/classes";
 import {
     deepClone,
 } from "../../utilities/objects";

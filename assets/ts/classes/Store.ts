@@ -1,10 +1,12 @@
 import {
     IPG,
     IStore,
-    IStoreEntries,
     IStoreEvents,
     IRole,
 } from "../types/data";
+import {
+    IStoreEntries,
+} from "../types/classes";
 import {
     deepClone,
     update,

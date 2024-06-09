@@ -1,11 +1,27 @@
 export type INumeric = number | `${number}`;
 
-export type IObjectDiff<T extends any = any> = Record<string, {
+export type ArrayOrRecord<Data> = Record<PropertyKey, Data> | Data[];
+
+export type IObjectDiffEntry<T extends any = any> = {
     value: T,
     type: "new" | "update",
 } | {
     type: "remove",
-}>;
+};
+
+export type IObjectDiff<T extends any = any> = ArrayOrRecord<IObjectDiffEntry<T>>;
+
+// export type IObjectDiff<T extends any = any> = Record<string, {
+//     value: T,
+//     type: "new" | "update",
+// } | {
+//     type: "remove",
+// }> | ({
+//     value: T,
+//     type: "new" | "update",
+// } | {
+//     type: "remove",
+// })[];
 
 // -- Deprecated after this ------------------------------------------------- //
 

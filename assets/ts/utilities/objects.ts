@@ -1,5 +1,6 @@
 import {
     IObjectDiff,
+    IObjectDiffEntry,
 } from "../types/utilities";
 
 export function matches(
@@ -31,17 +32,32 @@ export function isPrimative(object: unknown): boolean {
 
 }
 
+function setDiffKey(diff: IObjectDiff, key: string, entry: IObjectDiffEntry) {
+
+    if (Array.isArray(diff)) {
+        diff[Number(key)] = entry;
+    } else {
+        diff[key] = entry;
+    }
+
+}
+
 export function diff<T extends any = any>(
     source: Record<PropertyKey, any>,
     update: Record<PropertyKey, any>,
 ) {
 
-    const diff: IObjectDiff<T> = Object.create(null);
+    const isArray = Array.isArray(source);
+    const diff: IObjectDiff<T> = (
+        isArray
+        ? []
+        : Object.create(null)
+    );
 
     Object.keys(source).forEach((key) => {
 
         if (!Object.hasOwn(update, key)) {
-            diff[key] = { type: "remove" };
+            setDiffKey(diff, key, { type: "remove" });
             return;
         }
 
@@ -50,7 +66,7 @@ export function diff<T extends any = any>(
     Object.entries(update).forEach(([key, value]) => {
 
         if (!Object.hasOwn(source, key)) {
-            diff[key] = { value, type: "new" };
+            setDiffKey(diff, key, { value, type: "new" });
             return;
         }
 
@@ -72,7 +88,7 @@ export function diff<T extends any = any>(
             return;
         }
 
-        diff[key] = { value, type: "update" };
+        setDiffKey(diff, key, { value, type: "update" });
 
     });
 

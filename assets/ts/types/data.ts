@@ -142,23 +142,9 @@ export type IStore = {
     infos: IInfoToken[],
 };
 
-export type IStoreEntry<T> = {
-    setData(data: T): void,
-    getData(): T,
-    reset(): T,
-    load(stored: T): T,
-    save(): T | null,
-};
-
-export type IStoreEntries = {
-    [K in keyof IStore]: IStoreEntry<IStore[K]>
-};
-
 export type IStoreEvents = {
     [K in keyof IStore as `${K}-set`]: IStore[K]
 };
-
-export type IStoreEntryData = any[] | Record<string, any>;
 
 export type IInfoToken = {
     id: string,
@@ -173,6 +159,18 @@ export type IPG = {
     scripts: IScripts,
     infos: IInfoToken[],
 };
+
+export type INights = "firstNight" | "otherNight";
+
+export type INightOrderDatum = {
+    role: IRole,
+    order: number,
+    dead: boolean,
+    added: boolean,
+};
+
+export type INightOrderData = Record<string, INightOrderDatum>;
+
 
 // -- Deprecated after this ------------------------------------------------- //
 
@@ -204,13 +202,13 @@ export type IData = {
 export type IRepository = IData[];
 
 /** @deprecated */
-export type INights<T> = {
-    [K in 'first' | 'other']: T[]
-};
+// export type INights<T> = {
+//     [K in 'first' | 'other']: T[]
+// };
 /** @deprecated */
-export type IRepositoryNights = INights<IData>;
+export type IRepositoryNights = {};//INights<IData>;
 /** @deprecated */
-export type IRepositoryNightsRoles = INights<IRole>;
+export type IRepositoryNightsRoles = {};//INights<IRole>;
 
 /** @deprecated */
 export type IToken = {

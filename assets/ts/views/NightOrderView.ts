@@ -1,45 +1,83 @@
 import View from "./View";
 import {
     querySelectorCached,
+    findOrDie,
     renderTemplate,
 } from "../utilities/dom";
 import {
-    IRepositoryNightsRoles,
+    // IRepositoryNightsRoles,
     IRole,
+    INights,
+    INightOrderData,
+    INightOrderDatum,
 } from "../types/data";
+import {
+    IObjectDiff,
+} from "../types/utilities";
 
 export default class NightOrderView extends View<{
 }> {
 
     protected firstNight: HTMLElement;
-    protected otherNights: HTMLElement;
+    protected otherNight: HTMLElement;
     protected showNotInPlay: HTMLInputElement;
 
     discoverElements() {
 
-        const options = {
-            required: true,
-        };
-
-        this.firstNight = querySelectorCached("#first-night", options)!;
-        this.otherNights = querySelectorCached("#other-nights", options)!;
-        this.showNotInPlay = querySelectorCached<HTMLInputElement>("#show-all", options)!;
+        this.firstNight = findOrDie("#first-night")!;
+        this.otherNight = findOrDie("#other-night")!;
+        this.showNotInPlay = findOrDie<HTMLInputElement>("#show-all")!;
 
     }
 
-    drawNights({ first, other }: IRepositoryNightsRoles) {
+    updateNights(nights: Record<INights, IObjectDiff<INightOrderData>>) {
+
+        Object.entries(nights).forEach(([night, update]) => {
+            this.updateNight(night as INights, update);
+        });
+
+    }
+
+// NOTE: Have I confused `data` and `datum` here?
+    updateNight(night: INights, update: IObjectDiff<INightOrderData>) {
+console.log({ night, update });
+
+        Object.entries(update).forEach(([id, diff]) => {
+        });
+
+        // Object.entries(update).forEach(([id, diff]) => {
+
+        //     const existing = (
+        //         (diff.type === "update" || diff.type === "remove")
+        //         ? this[night].querySelector(
+        //             `.js--info-token--wrapper[data-id="${id}"]`
+        //         )
+        //         : null
+        //     );
+        //     const render = (
+        //         (diff.type === "new" || diff.type === "update")
+        //         ? this.drawEntry(diff.value.role, night)
+        //         : null
+        //     );
+
+
+        // });
+
+    }
+
+    drawNights({ firstNight, otherNight }: Record<INights, IRole[]>) {
 
         this.firstNight.replaceChildren(
-            ...first.map((role) => this.drawEntry(role, "first"))
+            ...firstNight.map((role) => this.drawEntry(role, "firstNight"))
         );
 
-        this.otherNights.replaceChildren(
-            ...other.map((role) => this.drawEntry(role, "other"))
+        this.otherNight.replaceChildren(
+            ...otherNight.map((role) => this.drawEntry(role, "otherNight"))
         );
 
     }
 
-    drawEntry(role: IRole, type: keyof IRepositoryNightsRoles) {
+    drawEntry(role: IRole, type: INights) {
 
         return renderTemplate("#night-order-entry", {
             ".js--night-order-entry--wrapper"(element) {
@@ -49,7 +87,7 @@ export default class NightOrderView extends View<{
                 element.textContent = role.name;
             },
             ".js--night-order-entry--text"(element) {
-                element.textContent = role[`${type}NightReminder`];
+                element.textContent = role[`${type}Reminder`];
             },
             // TEMP: this is only commented out to prevent 404's in the console.
             // ".js--night-order-entry--image"(element) {
@@ -59,6 +97,7 @@ export default class NightOrderView extends View<{
 
     }
 
+    /*
     static markInPlay(element: HTMLElement, ids: string[]) {
 
         element.classList.toggle(
@@ -67,7 +106,9 @@ export default class NightOrderView extends View<{
         );
 
     }
+    */
 
+    /*
     markInPlay(roles: IRole[]) {
 
         const constructor = this.constructor as typeof NightOrderView;
@@ -86,7 +127,9 @@ export default class NightOrderView extends View<{
             });
 
     }
+    */
 
+    /*
     addListeners() {
 
         const {
@@ -103,5 +146,6 @@ export default class NightOrderView extends View<{
         });
 
     }
+    */
 
 }

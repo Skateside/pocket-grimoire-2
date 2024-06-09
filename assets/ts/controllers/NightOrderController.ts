@@ -1,8 +1,8 @@
 import Controller from "./Controller";
-import RepositoryModel from "../models/RepositoryModel";
+import NightOrderModel from "../models/NightOrderModel";
 import NightOrderView from "../views/NightOrderView";
 
-export default class NightOrderController extends Controller<RepositoryModel, NightOrderView> {
+export default class NightOrderController extends Controller<NightOrderModel, NightOrderView> {
 
     render() {
 
@@ -13,16 +13,19 @@ export default class NightOrderController extends Controller<RepositoryModel, Ni
             view,
         } = this;
 
-        view.drawNights(model.getScriptNightsRoles());
-        view.markInPlay(model.getInPlayRoles());
+        // model.on("script-set", (nights) => view.drawNights(nights));
+        model.on("update", (update) => view.updateNights(update));
 
-        model.on("script-update", () => {
-            view.drawNights(model.getScriptNightsRoles());
-            view.markInPlay(model.getInPlayRoles());
-        });
-        model.on("inplay-update", () => {
-            view.markInPlay(model.getInPlayRoles());
-        });
+        // view.drawNights(model.getScriptNightsRoles());
+        // view.markInPlay(model.getInPlayRoles());
+
+        // model.on("script-update", () => {
+        //     view.drawNights(model.getScriptNightsRoles());
+        //     view.markInPlay(model.getInPlayRoles());
+        // });
+        // model.on("inplay-update", () => {
+        //     view.markInPlay(model.getInPlayRoles());
+        // });
 
     }
 

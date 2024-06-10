@@ -120,19 +120,16 @@ export type IReminder = {
     coords: ICoordinates,
 };
 
-// export type IMeta<DataType = any> = {
-//     ignore?: boolean,
-//     filter?: (entry: any) => boolean,
-//     load?: (current: DataType, stored: DataType) => DataType,
-// };
-
-// NOTE: although we probably won't have "customScript" in the file `i18n`
-// object, the idea that each key should be explicitly mentioned like this is a
-// good one - it'll allow for autocompletion of the keys and warn if any are
-// misspelt.
+export type Ii18nKeys = (
+    "scriptcheckisarray"
+    | "scriptcheckhasroles"
+    | "scriptcheckrequiredkeys"
+    | "scriptcheckrequiredteams"
+    | "scriptcheckrecognisedteams"
+);
 
 export type IStore = {
-    i18n: Record<"customScript", string>,
+    i18n: Record<Ii18nKeys, string>,
     roles: Record<string, IRole>,
     augments: Record<string, Partial<IRole>>,
     script: IScript,
@@ -162,10 +159,20 @@ export type IPG = {
 
 export type INights = "firstNight" | "otherNight";
 
+export type INightOrderEntry = {
+    element: HTMLElement,
+    placeholder: Comment,
+};
+
+export type INightOrderFilters = {
+    showNotAdded: boolean,
+    showDead: boolean,
+};
+
 export type INightOrderDatum = {
-    role: IRole,
-    dead: number,
-    added: number,
+    added: boolean,
+    dead: boolean,
+    show: boolean,
 };
 
 

@@ -25,3 +25,7 @@ export function replace(array: any[], contents: any[]) {
     return array;
 
 }
+
+export function unique(array: any[]) {
+    return [...new Set(array)];
+}

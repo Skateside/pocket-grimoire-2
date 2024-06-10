@@ -13,18 +13,12 @@ export default class NightOrderController extends Controller<NightOrderModel, Ni
             view,
         } = this;
 
+        model.setFilters(view.getFilters());
+
         model.on("script-set", (nights) => view.drawNights(nights));
+        model.on("update-states", (diff) => view.updateElements(diff));
 
-        // view.drawNights(model.getScriptNightsRoles());
-        // view.markInPlay(model.getInPlayRoles());
-
-        // model.on("script-update", () => {
-        //     view.drawNights(model.getScriptNightsRoles());
-        //     view.markInPlay(model.getInPlayRoles());
-        // });
-        // model.on("inplay-update", () => {
-        //     view.markInPlay(model.getInPlayRoles());
-        // });
+        view.on("filters-update", (filters) => model.setFilters(filters));
 
     }
 

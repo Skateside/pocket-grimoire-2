@@ -538,6 +538,7 @@ export default class RepositoryModel extends Model<{
     }
     */
 
+    /*
     getNight(script: IData[], type: keyof IRepositoryNights) {
 
         const constructor = this.constructor as typeof RepositoryModel;
@@ -590,5 +591,6 @@ export default class RepositoryModel extends Model<{
         };
 
     }
+    */
 
 }

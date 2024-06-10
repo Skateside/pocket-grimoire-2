@@ -32,31 +32,17 @@ export function isPrimative(object: unknown): boolean {
 
 }
 
-function setDiffKey(diff: IObjectDiff, key: string, entry: IObjectDiffEntry) {
-
-    if (Array.isArray(diff)) {
-        diff[Number(key)] = entry;
-    } else {
-        diff[key] = entry;
-    }
-
-}
-
 export function diff<T extends any = any>(
-    source: Record<PropertyKey, any> | any[],
-    update: Record<PropertyKey, any> | any[],
+    source: Record<PropertyKey, any>,
+    update: Record<PropertyKey, any>,
 ) {
 
-    const diff: IObjectDiff<T> = (
-        Array.isArray(source)
-        ? []
-        : Object.create(null)
-    );
+    const diff: IObjectDiff<T> = Object.create(null);
 
     Object.keys(source).forEach((key) => {
 
         if (!Object.hasOwn(update, key)) {
-            setDiffKey(diff, key, { type: "remove" });
+            diff[key] = { type: "remove" };
             return;
         }
 
@@ -65,15 +51,11 @@ export function diff<T extends any = any>(
     Object.entries(update).forEach(([key, value]) => {
 
         if (!Object.hasOwn(source, key)) {
-            setDiffKey(diff, key, { value, type: "new" });
+            diff[key] =  { value, type: "new" };
             return;
         }
 
-        const item = (
-            Array.isArray(source)
-            ? source[Number(key)]
-            : source[key]
-        );
+        const item = source[key];
 
         if (
             (
@@ -91,12 +73,17 @@ export function diff<T extends any = any>(
             return;
         }
 
-        setDiffKey(diff, key, { value, type: "update" });
+        diff[key] = { value, type: "update" };
 
     });
 
     return diff;
 
+}
+
+export function empty(object: Record<PropertyKey, any>) {
+    Object.keys(object).forEach((key) => delete object[key]);
+    return object;
 }
 
 export function isEmpty(

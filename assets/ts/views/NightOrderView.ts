@@ -4,46 +4,40 @@ import {
     renderTemplate,
 } from "../utilities/dom";
 import {
+    empty,
+} from "../utilities/objects";
+import {
     IRole,
     INights,
+    INightOrderEntry,
+    INightOrderFilters,
     INightOrderDatum,
 } from "../types/data";
 import {
-    replace,
-} from "../utilities/arrays";
-
-type INightOrderEntry = {
-    id: string,
-    added: boolean,
-    dead: boolean,
-    element: HTMLElement,
-    placeholder: Comment,
-};
+    IObjectDiff,
+} from "../types/utilities";
 
 export default class NightOrderView extends View<{
+    "filters-update": INightOrderFilters,
 }> {
 
     protected firstNight: HTMLElement;
     protected otherNight: HTMLElement;
     protected showAllInput: HTMLInputElement;
     protected showDeadInput: HTMLInputElement;
-    protected entries: Record<INights, INightOrderEntry[]>;
-    protected showNotAdded: boolean;
-    protected showDead: boolean;
+    protected filter: INightOrderFilters;
+    protected elements: Record<INights, Record<string, INightOrderEntry>>;
 
     discoverElements() {
 
         this.firstNight = findOrDie("#first-night");
         this.otherNight = findOrDie("#other-night");
-        this.showAllInput = findOrDie<HTMLInputElement>("#show-all");
-        this.showDeadInput = findOrDie<HTMLInputElement>("#show-dead");
-
-        this.entries = {
-            firstNight: [],
-            otherNight: [],
+        this.showAllInput = findOrDie("#show-all");
+        this.showDeadInput = findOrDie("#show-dead");
+        this.elements = {
+            firstNight: Object.create(null),
+            otherNight: Object.create(null),
         };
-        this.showNotAdded = false;
-        this.showDead = false;
 
     }
 
@@ -60,57 +54,99 @@ export default class NightOrderView extends View<{
                 checked,
             } = showAllInput;
 
-            this.showNotAdded = checked;
-
             if (checked && !showDeadInput.checked) {
                 showDeadInput.checked = true;
             }
 
-            this.showEntries();
+            this.announceFilters();
 
         });
 
         showDeadInput.addEventListener("change", () => {
+            this.announceFilters();
+        });
 
-            this.showDead = showDeadInput.checked;
-            this.showEntries();
+    }
+
+    getFilters() {
+
+        return {
+            showNotAdded: this.showAllInput.checked,
+            showDead: this.showDeadInput.checked,
+        };
+
+    }
+
+    announceFilters() {
+        this.trigger("filters-update", this.getFilters());
+    }
+
+    drawNights(nights: Record<INights, IRole[]>) {
+
+        Object
+            .entries(nights)
+            .forEach(([night, roles]: [INights, IRole[]]) => {
+
+                const elements = Object.fromEntries(roles.map((role) => [
+                    role.id,
+                    this.createEntry(role, night),
+                ]));
+
+                Object.assign(empty(this.elements[night]), elements);
+                this[night].replaceChildren(
+                    ...Object
+                        .values(elements)
+                        .map(({ placeholder }) => placeholder)
+                );
+
+            });
+
+    }
+
+    updateElements(difference: IObjectDiff<INightOrderDatum>) {
+
+        Object.entries(this.elements).forEach(([night, elements]) => {
+
+            night = night as INights;
+
+            Object.entries(difference).forEach(([id, diff]) => {
+
+                if (!Object.hasOwn(elements, id) || diff.type === "remove") {
+                    return;
+                }
+
+                const {
+                    placeholder,
+                    element,
+                } = elements[id];
+                const {
+                    added,
+                    dead,
+                    show,
+                } = diff.value;
+
+                element.classList.toggle("is-added", added);
+                element.classList.toggle("is-dead", dead);
+
+                if (show && placeholder.parentElement) {
+                    placeholder.replaceWith(element);
+                } else if (!show && element.parentElement) {
+                    element.replaceWith(placeholder);
+                }
+
+            });
 
         });
 
     }
 
-    drawNights(nights: Record<INights, INightOrderDatum[]>) {
+    createEntry(role: IRole, night: INights): INightOrderEntry {
 
-        Object
-            .entries(nights)
-            .forEach(([night, data]: [INights, INightOrderDatum[]]) => {
-
-                const entries = data.map((datum) => {
-                    return this.createEntry(datum, night);
-                });
-
-                replace(this.entries[night], entries);
-                this[night].replaceChildren(
-                    ...entries.map(({ placeholder }) => placeholder)
-                );
-
-            });
-
-        this.showEntries();
-        this.updateAllRenders();
-
-    }
-
-    createEntry(datum: INightOrderDatum, night: INights): INightOrderEntry {
-
-        const entry = this.drawEntry(datum.role, night);
+        const entry = this.drawEntry(role, night);
 
         return {
-            id: datum.role.id,
-            added: datum.added > 0 || datum.role.edition === "-pg-",
-            dead: datum.dead > 0,
             element: entry.firstElementChild as HTMLElement,
-            placeholder: document.createComment(datum.role.id),
+            placeholder: document.createComment(role.id),
         };
 
     }
@@ -131,68 +167,6 @@ export default class NightOrderView extends View<{
             // ".js--night-order-entry--image"(element) {
             //     (element as HTMLImageElement).src = role.image;
             // },
-        });
-
-    }
-
-    showEntries() {
-
-        const {
-            showNotAdded,
-            showDead,
-        } = this;
-
-        Object.entries(this.entries).forEach(([night, entries]) => {
-
-            night = night as INights;
-
-            entries.forEach(({ added, dead, element, placeholder }) => {
-
-                const shouldShow = (
-                    (added && !dead)
-                    || (!added && showNotAdded)
-                    || (dead && showDead)
-                );
-
-                if (shouldShow && placeholder.parentElement) {
-                    placeholder.replaceWith(element);
-                } else if (!shouldShow && element.parentElement) {
-                    element.replaceWith(placeholder);
-                }
-
-            });
-
-        });
-
-    }
-
-    updateRender(entry: INightOrderEntry) {
-
-        entry.element.classList.toggle("is-added", entry.added);
-        entry.element.classList.toggle("is-dead", entry.dead);
-
-    }
-
-    updateRenderById(id: string) {
-
-        Object.values(this.entries).forEach((entries) => {
-
-            const entry = entries.find((entry) => entry.id == id);
-
-            if (!entry) {
-                return;
-            }
-
-            this.updateRender(entry);
-
-        });
-
-    }
-
-    updateAllRenders() {
-
-        Object.values(this.entries).forEach((entries) => {
-            entries.forEach((entry) => this.updateRender(entry));
         });
 
     }

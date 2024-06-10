@@ -3,6 +3,7 @@ import Store from "../classes/Store";
 import ScriptValidator from "../classes/ScriptValidator";
 import {
     IRole,
+    INights,
     IScript,
     IMetaEntry,
     IMinimumRole,
@@ -148,10 +149,7 @@ export default class ScriptModel extends Model<{
 
     }
 
-    static createNightOrder(
-        roles: IRole[],
-        type: "firstNight" | "otherNight",
-    ): string[] {
+    static createNightOrder(roles: IRole[], type: INights): string[] {
 
         return roles
             .filter((role) => role[type] > 0)
@@ -164,8 +162,7 @@ export default class ScriptModel extends Model<{
 
         const ids = roles.map(({ id }) => id);
 
-        ["firstNight", "otherNight"].forEach(
-            <K extends "firstNight" | "otherNight">(type: K) => {
+        ["firstNight", "otherNight"].forEach((type: INights) => {
 
                 meta[type] = (
                     meta[type] || this.createNightOrder(roles, type)

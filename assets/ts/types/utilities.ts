@@ -9,7 +9,8 @@ export type IObjectDiffEntry<T extends any = any> = {
     type: "remove",
 };
 
-export type IObjectDiff<T extends any = any> = ArrayOrRecord<IObjectDiffEntry<T>>;
+// export type IObjectDiff<T extends any = any> = ArrayOrRecord<IObjectDiffEntry<T>>;
+export type IObjectDiff<T extends any = any> = Record<PropertyKey, IObjectDiffEntry<T>>;
 
 // export type IObjectDiff<T extends any = any> = Record<string, {
 //     value: T,

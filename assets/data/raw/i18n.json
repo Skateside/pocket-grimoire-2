@@ -1,3 +1,7 @@
 {
-    "customScript": "Custom Script"
+    "scriptcheckisarray": "The script should contain an array of roles or IDs",
+    "scriptcheckhasroles": "There are no roles",
+    "scriptcheckrequiredkeys": "Each role needs at least the following keys: {0}",
+    "scriptcheckrequiredteams": "There must be at least 1 role for each of these teams: {0}",
+    "scriptcheckrecognisedteams": "An unrecognised team was given - these are the only recognised teams: {0}"
 }

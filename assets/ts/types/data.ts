@@ -129,6 +129,7 @@ export type Ii18nKeys = (
 );
 
 export type IStore = {
+    game: IGameNumbersCollection,
     i18n: Record<Ii18nKeys, string>,
     roles: Record<string, IRole>,
     augments: Record<string, Partial<IRole>>,
@@ -151,6 +152,7 @@ export type IInfoToken = {
 };
 
 export type IPG = {
+    game: IGameNumbers[],
     i18n: Record<string, string>,
     roles: IRole[],
     scripts: IScripts,

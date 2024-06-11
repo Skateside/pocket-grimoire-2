@@ -1,4 +1,7 @@
 import {
+    INumeric,
+} from "../types/utilities";
+import {
     IPG,
     IStore,
     IStoreEvents,
@@ -15,6 +18,7 @@ import Observer from "./Observer";
 import StoreEntry from "./StoreEntry/StoreEntry";
 import Unsavable from "./StoreEntry/Unsavable";
 import Info from "./StoreEntry/Info";
+import gameData from "../data/game";
 
 export default class Store extends Observer<IStoreEvents> {
 
@@ -29,6 +33,7 @@ export default class Store extends Observer<IStoreEvents> {
         super();
 
         this.store = {
+            game: new Unsavable<IStore["game"]>({}),
             i18n: new Unsavable<IStore["i18n"]>({}),
             roles: new Unsavable<IStore["roles"]>({}),
             augments: new StoreEntry<IStore["augments"]>({}),
@@ -45,12 +50,14 @@ export default class Store extends Observer<IStoreEvents> {
 
         const PG = (window as any).PG as IPG;
         const {
+            game,
             i18n,
             roles,
             scripts,
             infos,
         } = this.store;
 
+        game.setData(gameData);
         i18n.setData(PG.i18n);
         roles.setData(
             Object.fromEntries(PG.roles.map((role) => [role.id, role]))
@@ -166,6 +173,30 @@ export default class Store extends Observer<IStoreEvents> {
 
         // NOTE: Potential future bug - this will override data for arrays.
         store.setData(update(store.getData(), extend));
+
+    }
+
+    getNumbers(players: INumeric) {
+
+        let playerCount = Math.floor(players as number);
+
+        if (Number.isNaN(playerCount)) {
+            throw new TypeError(`Unrecognised player count type: ${players}`);
+        }
+
+        if (playerCount < 5 || playerCount > 20) {
+
+            throw new RangeError(
+                `Player count must be between 5 and 20 - ${playerCount} given`
+            );
+
+        }
+
+        if (playerCount > 15) {
+            playerCount = 15;
+        }
+
+        return this.store.game.getData()[playerCount];
 
     }
 

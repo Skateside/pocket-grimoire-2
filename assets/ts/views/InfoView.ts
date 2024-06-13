@@ -13,7 +13,7 @@ import {
     toHTML,
     strip,
 } from "../utilities/markdown";
-import Dialog from "../classes/Dialog";
+import Dialog from "../classes/UI/Dialog";
 
 export default class InfoView extends View<{
     "info-update": {

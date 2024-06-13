@@ -121,7 +121,12 @@ export type IReminder = {
 };
 
 export type Ii18nKeys = (
-    "scriptcheckisarray"
+    "grouptownsfolk"
+    | "groupoutsider"
+    | "groupminion"
+    | "groupdemon"
+    | "grouptraveler"
+    | "scriptcheckisarray"
     | "scriptcheckhasroles"
     | "scriptcheckrequiredkeys"
     | "scriptcheckrequiredteams"

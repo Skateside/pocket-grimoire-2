@@ -113,12 +113,13 @@
 
                 <form class="js--role-select--count-form">
                     <label for="role-select-count">Player count</label>
-                    <input type="range" name="role-select-count" id="role-select-count" class="js--role-select--count" min="5" max="20" step="1" value="10" data-output="#role-select-count-output">
+                    <input type="range" name="role-select-count" id="role-select-count" min="5" max="20" step="1" value="10" data-output="#role-select-count-output">
                     <output id="role-select-count-output" aria-hidden="true">10</output>
                 </form>
 
                 <form class="js--role-select--roles">
-                    <fieldset class="js--role-select--team" data-team="townsfolk">
+                    <div id="role-select-groups" data-text="{0} ({1}/{2})"></div>
+                    <!-- <fieldset class="js--role-select--team" data-team="townsfolk">
                         <legend class="js--role-select--legend" data-text="Townsfolk ({count}/{max})" data-count="0" data-max="X">Townsfolk</legend>
                         <div class="js--role-select--items"></div>
                     </fieldset>
@@ -137,22 +138,29 @@
                     <fieldset class="js--role-select--team" data-team="traveler">
                         <legend class="js--role-select--legend" data-text="Travellers ({count}/{max})" data-count="0" data-max="X">Travellers</legend>
                         <div class="js--role-select--items"></div>
-                    </fieldset>
+                    </fieldset> -->
                     <p><button type="submit">Draw</button></p>
                 </form>
 
-                <template id="role-select">
-                    <div class="js--role-select--role">
+                <template id="role-select-group-template">
+                    <fieldset class="js--role-select-group--team">
+                        <legend class="js--role-select-group--legend"></legend>
+                        <div class="js--role-select-group--items"></div>
+                    </fieldset>
+                </template>
+
+                <template id="role-select-item-template">
+                    <div class="js--role-select-item--role">
                         <div>
-                            <label data-text="Quantity for {0}" class="js--role-select--quantity"></label>
-                            <input type="range" class="js--role-select--input" value="0" min="0" step="1" max="15">
-                            <output class="js--role-select--output" aria-hidden="true">0</output>
+                            <label data-text="Quantity for {0}" class="js--role-select-item--quantity"></label>
+                            <input type="range" class="js--role-select-item--input" value="0" min="0" step="1" max="15">
+                            <output class="js--role-select-item--output" aria-hidden="true">0</output>
                         </div>
-                        <label class="js--role-select--label">
-                            <input type="checkbox" class="js--role-select--checkbox">
+                        <label class="js--role-select-item--label">
+                            <input type="checkbox" class="js--role-select-item--checkbox">
                             <!-- <img class="js--role-select--image"> -->
-                            <span class="js--role-select--name"></span>
-                            <span class="js--role-select--ability"></span>
+                            <span class="js--role-select-item--name"></span>
+                            <span class="js--role-select-item--ability"></span>
                         </label>
                     </div>
                 </template>

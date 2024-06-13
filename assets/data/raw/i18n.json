@@ -1,4 +1,9 @@
 {
+    "grouptownsfolk": "Townsfolk",
+    "groupoutsider": "Outsiders",
+    "groupminion": "Minions",
+    "groupdemon": "Demons",
+    "grouptraveler": "Travellers",
     "scriptcheckisarray": "The script should contain an array of roles or IDs",
     "scriptcheckhasroles": "There are no roles",
     "scriptcheckrequiredkeys": "Each role needs at least the following keys: {0}",

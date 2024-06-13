@@ -103,6 +103,8 @@ export function findOrDie<T extends HTMLElement>(
 
 }
 
+export const findOrDieCached = memoise(findOrDie);
+
 export function updateChildren(
     content: HTMLElement | DocumentFragment,
     updates: Record<string, (element: HTMLElement) => void>
@@ -123,9 +125,7 @@ export function renderTemplate(
     populates: Record<string, (element: HTMLElement) => void>
 ): DocumentFragment {
 
-    const template = querySelectorCached<HTMLTemplateElement>(selector, {
-        required: true
-    })!;
+    const template = findOrDieCached<HTMLTemplateElement>(selector);
     const clone = template.content.cloneNode(true) as DocumentFragment;
 
     updateChildren(clone, populates);

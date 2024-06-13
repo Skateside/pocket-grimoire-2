@@ -1,4 +1,116 @@
 import View from "./View";
+import RangeCount from "../classes/UI/RangeCount";
+import {
+    findOrDie,
+    renderTemplate,
+} from "../utilities/dom";
+import {
+    supplant,
+} from "../utilities/strings";
+import {
+    IGameNumbers,
+} from "../types/data";
+
+export default class RoleSelectView extends View<{
+    "count-update": number,
+}> {
+
+    protected range: HTMLInputElement;
+    protected rangeCount: RangeCount;
+    protected groups: HTMLElement;
+    protected legends: Record<string, HTMLElement>;
+
+    discoverElements() {
+        
+        this.range = findOrDie("#role-select-count");
+        this.rangeCount = new RangeCount(this.range);
+        this.groups = findOrDie("#role-select-groups");
+        this.legends = Object.create(null);
+
+    }
+
+    addListeners() {
+        
+        const {
+            range,
+        } = this;
+
+        range.addEventListener("input", () => {
+            this.trigger("count-update", Number(range.value));
+        });
+
+    }
+
+    drawGroups(texts: [string, string][]) {
+
+        const {
+            legends,
+        } = this;
+
+        const fragment = texts.reduce((fragment, [id, text]) => {
+
+            fragment.append(renderTemplate("#role-select-group-template", {
+                ".js--role-select-group--team"(element) {
+                    element.dataset.id = id;
+                },
+                ".js--role-select-group--legend"(element) {
+                    element.dataset.group = text;
+                    element.dataset.count = "0";
+                    element.dataset.max = "X";
+                    legends[id] = element;
+                },
+                // ".js--role-select-group--items"(element) {
+                // },
+            }));
+
+            return fragment;
+
+        }, document.createDocumentFragment());
+
+        this.groups.append(fragment);
+
+    }
+
+    updateGroups(numbers: IGameNumbers) {
+
+        Object.entries(numbers).forEach(([id, count]) => {
+            this.updateGroup(id, String(count));
+        });
+
+        this.updateGroup("traveler", "X");
+
+    }
+
+    updateGroup(id: string, count: string) {
+
+        const {
+            groups,
+            legends,
+        } = this;
+        const legend = legends[id];
+
+        if (!legend) {
+            return;
+        }
+
+        legend.dataset.max = count;
+
+        legend.textContent = supplant(groups.dataset.text, [
+            legend.dataset.group,
+            legend.dataset.count,
+            legend.dataset.max,
+        ]);
+
+
+    }
+
+    getCount() {
+        return Number(this.range.value);
+    }
+
+}
+
+/*
 import {
     INumeric,
     IDomLookupCache,
@@ -257,3 +369,4 @@ export default class RoleSelectView extends View<{
     }
 
 }
+*/

@@ -1,6 +1,6 @@
 import {
     findOrDie,
-} from "../utilities/dom";
+} from "../../utilities/dom";
 
 export default class Tabs {
 

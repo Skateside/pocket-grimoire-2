@@ -7,7 +7,7 @@ import {
     findOrDie,
     renderTemplate,
 } from "../utilities/dom";
-import Tabs from "../classes/Tabs";
+import Tabs from "../classes/UI/Tabs";
 import InputProcessor from "../classes/InputProcessor/InputProcessor";
 import File from "../classes/InputProcessor/File";
 import URL from "../classes/InputProcessor/URL";

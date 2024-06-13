@@ -1,8 +1,8 @@
-import RepositoryModel from "../models/RepositoryModel";
+import RoleSelectModel from "../models/RoleSelectModel";
 import RoleSelectView from "../views/RoleSelectView";
 import Controller from "./Controller";
 
-export default class RoleSelectController extends Controller<RepositoryModel, RoleSelectView> {
+export default class RoleSelectController extends Controller<RoleSelectModel, RoleSelectView> {
 
     render(): void {
 
@@ -12,6 +12,14 @@ export default class RoleSelectController extends Controller<RepositoryModel, Ro
             model,
             view,
         } = this;
+
+        view.drawGroups(model.getTexts());
+        view.updateGroups(model.getNumbers(view.getCount()));
+        view.on("count-update", (number) => {
+            view.updateGroups(model.getNumbers(number));
+        });
+
+        /*
         const {
             getGameNumbers,
         } = RepositoryModel;
@@ -31,6 +39,7 @@ export default class RoleSelectController extends Controller<RepositoryModel, Ro
         });
 
         view.setGameNumbers(getGameNumbers(view.getPlayerCount()));
+        */
 
     }
 

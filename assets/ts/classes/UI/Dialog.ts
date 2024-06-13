@@ -1,6 +1,6 @@
 import {
     wordlist,
-} from "../utilities/strings";
+} from "../../utilities/strings";
 
 export default class Dialog {
 

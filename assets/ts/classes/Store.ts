@@ -39,10 +39,12 @@ export default class Store extends Observer<IStoreEvents> {
             augments: new StoreEntry<IStore["augments"]>({}),
             script: new StoreEntry<IStore["script"]>([]),
             scripts: new Unsavable<IStore["scripts"]>({}),
-            seats: new Unsavable<IStore["seats"]>([]),
-            reminders: new Unsavable<IStore["reminders"]>([]),
             infos: new Info<IStore["infos"]>([]),
+            // seats: new Unsavable<IStore["seats"]>([]),
+            // reminders: new Unsavable<IStore["reminders"]>([]),
         };
+
+        // TODO: store the input values.
 
     }
 

@@ -40,16 +40,20 @@ export default class Observer<TEventMap = {}> {
     }
 
     /*
+    // Right now this will give me a ts(2345) error in Store.ts
     trigger<K extends keyof TEventMap>(
-        eventName: K,
-        ...details: TEventMap[K] extends undefined ? [] | [undefined] : [TEventMap[K]]
+        ...[eventName, detail]: (
+            TEventMap[K] extends void
+            ? [eventName: K]
+            : [eventName: K, detail: TEventMap[K]]
+        )
     ) {
 
         this.observerElement.dispatchEvent(
             new CustomEvent<TEventMap[K]>(eventName as string, {
                 bubbles: false,
                 cancelable: false,
-                detail: details[0],
+                detail,
             })
         );
 

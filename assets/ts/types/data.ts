@@ -108,17 +108,17 @@ export type IGameNumbers = {
 
 export type IGameNumbersCollection = Record<number, IGameNumbers>;
 
-export type ISeat = {
-    coords: ICoordinates,
-    name: string,
-    roleId: string,
-};
+// export type ISeat = {
+//     coords: ICoordinates,
+//     name: string,
+//     roleId: string,
+// };
 
-export type IReminder = {
-    id: string,
-    index: number,
-    coords: ICoordinates,
-};
+// export type IReminder = {
+//     id: string,
+//     index: number,
+//     coords: ICoordinates,
+// };
 
 export type Ii18nKeys = (
     "grouptownsfolk"
@@ -140,9 +140,9 @@ export type IStore = {
     augments: Record<string, Partial<IRole>>,
     script: IScript,
     scripts: IScripts,
-    seats: ISeat[],
-    reminders: IReminder[],
     infos: IInfoToken[],
+    // seats: ISeat[],
+    // reminders: IReminder[],
 };
 
 export type IStoreEvents = {

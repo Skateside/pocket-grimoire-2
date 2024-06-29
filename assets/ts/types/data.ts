@@ -141,6 +141,7 @@ export type IStore = {
     script: IScript,
     scripts: IScripts,
     infos: IInfoToken[],
+    inputs: Record<string, string | boolean>,
     // seats: ISeat[],
     // reminders: IReminder[],
 };

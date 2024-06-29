@@ -24,6 +24,9 @@ export type IObjectDiff<T extends any = any> = Record<PropertyKey, IObjectDiffEn
 //     type: "remove",
 // })[];
 
+export type IFieldElement = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+
+
 // -- Deprecated after this ------------------------------------------------- //
 
 /** @deprecated */

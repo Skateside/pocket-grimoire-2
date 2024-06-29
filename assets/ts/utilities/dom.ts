@@ -1,6 +1,7 @@
 import {
     IQuerySelectorOptions,
     IDomLookupCache,
+    IFieldElement,
 } from "../types/utilities";
 import {
     memoise,
@@ -167,7 +168,7 @@ export function serialiseForm(form: HTMLFormElement): Record<string, any> {
  * (or, at least, a consistent) order. If the given input does not exist or is
  * not an input then nothing happens.
  */
-export function announceInput(input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) {
+export function announceInput(input: IFieldElement) {
 
     input.dispatchEvent(new Event("input", {
         bubbles: true,

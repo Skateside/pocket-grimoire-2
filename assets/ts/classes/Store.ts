@@ -40,6 +40,7 @@ export default class Store extends Observer<IStoreEvents> {
             script: new StoreEntry<IStore["script"]>([]),
             scripts: new Unsavable<IStore["scripts"]>({}),
             infos: new Info<IStore["infos"]>([]),
+            inputs: new StoreEntry<IStore["inputs"]>({}),
             // seats: new Unsavable<IStore["seats"]>([]),
             // reminders: new Unsavable<IStore["reminders"]>([]),
         };
@@ -49,6 +50,8 @@ export default class Store extends Observer<IStoreEvents> {
     }
 
     ready() {
+
+        // Load data from the localised data.
 
         const PG = (window as any).PG as IPG;
         const {
@@ -66,6 +69,8 @@ export default class Store extends Observer<IStoreEvents> {
         );
         scripts.setData(PG.scripts);
         infos.setData(PG.infos);
+
+        // Load data from localStorage.
 
         const constructor = this.constructor as typeof Store;
         const stored = JSON.parse(window.localStorage.getItem(constructor.KEY));

@@ -146,7 +146,7 @@ export default class InputView extends View<{
 
             announceInput(input);
 
-            if (input.form) {
+            if (input.form && !input.form.hasAttribute("data-no-autosubmit")) {
                 forms.add(input.form);
             }
 

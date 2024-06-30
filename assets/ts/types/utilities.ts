@@ -30,10 +30,10 @@ export type IFieldElement = HTMLInputElement | HTMLSelectElement | HTMLTextAreaE
 // -- Deprecated after this ------------------------------------------------- //
 
 /** @deprecated */
-export type IQuerySelectorOptions = Partial<{
-    required: boolean,
-    root: HTMLElement | Document | null,
-}>;
+// export type IQuerySelectorOptions = Partial<{
+//     required: boolean,
+//     root: HTMLElement | Document | null,
+// }>;
 
 // A Promise variant that can be resolved externally.
 /** @deprecated */
@@ -43,7 +43,7 @@ export type IDefer<T extends any = any> = Promise<T> & {
 };
 
 /** @deprecated */
-export type IDomLookupCache<T extends HTMLElement = HTMLElement> = (element: HTMLElement) => T;
+// export type IDomLookupCache<T extends HTMLElement = HTMLElement> = (element: HTMLElement) => T;
 
 /** @deprecated */
 export type IStorage = {

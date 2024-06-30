@@ -1,8 +1,8 @@
-import View from "./View";
-import {
+import type {
     IMetaEntry,
     IScript,
 } from "../types/data";
+import View from "./View";
 import {
     findOrDie,
     renderTemplate,
@@ -46,6 +46,7 @@ export default class ScriptView extends View<{
             selectForm,
             customForm,
             fields,
+            tabs,
         } = this;
 
         selectForm.addEventListener("submit", (e) => {
@@ -77,6 +78,17 @@ export default class ScriptView extends View<{
 
         });
 
+        tabs.getHolder().addEventListener("tab-hide", ({ target }) => {
+
+            const panel = Tabs.getPanelFromTab(target as HTMLElement);
+            const form = panel?.querySelector("form");
+
+            if (form) {
+                form.reset();
+            }
+
+        });
+
     }
 
     setFieldsActive(input: HTMLElement) {
@@ -92,23 +104,6 @@ export default class ScriptView extends View<{
         });
 
     }
-
-    // setInputStates(isOffline: boolean) {
-
-    //     const {
-    //         url,
-    //     } = this.fields;
-
-    //     url.setEnabled(!isOffline);
-
-    //     if (isOffline) {
-
-    //         url.setActive(false);
-    //         url.setRequired(false);
-
-    //     }
-
-    // }
 
     drawScripts(scripts: Record<string, IMetaEntry>) {
 

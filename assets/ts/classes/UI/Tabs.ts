@@ -1,15 +1,26 @@
+import type {
+    ITabData,
+} from "../../types/classes";
 import {
     findOrDie,
 } from "../../utilities/dom";
 
 export default class Tabs {
 
+    static getPanelFromTab(tab: HTMLElement) {
+
+        const id = tab.getAttribute("aria-controls");
+
+        return (
+            id === null
+            ? null
+            : document.getElementById(id)
+        );
+
+    }
+
     protected holder: HTMLElement;
-    protected elements: {
-        tab: HTMLButtonElement,
-        panel: HTMLElement,
-        active: boolean,
-    }[];
+    protected elements: ITabData[];
 
     constructor(holder: HTMLElement) {
 
@@ -95,6 +106,10 @@ export default class Tabs {
 
     }
 
+    getHolder() {
+        return this.holder;
+    }
+
     getActiveIndex() {
         return this.elements.findIndex(({ active }) => active);
     }
@@ -107,37 +122,60 @@ export default class Tabs {
 
         this.elements.forEach((data, elementIndex) => {
 
-            const {
-                tab,
-                panel,
-            } = data;
-
             if (index === elementIndex) {
-
-                tab.removeAttribute("tabindex");
-                tab.setAttribute("aria-selected", "true");
-                panel.hidden = false;
-                data.active = true;
-
-                if (!suppressFocus) {
-                    tab.focus();
-                }
-
-                tab.dispatchEvent(new CustomEvent("tab-show", {
-                    bubbles: true,
-                    cancelable: false,
-                }));
-
+                this.showData(data, suppressFocus);
             } else {
-
-                tab.tabIndex = -1;
-                tab.setAttribute("aria-selected", "false");
-                panel.hidden = true;
-                data.active = false;
-
+                this.hideData(data);
             }
 
         });
+
+    }
+
+    protected showData(data: ITabData, suppressFocus = false) {
+
+        const {
+            tab,
+            panel,
+        } = data;
+
+        tab.removeAttribute("tabindex");
+        tab.setAttribute("aria-selected", "true");
+        panel.hidden = false;
+        data.active = true;
+
+        if (!suppressFocus) {
+            tab.focus();
+        }
+
+        tab.dispatchEvent(new CustomEvent("tab-show", {
+            bubbles: true,
+            cancelable: false,
+        }));
+
+    }
+
+    protected hideData(data: ITabData) {
+
+        const {
+            tab,
+            panel,
+        } = data;
+        const wasShowing = data.active;
+
+        tab.tabIndex = -1;
+        tab.setAttribute("aria-selected", "false");
+        panel.hidden = true;
+        data.active = false;
+
+        if (wasShowing) {
+
+            tab.dispatchEvent(new CustomEvent("tab-hide", {
+                bubbles: true,
+                cancelable: false,
+            }));
+
+        }
 
     }
 

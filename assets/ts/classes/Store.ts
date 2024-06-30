@@ -109,7 +109,12 @@ export default class Store extends Observer<IStoreEvents> {
 
         // NOTE: Potential future bug - this will override data for arrays.
         const existing = this.read();
-        update(existing[key] || {}, data);
+
+        if (Object.hasOwn(existing, key)) {
+            update(existing[key], data);
+        } else {
+            existing[key] = data as IStore[K];
+        }
 
         this.write(existing);
 
@@ -245,6 +250,21 @@ export default class Store extends Observer<IStoreEvents> {
         }
 
         return role;
+
+    }
+
+    removeStaleInputs() {
+
+        const {
+            inputs,
+        } = this.store;
+
+        inputs.setData(
+            Object.fromEntries(
+                Object.entries(inputs.getData())
+                    .filter(([selector]) => document.querySelector(selector))
+            )
+        );
 
     }
 

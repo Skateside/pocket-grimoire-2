@@ -1,4 +1,4 @@
-import {
+import type {
     IRole,
     IStore,
 } from "./data";
@@ -26,3 +26,12 @@ export type IStoreEntries = {
 };
 
 export type IStoreEntryData = any[] | Record<string, any>;
+
+export type IInputValue = boolean | string | void;
+export type IInputRecord = Record<string, IInputValue>;
+
+export type ITabData = {
+    tab: HTMLButtonElement,
+    panel: HTMLElement,
+    active: boolean,
+};

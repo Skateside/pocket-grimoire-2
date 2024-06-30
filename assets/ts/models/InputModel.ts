@@ -1,10 +1,12 @@
+import type {
+    IInputRecord,
+} from "../types/classes";
 import Model from "./Model";
 
 export default class InputModel extends Model<{
 }> {
 
-    update(data: Record<string, string | boolean>) {
-console.log({ data });
+    update(data: IInputRecord) {
         this.store.update("inputs", data);
     }
 

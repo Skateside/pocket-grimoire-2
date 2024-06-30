@@ -1,13 +1,16 @@
-import View from "./View";
-import {
+import type {
+    IInputRecord,
+} from "../types/classes";
+import type {
     IFieldElement,
 } from "../types/utilities";
+import View from "./View";
 import {
     announceInput,
 } from "../utilities/dom";
 
 export default class InputView extends View<{
-    "input-update": Record<string, string | boolean>,
+    "input-update": IInputRecord,
 }> {
 
     static identify(input: IFieldElement) {
@@ -46,13 +49,13 @@ export default class InputView extends View<{
 
     }
 
-    static serialise(input: IFieldElement): Record<string, string | boolean> {
+    static serialise(input: IFieldElement) {
 
         const {
             name,
             type,
         } = input;
-        const serialised = Object.create(null);
+        const serialised = Object.create(null) as IInputRecord;
 
         if (!name || type === "file") {
             return serialised;
@@ -67,24 +70,52 @@ export default class InputView extends View<{
     watchInputs() {
 
         const constructor = this.constructor as typeof InputView;
+        const {
+            body,
+        } = document;
 
-        document.body.addEventListener("input", ({ target }) => {
+        body.addEventListener("input", ({ target }) => {
 
             const input = (target as HTMLElement)
                 .closest<IFieldElement>("input,select,textarea");
 
             if (input && !input.hasAttribute("data-no-store")) {
-console.log('this.trigger("input-update", %o)', constructor.serialise(input));
                 this.trigger("input-update", constructor.serialise(input));
             }
 
         });
 
+        body.addEventListener("reset", ({ target }) => {
+
+            const form = (target as HTMLElement).closest("form");
+
+            if (!form) {
+                return;
+            }
+
+            const remove = Object.create(null) as IInputRecord;
+
+            form
+                .querySelectorAll<IFieldElement>("input,select,textarea")
+                .forEach((field) => {
+                    remove[constructor.identify(field)] = undefined;
+                });
+
+            this.trigger("input-update", remove);
+
+        });
+
     }
 
-    populate(data: Record<string, string | boolean>) {
+    populate(data: IInputRecord) {
+
+        const forms = new Set<HTMLFormElement>();
 
         Object.entries(data).forEach(([selector, value]) => {
+
+            if (value === undefined) {
+                return;
+            }
 
             const inputs = [
                 ...document.querySelectorAll<IFieldElement>(selector)
@@ -115,6 +146,14 @@ console.log('this.trigger("input-update", %o)', constructor.serialise(input));
 
             announceInput(input);
 
+            if (input.form) {
+                forms.add(input.form);
+            }
+
+        });
+
+        forms.forEach((form) => {
+            form.requestSubmit();
         });
 
     }

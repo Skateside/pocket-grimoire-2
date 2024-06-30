@@ -32,7 +32,7 @@ app
     .addMVC(NightOrderModel, NightOrderView, NightOrderController)
     .addMVC(InfoModel, InfoView, InfoController)
     .addMVC(RoleSelectModel, RoleSelectView, RoleSelectController)
-    // .addMVC(InputModel, InputView, InputController)
+    .addMVC(InputModel, InputView, InputController)
     .run();
 
 console.log({ app });

@@ -1,6 +1,4 @@
 import {
-    IQuerySelectorOptions,
-    IDomLookupCache,
     IFieldElement,
 } from "../types/utilities";
 import {
@@ -10,19 +8,10 @@ import {
     randomId,
 } from "./strings";
 
-// TODO: When we remove `querySelector()` and `querySelectorCached()`, get rid
-// of the option for `element` to be Document here.
-export function identify(
-    element: Element | Document | null,
-    prefix = "anonymous-"
-) {
+export function identify(element: Element | null, prefix = "anonymous-") {
 
     if (!element) {
         return "";
-    }
-
-    if (element === document) {
-        return "_document_";
     }
 
     element = element as HTMLElement;
@@ -43,43 +32,6 @@ export function identify(
     return id;
 
 }
-
-/** @deprecated use {@link findOrDie} instead */
-// TODO: When this is removed, update `idenify()`
-export function querySelector<T extends HTMLElement>(
-    selector: string,
-    options: IQuerySelectorOptions = {}
-) {
-
-    const root = (
-        Object.hasOwn(options, "root")
-        ? options.root
-        : document
-    );
-
-    if (!root) {
-        throw new TypeError("Cannot look up element - root is missing");
-    }
-
-    const element = root.querySelector<T>(selector);
-
-    if (options.required && !element) {
-
-        throw new ReferenceError(
-            `Cannot find an element matching selector "${selector}"`
-        );
-
-    }
-
-    return element;
-
-}
-
-/** @deprecated use {@link findOrDie} instead and save the result */
-export const querySelectorCached = memoise(
-    querySelector,
-    (selector, options) => `#${identify(options?.root || null)} ${selector}`
-);
 
 export function findOrDie<T extends HTMLElement>(
     selector: string,
@@ -170,32 +122,15 @@ export function serialiseForm(form: HTMLFormElement): Record<string, any> {
  */
 export function announceInput(input: IFieldElement) {
 
+    if (!input || !(/^input|select|textarea$/i).test(input.nodeName)) {
+        return;
+    }
+
     input.dispatchEvent(new Event("input", {
         bubbles: true,
     }));
     input.dispatchEvent(new Event("change", {
         bubbles: true,
     }));
-
-}
-
-export function makeLookupCache<T extends HTMLElement = HTMLElement>(lookup: IDomLookupCache<T>) {
-
-    const cache = new WeakMap<HTMLElement, T>();
-
-    return (element: HTMLElement): T => {
-
-        let value = cache.get(element);
-
-        if (value === undefined) {
-
-            value = lookup(element) as T;
-            cache.set(element, value);
-
-        }
-
-        return value;
-
-    };
 
 }

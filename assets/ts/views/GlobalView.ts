@@ -1,23 +1,23 @@
 import View from "./View";
 import {
-    IDomLookupCache,
+    // IDomLookupCache,
 } from "../types/utilities";
 import {
-    makeLookupCache,
+    // makeLookupCache,
 } from "../utilities/dom";
 
 /** @deprecated */
 export default class GlobalView extends View {
 
-    protected getOutputFromRange: IDomLookupCache<HTMLOutputElement>;
+    // protected getOutputFromRange: IDomLookupCache<HTMLOutputElement>;
 
     constructor() {
 
         super();
 
-        this.getOutputFromRange = makeLookupCache(({ dataset: { output } }) => {
-            return document.querySelector<HTMLOutputElement>(output);
-        });
+        // this.getOutputFromRange = makeLookupCache(({ dataset: { output } }) => {
+        //     return document.querySelector<HTMLOutputElement>(output);
+        // });
 
     }
 
@@ -97,11 +97,11 @@ export default class GlobalView extends View {
 
     updateRangeOutput(input: HTMLInputElement) {
 
-        const output = this.getOutputFromRange(input);
+        // const output = this.getOutputFromRange(input);
 
-        if (output) {
-            output.value = input.value;
-        }
+        // if (output) {
+        //     output.value = input.value;
+        // }
 
     }
 

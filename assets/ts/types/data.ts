@@ -1,3 +1,7 @@
+import type {
+    IInputRecord,
+} from "./classes";
+
 export type IJinx = {
     id: string,
     reason: string,
@@ -141,7 +145,7 @@ export type IStore = {
     script: IScript,
     scripts: IScripts,
     infos: IInfoToken[],
-    inputs: Record<string, string | boolean>,
+    inputs: IInputRecord,
     // seats: ISeat[],
     // reminders: IReminder[],
 };

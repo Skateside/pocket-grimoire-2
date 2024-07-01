@@ -46,7 +46,6 @@ export default class ScriptView extends View<{
             selectForm,
             customForm,
             fields,
-            tabs,
         } = this;
 
         selectForm.addEventListener("submit", (e) => {
@@ -75,17 +74,6 @@ export default class ScriptView extends View<{
             input.addEventListener("input", () => {
                 this.setFieldsActive(input);
             });
-
-        });
-
-        tabs.getHolder().addEventListener("tab-hide", ({ target }) => {
-
-            const panel = Tabs.getPanelFromTab(target as HTMLElement);
-            const form = panel?.querySelector("form");
-
-            if (form) {
-                form.reset();
-            }
 
         });
 

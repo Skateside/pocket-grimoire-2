@@ -13,11 +13,12 @@ export default class RoleSelectController extends Controller<RoleSelectModel, Ro
             view,
         } = this;
 
-        view.drawGroups(model.getTexts());
-        view.updateGroups(model.getNumbers(view.getCount()));
         view.on("count-update", (number) => {
             view.updateGroups(model.getNumbers(number));
         });
+
+        view.drawGroups(model.getTexts());
+        view.updateGroups(model.getNumbers(view.getCount()));
 
         /*
         const {

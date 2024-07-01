@@ -17,7 +17,7 @@ export function shuffle<T extends any>(array: T[]) {
 
 }
 
-export function replace(array: any[], contents: any[]) {
+export function replace<T extends any>(array: T[], contents: T[]) {
 
     array.length = 0;
     array.push(...contents);
@@ -26,6 +26,6 @@ export function replace(array: any[], contents: any[]) {
 
 }
 
-export function unique(array: any[]) {
-    return [...new Set(array)];
+export function unique<T extends any>(array: T[]) {
+    return [...new Set<T>(array)];
 }

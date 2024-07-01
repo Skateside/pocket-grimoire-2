@@ -11,9 +11,10 @@ export default class InputController extends Controller<InputModel, InputView> {
             view,
         } = this;
 
+        view.on("input-update", (data) => model.update(data));
+
         view.populate(model.getValues());
         view.watchInputs();
-        view.on("input-update", (data) => model.update(data));
 
     }
 

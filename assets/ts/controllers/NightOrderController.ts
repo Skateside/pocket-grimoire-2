@@ -13,12 +13,13 @@ export default class NightOrderController extends Controller<NightOrderModel, Ni
             view,
         } = this;
 
-        model.setFilters(view.getFilters());
-
         model.on("script-set", (nights) => view.drawNights(nights));
         model.on("update-states", (diff) => view.updateElements(diff));
 
         view.on("filters-update", (filters) => model.setFilters(filters));
+
+        model.loadScript();
+        model.setFilters(view.getFilters());
 
     }
 

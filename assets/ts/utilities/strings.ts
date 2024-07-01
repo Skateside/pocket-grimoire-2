@@ -1,3 +1,7 @@
+import {
+    unique,
+} from "./arrays";
+
 export function supplant(
     template: string,
     replacements: Record<string, number | string> | (number | string)[],
@@ -37,7 +41,7 @@ export function wordlist(text: string) {
 
     return (
         trimmed
-        ? [...new Set(trimmed.split(/\s+/))]
+        ? unique(trimmed.split(/\s+/))
         : []
     );
 

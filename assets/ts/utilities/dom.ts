@@ -6,6 +6,7 @@ import {
 } from "./functions";
 import {
     randomId,
+    wordlist,
 } from "./strings";
 
 export function identify(element: Element | null, prefix = "anonymous-") {
@@ -132,5 +133,18 @@ export function announceInput(input: IFieldElement) {
     input.dispatchEvent(new Event("change", {
         bubbles: true,
     }));
+
+}
+
+export function optout(element: HTMLElement, features: string) {
+
+    const list = wordlist(element?.dataset.optout || "");
+    const outs = wordlist(features);
+
+    if (!list.length || !outs.length) {
+        return false;
+    }
+
+    return outs.every((out) => list.includes(out));
 
 }

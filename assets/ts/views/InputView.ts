@@ -7,6 +7,7 @@ import type {
 import View from "./View";
 import {
     announceInput,
+    optout,
 } from "../utilities/dom";
 
 export default class InputView extends View<{
@@ -79,7 +80,7 @@ export default class InputView extends View<{
             const input = (target as HTMLElement)
                 .closest<IFieldElement>("input,select,textarea");
 
-            if (input && !input.hasAttribute("data-no-store")) {
+            if (!optout(input, "store")) {
                 this.trigger("input-update", constructor.serialise(input));
             }
 
@@ -109,7 +110,7 @@ export default class InputView extends View<{
 
     populate(data: IInputRecord) {
 
-        const forms = new Set<HTMLFormElement>();
+        // const forms = new Set<HTMLFormElement>();
 
         Object.entries(data).forEach(([selector, value]) => {
 
@@ -146,15 +147,15 @@ export default class InputView extends View<{
 
             announceInput(input);
 
-            if (input.form && !input.form.hasAttribute("data-no-autosubmit")) {
-                forms.add(input.form);
-            }
+            // if (input.form && !input.form.hasAttribute("data-no-autosubmit")) {
+            //     forms.add(input.form);
+            // }
 
         });
 
-        forms.forEach((form) => {
-            form.requestSubmit();
-        });
+        // forms.forEach((form) => {
+        //     form.requestSubmit();
+        // });
 
     }
 

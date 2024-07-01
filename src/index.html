@@ -201,18 +201,20 @@
                         <ol id="other-night"></ol>
                     </div>
                 </div>
-                <p>
-                    <label for="show-all">
-                        <input type="checkbox" id="show-all">
-                        Show all
-                    </label>
-                </p>
-                <p>
-                    <label for="show-dead">
-                        <input type="checkbox" id="show-dead">
-                        Show dead
-                    </label>
-                </p>
+                <form id="night-order-form">
+                    <p>
+                        <label for="show-all">
+                            <input type="checkbox" name="show-all" id="show-all">
+                            Show all
+                        </label>
+                    </p>
+                    <p>
+                        <label for="show-dead">
+                            <input type="checkbox" name="show-dead" id="show-dead">
+                            Show dead
+                        </label>
+                    </p>
+                </form>
 
                 <template id="night-order-entry">
                     <li class="js--night-order-entry--wrapper">

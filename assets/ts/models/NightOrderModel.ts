@@ -73,6 +73,16 @@ export default class NightOrderModel extends Model<{
 
     }
 
+    loadScript() {
+
+        const script = this.store.getData("script");
+
+        if (script) {
+            this.processNightOrder(script);
+        }
+
+    }
+
     processNightOrder(script: IScript) {
 
         const meta = script.find((entry) => {

@@ -13,13 +13,13 @@ export default class ScriptController extends Controller<ScriptModel, ScriptView
             view,
         } = this;
 
-        // view.setInputStates(model.isOffline());
-        view.drawScripts(model.getScripts());
-
         view.on("script-select", (script) => model.setScript(script));
         view.on("script-id-select", (id) => model.setScriptById(id));
 
         model.on("script-error", (error) => view.showCustomError(error));
+
+        // view.setInputStates(model.isOffline());
+        view.drawScripts(model.getScripts());
 
     }
 

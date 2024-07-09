@@ -60,6 +60,7 @@
                 </form>
 
                 <form class="js--players--name-form">
+<p style="color: fuchsia">TODO: allow players to be deleted<br>NOTE: Would this be better handled in a tokens section? What's supposed to happen if the player has a token associated with them (that isn't a Traveller)?</p>
                     <ol id="players-names"></ol>
                     <datalist id="players-names-list"></datalist>
                 </form>
@@ -68,6 +69,7 @@
                     <li>
                         <label class="js--players--name-label" data-text="Player #{0}"></label>
                         <input class="js--players--name-input" type="text" name="player[{0}]" list="players-names-list">
+                        <button type="button" class="js--players--name-remove" hidden>Remove</button>
                     </li>
                 </template>
 

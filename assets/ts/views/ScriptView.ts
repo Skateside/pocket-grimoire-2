@@ -5,7 +5,7 @@ import type {
 import View from "./View";
 import {
     findOrDie,
-    renderTemplate,
+    renderTemplateMany,
 } from "../utilities/dom";
 import Tabs from "../classes/UI/Tabs";
 import InputProcessor from "../classes/InputProcessor/InputProcessor";
@@ -95,31 +95,23 @@ export default class ScriptView extends View<{
 
     drawScripts(scripts: Record<string, IMetaEntry>) {
 
-        const contents = Object
-            .entries(scripts)
-            .reduce((frag, [id, meta], index) => {
-
-                frag.append(
-                    renderTemplate("#script-select-template", {
-                        ".js--script-select--label"(element: HTMLLabelElement) {
-                            element.htmlFor = `script-${id}`;
-                        },
-                        ".js--script-select--input"(element: HTMLInputElement) {
-                            element.id = `script-${id}`;
-                            element.value = id;
-                            element.required = index === 0;
-                        },
-                        ".js--script-select--name"(element) {
-                            element.textContent = meta.name;
-                        }
-                    })
-                );
-
-                return frag;
-
-            }, document.createDocumentFragment());
-
-        this.selection.append(contents);
+        this.selection.append(renderTemplateMany(
+            "#script-select-template",
+            Object.entries(scripts),
+            ([id, meta], index) => ({
+                ".js--script-select--label"(element: HTMLLabelElement) {
+                    element.htmlFor = `script-${id}`;
+                },
+                ".js--script-select--input"(element: HTMLInputElement) {
+                    element.id = `script-${id}`;
+                    element.value = id;
+                    element.required = index === 0;
+                },
+                ".js--script-select--name"(element) {
+                    element.textContent = meta.name;
+                },
+            }),
+        ));
 
     }
 

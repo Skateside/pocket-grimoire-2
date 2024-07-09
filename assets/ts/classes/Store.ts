@@ -33,13 +33,21 @@ export default class Store extends Observer<IStoreEvents> {
         super();
 
         this.store = {
+            // The numbers of townsfolk/outsiders etc. for the number of players.
             game: new Unsavable<IStore["game"]>({}),
+            // Any localised texts.
             i18n: new Unsavable<IStore["i18n"]>({}),
+            // Full data for the official roles.
             roles: new Unsavable<IStore["roles"]>({}),
+            // Data for any homebrew roles or updates to official roles.
             augments: new StoreEntry<IStore["augments"]>({}),
+            // The current script - an array of roles and the meta entry.
             script: new StoreEntry<IStore["script"]>([]),
+            // The official scripts - a record of the script ID vs. role IDs and the meta entry.
             scripts: new Unsavable<IStore["scripts"]>({}),
+            // Full data for any info tokens.
             infos: new Info<IStore["infos"]>([]),
+            // A record of CSS selectors to values for the inputs.
             inputs: new StoreEntry<IStore["inputs"]>({}),
             // seats: new Unsavable<IStore["seats"]>([]),
             // reminders: new Unsavable<IStore["reminders"]>([]),

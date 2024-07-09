@@ -89,6 +89,10 @@ export type IScript = (string | IMinimumRole | IMetaEntry)[];
 
 export type IScripts = Record<string, IScript>;
 
+export type IScriptRoles = (IRole | IMetaEntry)[];
+
+export type IScriptByTeam = Record<ITeam, IRole[]>;
+
 export type IColours = (
     "blue"
     | "dark-orange"
@@ -142,7 +146,7 @@ export type IStore = {
     i18n: Record<Ii18nKeys, string>,
     roles: Record<string, IRole>,
     augments: Record<string, Partial<IRole>>,
-    script: IScript,
+    script: IScriptRoles,
     scripts: IScripts,
     infos: IInfoToken[],
     inputs: IInputRecord,

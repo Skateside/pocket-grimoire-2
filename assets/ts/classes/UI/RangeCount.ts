@@ -7,10 +7,14 @@ export default class RangeCount {
     protected input: HTMLInputElement;
     protected output: HTMLOutputElement;
 
-    constructor(input: HTMLInputElement) {
+    constructor(input: HTMLInputElement, output?: HTMLOutputElement) {
 
         this.input = input;
-        this.output = findOrDie(input.dataset.output);
+        this.output = (
+            output === undefined
+            ? findOrDie(input.dataset.output)
+            : output
+        );
 
         this.addListeners();
 

@@ -49,6 +49,8 @@
     </head>
     <body>
 
+        <!-- TODO: select players -->
+
         <details>
             <summary>Script Selection</summary>
 
@@ -119,26 +121,6 @@
 
                 <form class="js--role-select--roles">
                     <div id="role-select-groups" data-text="{0} ({1}/{2})"></div>
-                    <!-- <fieldset class="js--role-select--team" data-team="townsfolk">
-                        <legend class="js--role-select--legend" data-text="Townsfolk ({count}/{max})" data-count="0" data-max="X">Townsfolk</legend>
-                        <div class="js--role-select--items"></div>
-                    </fieldset>
-                    <fieldset class="js--role-select--team" data-team="outsider">
-                        <legend class="js--role-select--legend" data-text="Outsiders ({count}/{max})" data-count="0" data-max="X">Outsiders</legend>
-                        <div class="js--role-select--items"></div>
-                    </fieldset>
-                    <fieldset class="js--role-select--team" data-team="minion">
-                        <legend class="js--role-select--legend" data-text="Minons ({count}/{max})" data-count="0" data-max="X">Minons</legend>
-                        <div class="js--role-select--items"></div>
-                    </fieldset>
-                    <fieldset class="js--role-select--team" data-team="demon">
-                        <legend class="js--role-select--legend" data-text="Demons ({count}/{max})" data-count="0" data-max="X">Demons</legend>
-                        <div class="js--role-select--items"></div>
-                    </fieldset>
-                    <fieldset class="js--role-select--team" data-team="traveler">
-                        <legend class="js--role-select--legend" data-text="Travellers ({count}/{max})" data-count="0" data-max="X">Travellers</legend>
-                        <div class="js--role-select--items"></div>
-                    </fieldset> -->
                     <p><button type="submit">Draw</button></p>
                 </form>
 
@@ -157,7 +139,7 @@
                             <output class="js--role-select-item--output" aria-hidden="true">0</output>
                         </div>
                         <label class="js--role-select-item--label">
-                            <input type="checkbox" class="js--role-select-item--checkbox">
+                            <input type="checkbox" class="js--role-select-item--checkbox" name="role-select[]">
                             <!-- <img class="js--role-select--image"> -->
                             <span class="js--role-select-item--name"></span>
                             <span class="js--role-select-item--ability"></span>

@@ -2,6 +2,18 @@ import {
     unique,
 } from "./arrays";
 
+/**
+ * Takes a string containing placeholders (denoted between `{` and `}`) and
+ * replaces them with the entries in `replacements`.
+ *
+ * @param template String containing placeholders.
+ * @param replacements Replacements for those placeholders.
+ * @returns A string with the placeholders replaced.
+ *
+ * @example
+ * supplant("Hello {thing}", { thing: "world" }); // "Hello world"
+ * supplany("Count: {0}", [1]); // "Count: 1"
+ */
 export function supplant(
     template: string,
     replacements: Record<string, number | string> | (number | string)[],
@@ -23,6 +35,12 @@ export function supplant(
 
 }
 
+/**
+ * Generates a random ID containing letters and numbers.
+ *
+ * @param prefix Optional prefix for the ID.
+ * @returns A random id.
+ */
 export function randomId(prefix = "") {
 
     const random = window
@@ -35,6 +53,13 @@ export function randomId(prefix = "") {
 
 }
 
+/**
+ * Takes a space-separated collection of words and returns a de-duplicated array
+ * of those words. If the given `text` is blank, an empty array is returned.
+ *
+ * @param text Text whose words should be returned.
+ * @returns Array of unique words.
+ */
 export function wordlist(text: string) {
 
     const trimmed = text.trim();
@@ -51,6 +76,8 @@ export function wordlist(text: string) {
  * Interprets the bytes within a string as UTF-8. We need this when importing
  * JSON - for some reason it struggles to understand accented characters.
  *
+ * @param bytes String to convert into UTF-8.
+ * @return Converted string.
  * @see https://stackoverflow.com/a/24282873/557019
  */
 export function readUTF8(bytes: string) {

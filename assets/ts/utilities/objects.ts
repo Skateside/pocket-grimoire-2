@@ -37,6 +37,7 @@ export function matches(
  *
  * @param object Object to clone.
  * @returns Cloned object.
+ * @deprecated Use `window.structuredClone` instead.
  */
 export function deepClone<T extends Record<PropertyKey, any>>(object: T): T {
     return JSON.parse(JSON.stringify(object));
@@ -57,7 +58,7 @@ export function isPrimative(object: unknown) {
     return (
         object === undefined
         || object === null
-        || ["boolean", "number", "string"].includes(type)
+        || (/^(?:boolean|number|string)$/).test(type)
     );
 
 }

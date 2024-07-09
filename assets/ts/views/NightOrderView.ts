@@ -9,9 +9,9 @@ import {
 import {
     IRole,
     INights,
-    INightOrderEntry,
     INightOrderFilters,
     INightOrderDatum,
+    IToggleableElement,
 } from "../types/data";
 import {
     IObjectDiff,
@@ -26,7 +26,7 @@ export default class NightOrderView extends View<{
     protected showAllInput: HTMLInputElement;
     protected showDeadInput: HTMLInputElement;
     protected filter: INightOrderFilters;
-    protected elements: Record<INights, Record<string, INightOrderEntry>>;
+    protected elements: Record<INights, Record<string, IToggleableElement>>;
 
     discoverElements() {
 
@@ -140,7 +140,7 @@ export default class NightOrderView extends View<{
 
     }
 
-    createEntry(role: IRole, night: INights): INightOrderEntry {
+    createEntry(role: IRole, night: INights): IToggleableElement {
 
         const entry = this.drawEntry(role, night);
 

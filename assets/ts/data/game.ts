@@ -1,4 +1,4 @@
-import {
+import type {
     IGameNumbersCollection,
 } from "../types/data";
 

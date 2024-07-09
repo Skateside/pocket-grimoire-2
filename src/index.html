@@ -49,7 +49,32 @@
     </head>
     <body>
 
-        <!-- TODO: select players -->
+        <details>
+            <summary>Players</summary>
+            <div>
+
+                <form class="js--players--count-form">
+                    <label for="players-count">Player count</label>
+                    <input type="range" name="players-count" id="players-count" min="5" max="20" step="1" data-output="#players-count-output">
+                    <output id="players-count-output" aria-hidden="true">10</output>
+                </form>
+
+                <form class="js--players--name-form">
+                    <ol id="players-names"></ol>
+                    <datalist id="players-names-list"></datalist>
+                </form>
+
+                <template id="players-name-template">
+                    <li>
+                        <label class="js--players--name-label" data-text="Player #{0}"></label>
+                        <input class="js--players--name-input" type="text" name="player[{0}]" list="players-names-list">
+                    </li>
+                </template>
+
+            </div>
+        </details>
+
+        <hr>
 
         <details>
             <summary>Script Selection</summary>
@@ -112,12 +137,6 @@
         <details>
             <summary>Role Selection</summary>
             <div>
-
-                <form class="js--role-select--count-form">
-                    <label for="role-select-count">Player count</label>
-                    <input type="range" name="role-select-count" id="role-select-count" min="5" max="20" step="1" value="10" data-output="#role-select-count-output">
-                    <output id="role-select-count-output" aria-hidden="true">10</output>
-                </form>
 
                 <form class="js--role-select--roles">
                     <div id="role-select-groups" data-text="{0} ({1}/{2})"></div>

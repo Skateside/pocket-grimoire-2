@@ -2,9 +2,6 @@ import {
     IStoreEntry,
     IStoreEntryData,
 } from "../../types/classes";
-import {
-    deepClone,
-} from "../../utilities/objects";
 
 export default class StoreEntry<T extends IStoreEntryData> implements IStoreEntry<T> {
 
@@ -15,7 +12,7 @@ export default class StoreEntry<T extends IStoreEntryData> implements IStoreEntr
     }
 
     getData() {
-        return deepClone(this.data);
+        return structuredClone(this.data);
     }
 
     setData(data: T) {
@@ -50,12 +47,12 @@ export default class StoreEntry<T extends IStoreEntryData> implements IStoreEntr
             Object.assign(data, stored);
         }
 
-        return deepClone(data);
+        return structuredClone(data);
 
     }
 
     save(): T | null {
-        return deepClone(this.data);
+        return structuredClone(this.data);
     }
 
 }

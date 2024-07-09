@@ -11,7 +11,6 @@ import {
 import {
     diff,
     isEmpty,
-    deepClone,
 } from "../utilities/objects";
 import {
     randomId,
@@ -60,7 +59,7 @@ export default class InfoModel extends Model<{
 
     updateInfo(info: IInfoToken) {
 
-        const infos = deepClone(this.infos);
+        const infos = structuredClone(this.infos);
 
         let index = infos.findIndex(({ id }) => id === info.id);
 

@@ -13,39 +13,14 @@ export default class RoleSelectController extends Controller<RoleSelectModel, Ro
             view,
         } = this;
 
-        model.on("script-set", (script) => {
-            view.drawRoles(script);
-        });
-
-        view.on("count-update", (number) => {
-            view.updateGroups(model.getNumbers(number));
+        model.on("script-set", (script) => view.drawRoles(script));
+        model.on("player-count-update", (count) => {
+            view.updateGroups(model.getNumbers(count));
         });
 
         view.drawGroups(model.getTexts());
-        view.updateGroups(model.getNumbers(view.getCount()));
+        view.updateGroups(model.getNumbers(model.getPlayerCount()));
         view.drawRoles(model.getScriptByTeam());
-
-        /*
-        const {
-            getGameNumbers,
-        } = RepositoryModel;
-
-        model.on("script-update", () => {
-            view.drawSelection(model.getScriptRolesByTeam());
-        });
-        model.on("bag-update", () => {
-            view.drawBag(model.getInBagRoles());
-        });
-
-        view.on("roles-selected", (bag) => {
-            model.setBag(bag);
-        });
-        view.on("player-count-update", (number) => {
-            view.setGameNumbers(getGameNumbers(number));
-        });
-
-        view.setGameNumbers(getGameNumbers(view.getPlayerCount()));
-        */
 
     }
 

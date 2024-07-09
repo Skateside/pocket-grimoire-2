@@ -1,4 +1,4 @@
-import {
+import type {
     IScriptValidatorCheck,
 } from "../types/classes";
 import {

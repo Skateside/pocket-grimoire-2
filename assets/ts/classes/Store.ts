@@ -11,13 +11,13 @@ import {
     IStoreEntries,
 } from "../types/classes";
 import {
-    deepClone,
     update,
 } from "../utilities/objects";
 import Observer from "./Observer";
 import StoreEntry from "./StoreEntry/StoreEntry";
 import Unsavable from "./StoreEntry/Unsavable";
 import Info from "./StoreEntry/Info";
+import defaultSettings from "../data/settings";
 import gameData from "../data/game";
 
 export default class Store extends Observer<IStoreEvents> {
@@ -33,10 +33,14 @@ export default class Store extends Observer<IStoreEvents> {
         super();
 
         this.store = {
+            // Default settings for the application.
+            settings: new Unsavable<IStore["settings"]>({}),
             // The numbers of townsfolk/outsiders etc. for the number of players.
             game: new Unsavable<IStore["game"]>({}),
             // Any localised texts.
             i18n: new Unsavable<IStore["i18n"]>({}),
+            // Players that have been created.
+            players: new StoreEntry<IStore["players"]>({}),
             // Full data for the official roles.
             roles: new Unsavable<IStore["roles"]>({}),
             // Data for any homebrew roles or updates to official roles.
@@ -53,8 +57,6 @@ export default class Store extends Observer<IStoreEvents> {
             // reminders: new Unsavable<IStore["reminders"]>([]),
         };
 
-        // TODO: store the input values.
-
     }
 
     ready() {
@@ -63,15 +65,22 @@ export default class Store extends Observer<IStoreEvents> {
 
         const PG = (window as any).PG as IPG;
         const {
+            settings,
             game,
             i18n,
+            players,
             roles,
             scripts,
             infos,
         } = this.store;
 
+        settings.setData(defaultSettings);
         game.setData(gameData);
         i18n.setData(PG.i18n);
+        players.setData({
+            count: defaultSettings.startingPlayers,
+            names: [],
+        });
         roles.setData(
             Object.fromEntries(PG.roles.map((role) => [role.id, role]))
         );
@@ -241,8 +250,8 @@ export default class Store extends Observer<IStoreEvents> {
             throw new ReferenceError(`Unable to identify role with ID "${id}"`);
         }
 
-        const role = deepClone(roles[id] || {}) as IRole;
-        const augment = deepClone(augments[id] || {});
+        const role = structuredClone(roles[id] || {}) as IRole;
+        const augment = structuredClone(augments[id] || {});
 
         if (augment) {
 

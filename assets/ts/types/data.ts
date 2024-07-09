@@ -141,9 +141,21 @@ export type Ii18nKeys = (
     | "scriptcheckrecognisedteams"
 );
 
+export type IPlayers = {
+    count: number,
+    names: string[],
+};
+
+export type ISettings = {
+    maxPlayers: number,
+    startingPlayers: number,
+};
+
 export type IStore = {
+    settings: ISettings,
     game: IGameNumbersCollection,
     i18n: Record<Ii18nKeys, string>,
+    players: IPlayers,
     roles: Record<string, IRole>,
     augments: Record<string, Partial<IRole>>,
     script: IScriptRoles,
@@ -175,11 +187,6 @@ export type IPG = {
 
 export type INights = "firstNight" | "otherNight";
 
-export type INightOrderEntry = {
-    element: HTMLElement,
-    placeholder: Comment,
-};
-
 export type INightOrderFilters = {
     showNotAdded: boolean,
     showDead: boolean,
@@ -189,6 +196,11 @@ export type INightOrderDatum = {
     added: boolean,
     dead: boolean,
     show: boolean,
+};
+
+export type IToggleableElement = {
+    element: HTMLElement,
+    placeholder: Comment,
 };
 
 

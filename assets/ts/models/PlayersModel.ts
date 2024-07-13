@@ -38,6 +38,10 @@ export default class PlayersModel extends Model<{
         } = this;
         const players = store.getData("players");
 
+        if (count === players.count) {
+            return;
+        }
+
         players.count = count;
         players.names = (players.names || []).slice(0, count);
         store.setData("players", players);
@@ -55,7 +59,28 @@ export default class PlayersModel extends Model<{
             players.names = [];
         }
 
+        if (players.names[index] === name) {
+            return;
+        }
+
         players.names[index] = name;
+        store.setData("players", players);
+
+    }
+
+    removePlayer(index: number) {
+
+        const {
+            store,
+        } = this;
+        const players = store.getData("players");
+
+        if (players.count <= index) {
+            return;
+        }
+
+        players.count -= 1;
+        players.names.splice(index, 1);
         store.setData("players", players);
 
     }

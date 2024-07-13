@@ -17,7 +17,8 @@ export default class PlayersController extends Controller<PlayersModel, PlayersV
         view.on("name-update", ([index, name]) => {
             model.updatePlayer(index, name);
         });
-        model.on("players-set", (players) => view.drawNames(players.count));
+        view.on("name-remove", (index) => model.removePlayer(index));
+        model.on("players-set", (players) => view.updateNames(players));
 
         view.createNames(model.getMaxPlayers());
         view.setCount(model.getCount());

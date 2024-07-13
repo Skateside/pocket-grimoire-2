@@ -144,6 +144,7 @@ export type Ii18nKeys = (
 export type IPlayers = {
     count: number,
     names: string[],
+    // TODO: seat information, token information, reminders information?
 };
 
 export type ISettings = {

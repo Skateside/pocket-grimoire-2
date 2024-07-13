@@ -8,10 +8,18 @@ import View from "./View";
 import {
     announceInput,
     optout,
+    createInputWatcher,
+    INPUT_WATCH_EVENT,
 } from "../utilities/dom";
+import {
+    debounce,
+} from "../utilities/functions";
+
+const SELECTOR = "input:not([type=\"hidden\"]),select,textarea";
 
 export default class InputView extends View<{
     "input-update": IInputRecord,
+    "inputs-removed": void,
 }> {
 
     static identify(input: IFieldElement) {
@@ -77,12 +85,17 @@ export default class InputView extends View<{
 
         body.addEventListener("input", ({ target }) => {
 
-            const input = (target as HTMLElement)
-                .closest<IFieldElement>("input,select,textarea");
+            this.updateInput(
+                (target as HTMLElement).closest<IFieldElement>(SELECTOR)
+            );
 
-            if (!optout(input, "store")) {
-                this.trigger("input-update", constructor.serialise(input));
-            }
+        });
+
+        body.addEventListener(INPUT_WATCH_EVENT, ({ target }) => {
+
+            this.updateInput(
+                (target as HTMLElement).closest<IFieldElement>(SELECTOR)
+            );
 
         });
 
@@ -97,7 +110,7 @@ export default class InputView extends View<{
             const remove = Object.create(null) as IInputRecord;
 
             form
-                .querySelectorAll<IFieldElement>("input,select,textarea")
+                .querySelectorAll<IFieldElement>(SELECTOR)
                 .forEach((field) => {
                     remove[constructor.identify(field)] = undefined;
                 });
@@ -106,11 +119,56 @@ export default class InputView extends View<{
 
         });
 
+        this.createWatchers(body);
+
+        const triggerInputsRemoved = debounce(() => {
+            this.trigger("inputs-removed", null);
+        });
+
+        const observer = new MutationObserver((records) => {
+
+            records.forEach(({ addedNodes, removedNodes }) => {
+
+                addedNodes.forEach((node) => {
+
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        this.createWatchers(node as HTMLElement);
+                    }
+
+                });
+
+                if (removedNodes.length) {
+                    triggerInputsRemoved();
+                }
+
+            });
+        });
+        observer.observe(body, {
+            childList: true,
+            subtree: true,
+        });
+
+    }
+
+    updateInput(input: IFieldElement) {
+
+        const constructor = this.constructor as typeof InputView;
+
+        if (!optout(input, "store")) {
+            this.trigger("input-update", constructor.serialise(input));
+        }
+
+    }
+
+    createWatchers(element: HTMLElement) {
+
+        element
+            .querySelectorAll<IFieldElement>(SELECTOR)
+            .forEach((input) => createInputWatcher(input));
+
     }
 
     populate(data: IInputRecord) {
-
-        // const forms = new Set<HTMLFormElement>();
 
         Object.entries(data).forEach(([selector, value]) => {
 
@@ -147,15 +205,31 @@ export default class InputView extends View<{
 
             announceInput(input);
 
-            // if (input.form && !input.form.hasAttribute("data-no-autosubmit")) {
-            //     forms.add(input.form);
-            // }
-
         });
 
-        // forms.forEach((form) => {
-        //     form.requestSubmit();
-        // });
+    }
+
+    confirmData(data: IInputRecord) {
+
+        const constructor = this.constructor as typeof InputView;
+        const updated = Object.fromEntries(
+            Object.keys(data).map((selector) => {
+
+                const input = document.querySelector<IFieldElement>(selector);
+
+                return [
+                    selector,
+                    (
+                        input
+                        ? constructor.getValue(input)
+                        : undefined
+                    )
+                ];
+
+            })
+        );
+
+        this.trigger("input-update", updated);
 
     }
 

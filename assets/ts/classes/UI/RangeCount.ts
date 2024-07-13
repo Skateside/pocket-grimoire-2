@@ -1,5 +1,6 @@
 import {
     findOrDie,
+    watchInput,
 } from "../../utilities/dom";
 
 export default class RangeCount {
@@ -24,13 +25,15 @@ export default class RangeCount {
 
         const {
             input,
-            output,
         } = this;
 
-        input.addEventListener("input", () => {
-            output.value = input.value;
-        });
+        input.addEventListener("input", () => this.display());
+        watchInput(input, () => this.display());
 
+    }
+
+    display() {
+        this.output.value = this.input.value;
     }
 
 }

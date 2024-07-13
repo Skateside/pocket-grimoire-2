@@ -102,23 +102,23 @@ export const findOrDieCached = memoise(findOrDie);
  * const div = document.querySelector("div");
  * div;
  * // <div>
- * //     <span class="update-me">Alpha</span>
- * //     <em class="update-me">Bravo</em>
- * //     <span class="update-me-too">Charlie</span>
+ * //     <span class="first-letter">Alpha</span>
+ * //     <em class="first-letter">Bravo</em>
+ * //     <span class="last-letter">Charlie</span>
  * // </div>
  * updateChildren(div, {
- *     ".update-me"(element) {
+ *     ".first-letter"(element) {
  *         element.textContent = element.textContent.slice(0, 1);
  *     },
- *     ".update-me-too"(element) {
+ *     ".last-letter"(element) {
  *         element.textContent = element.textContent.slice(1);
  *     },
  * });
  * div;
  * // <div>
- * //     <span class="update-me">A</span>
- * //     <em class="update-me">B</em>
- * //     <span class="update-me-too">e</span>
+ * //     <span class="first-letter">A</span>
+ * //     <em class="first-letter">B</em>
+ * //     <span class="last-letter">e</span>
  * // </div>
  */
 export function updateChildren(
@@ -241,6 +241,91 @@ export function announceInput(input: IFieldElement) {
     input.dispatchEvent(new Event("change", {
         bubbles: true,
     }));
+
+}
+
+/**
+ * A store that keeps track of input elements that are being watched.
+ * @private
+ */
+const watcherMap = new WeakMap<IFieldElement, true>();
+
+/**
+ * The name of the event that gets triggered after manually setting the `value`.
+ */
+export const INPUT_WATCH_EVENT = "manual-input";
+
+/**
+ * Triggers a custom event ("manual-input") whenever the given input element's
+ * `value` property is directly changed.
+ *
+ * @param input Input that should trigger an event when its `value` is set.
+ * @see https://stackoverflow.com/a/55033939/557019
+ */
+export function createInputWatcher(input: IFieldElement) {
+
+    if (watcherMap.has(input)) {
+        return;
+    }
+
+    const prototype = Object.getPrototypeOf(input);
+    const {
+        get,
+        set,
+    } = Object.getOwnPropertyDescriptor(prototype, "value");
+
+    Object.defineProperty(input, "value", {
+
+        get() {
+            return get.call(input);
+        },
+
+        set(value) {
+
+            const setResult = set.call(input, value);
+
+            input.dispatchEvent(new CustomEvent(INPUT_WATCH_EVENT, {
+                bubbles: true,
+                cancelable: false,
+                detail: {
+                    value,
+                    oldValue: input.value,
+                },
+            }));
+
+            return setResult;
+        },
+
+    });
+
+    watcherMap.set(input, true);
+
+}
+
+/**
+ * Executes the given function when the given input has its `value` property
+ * manually set. The handler that gets executed is passed the new value and the
+ * previous value.
+ *
+ * @param input Input element to watch.
+ * @param handler Handler to execute when the input's `value` is manually set.
+ *
+ * @example
+ * const input = document.querySelector("input");
+ * watchInput(input, (value, oldValue) => {
+ *     console.log("Value was '%s' now '%s'", value, oldValue);
+ * });
+ * input.value = "abc123"; // Logs: Value was '' now 'abc123'
+ */
+export function watchInput(
+    input: IFieldElement,
+    handler: (value: string, oldValue: string) => void,
+) {
+
+    createInputWatcher(input);
+    input.addEventListener(INPUT_WATCH_EVENT, ({ detail }: CustomEvent) => {
+        handler.call(input, String(detail.value), String(detail.oldValue));
+    });
 
 }
 

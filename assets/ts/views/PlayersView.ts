@@ -1,4 +1,5 @@
 import type {
+    IPlayers,
     IToggleableElement,
 } from "../types/data";
 import View from "./View";
@@ -18,16 +19,22 @@ import {
     randomId,
 } from "../utilities/strings";
 
+type IPlayerToggleableElement = IToggleableElement & {
+    input: HTMLInputElement,
+    remove: HTMLButtonElement,
+};
+
 export default class PlayersView extends View<{
     "count-update": number,
     "name-update": [number, string],
+    "name-remove": number,
 }> {
 
     protected range: HTMLInputElement;
     protected names: HTMLElement;
     protected datalist: HTMLDataListElement;
     protected rangeCount: RangeCount;
-    protected elements: IToggleableElement[];
+    protected elements: IPlayerToggleableElement[];
 
     discoverElements() {
 
@@ -63,6 +70,19 @@ export default class PlayersView extends View<{
 
         });
 
+        names.addEventListener("click", ({ target }) => {
+
+            const remove = (target as HTMLElement)
+                .closest<HTMLButtonElement>(".js--players--name-remove");
+
+            if (!remove) {
+                return;
+            }
+
+            this.trigger("name-remove", Number(remove.dataset.index));
+
+        });
+
     }
 
     getCount() {
@@ -91,12 +111,15 @@ export default class PlayersView extends View<{
 
     }
 
-    createEntry(index: number): IToggleableElement {
+    createEntry(index: number): IPlayerToggleableElement {
 
         const entry = this.drawEntry(index);
+        const element = entry.firstElementChild as HTMLElement;
 
         return {
-            element: entry.firstElementChild as HTMLElement,
+            element,
+            input: element.querySelector(".js--players--name-input"),
+            remove: element.querySelector(".js--players--name-remove"),
             placeholder: document.createComment(String(index)),
         };
 
@@ -120,13 +143,24 @@ export default class PlayersView extends View<{
                 element.name = supplant(element.name, [index]);
 
             },
+            ".js--players--name-remove"(element) {
+                element.dataset.index = String(index);
+            },
         });
+
+    }
+
+    updateNames({ count, names }: IPlayers) {
+
+        this.setCount(count);
+        this.drawNames(count);
+        this.displayNames(names);
 
     }
 
     drawNames(count: number) {
 
-        this.elements.forEach(({ element, placeholder }, index) => {
+        this.elements.forEach(({ element, input, placeholder }, index) => {
 
             const shouldShow = index < count;
 
@@ -135,7 +169,7 @@ export default class PlayersView extends View<{
             } else if (!shouldShow && element.parentElement) {
 
                 element.replaceWith(placeholder);
-                element.querySelector("input").value = "";
+                input.value = "";
 
             }
 
@@ -150,8 +184,13 @@ export default class PlayersView extends View<{
             datalist,
         } = this;
 
-        elements.forEach(({ element }, index) => {
-            element.querySelector("input").value = names[index] || "";
+        elements.forEach(({ input, remove }, index) => {
+
+            const name = names[index] || "";
+
+            input.value = name;
+            remove.hidden = !name;
+
         });
 
         // Due to the way JSON handles sparsly-populated arrays, some of the

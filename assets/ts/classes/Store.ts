@@ -1,22 +1,22 @@
-import {
+import type {
     INumeric,
 } from "../types/utilities";
-import {
+import type {
     IPG,
     IStore,
     IStoreEvents,
     IRole,
 } from "../types/data";
-import {
+import type {
     IStoreEntries,
 } from "../types/classes";
-import {
-    update,
-} from "../utilities/objects";
 import Observer from "./Observer";
 import StoreEntry from "./StoreEntry/StoreEntry";
 import Unsavable from "./StoreEntry/Unsavable";
 import Info from "./StoreEntry/Info";
+import {
+    update,
+} from "../utilities/objects";
 import defaultSettings from "../data/settings";
 import gameData from "../data/game";
 
@@ -231,9 +231,9 @@ export default class Store extends Observer<IStoreEvents> {
 
     getMechanicalRoleIds() {
 
-        return Object.entries(this.store.roles.getData())
-            .filter(([ignore, role]) => this.isMechanicalRole(role))
-            .map(([id]) => id);
+        return Object.values(this.store.roles.getData())
+            .filter((role) => this.isMechanicalRole(role))
+            .map(({ id }) => id);
 
     }
 
@@ -267,21 +267,6 @@ export default class Store extends Observer<IStoreEvents> {
         }
 
         return role;
-
-    }
-
-    removeStaleInputs() {
-
-        const {
-            inputs,
-        } = this.store;
-
-        inputs.setData(
-            Object.fromEntries(
-                Object.entries(inputs.getData())
-                    .filter(([selector]) => document.querySelector(selector))
-            )
-        );
 
     }
 

@@ -17,6 +17,9 @@ export default class RoleSelectController extends Controller<RoleSelectModel, Ro
         model.on("player-count-update", (count) => {
             view.updateGroups(model.getNumbers(count));
         });
+        view.on("random-select", () => {
+            model.getRandomPlayers();
+        });
 
         view.drawGroups(model.getTexts());
         view.updateGroups(model.getNumbers(model.getPlayerCount()));

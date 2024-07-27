@@ -7,6 +7,7 @@ import RangeCount from "../classes/UI/RangeCount";
 import {
     findOrDie,
     renderTemplateMany,
+    serialiseForm,
 } from "../utilities/dom";
 import {
     supplant,
@@ -18,19 +19,73 @@ const UNKNOWN_MAX = "X";
 
 export default class RoleSelectView extends View<{
     "count-update": number,
+    "random-select": void,
 }> {
 
+    protected form: HTMLFormElement;
     protected roleCounts: WeakMap<HTMLInputElement, RangeCount>;
     protected groups: HTMLElement;
     protected legends: Record<string, HTMLElement>;
     protected teams: ITeamElements;
+    protected checkToRange: WeakMap<HTMLInputElement, HTMLInputElement>;
+    protected rangeToCheck: WeakMap<HTMLInputElement, HTMLInputElement>;
 
     discoverElements() {
 
+        this.form = findOrDie("#role-select-form");
         this.roleCounts = new WeakMap();
         this.groups = findOrDie("#role-select-groups");
         this.legends = Object.create(null);
         this.teams = Object.create(null);
+        this.checkToRange = new WeakMap();
+        this.rangeToCheck = new WeakMap();
+
+    }
+
+    addListeners() {
+        
+        const {
+            form,
+        } = this;
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            console.log(serialiseForm(form));
+        });
+
+        form.addEventListener("change", ({ target }) => {
+
+            const checkbox = (target as HTMLElement).closest<HTMLInputElement>(
+                "input[type=\"checkbox\"]"
+            );
+
+            if (!checkbox) {
+                return;
+            }
+
+            const range = this.getRange(checkbox);
+            range.value = String(Number(checkbox.checked));
+
+        });
+
+        form.addEventListener("input", ({ target }) => {
+
+            const range = (target as HTMLElement).closest<HTMLInputElement>(
+                "input[type=\"range\"]"
+            );
+
+            if (!range) {
+                return;
+            }
+
+            const checkbox = this.getCheckbox(range);
+            checkbox.checked = Number(range.value) > 0;
+
+        });
+
+        findOrDie("#role-select-random").addEventListener("click", () => {
+            this.trigger("random-select", null);
+        });
 
     }
 
@@ -184,6 +239,45 @@ export default class RoleSelectView extends View<{
             legend.dataset.max,
         ]);
 
+    }
+
+    getRange(checkbox: HTMLInputElement) {
+
+        const {
+            checkToRange,
+        } = this;
+        let range = checkToRange.get(checkbox);
+
+        if (!range) {
+
+            range = checkbox
+                .closest(".js--role-select-item--role")
+                .querySelector<HTMLInputElement>(".js--role-select-item--input");
+            checkToRange.set(checkbox, range);
+
+        }
+
+        return range;
+
+    }
+
+    getCheckbox(range: HTMLInputElement) {
+
+        const {
+            rangeToCheck,
+        } = this;
+        let check = rangeToCheck.get(range);
+
+        if (!check) {
+
+            check = range
+                .closest(".js--role-select-item--role")
+                .querySelector<HTMLInputElement>(".js--role-select-item--checkbox");
+            rangeToCheck.set(range, check);
+
+        }
+
+        return check;
 
     }
 

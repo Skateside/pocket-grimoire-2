@@ -4,6 +4,9 @@ import type {
 } from "../types/data";
 import Model from "./Model";
 import ScriptModel from "./ScriptModel";
+import {
+    shuffle,
+} from "../utilities/arrays";
 
 export default class RoleSelectModel extends Model<{
     "script-set": Partial<IScriptByTeam>,
@@ -58,6 +61,18 @@ export default class RoleSelectModel extends Model<{
             script.filter((entry) => ScriptModel.isRole(entry)) as IRole[],
             ({ team }) => team,
         );
+
+    }
+
+    getRandomPlayers() {
+
+        const count = this.getPlayerCount();
+        const numbers = this.getNumbers(count);
+        const teams = this.getScriptByTeam();
+
+        console.log({ count, numbers, teams });
+
+        // TODO: Select enough players at random and trigger an event to set them all on the view.
 
     }
 

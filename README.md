@@ -12,7 +12,8 @@ This is an unsorted list of things that still need to be done:
 
 #### Role Selection
 
-- Select random
+- Select roles
+- Highlight random
 - Show "select multiple"
 - Player selection "bag".
 - Ability for Storyteller to assign a role to a player.

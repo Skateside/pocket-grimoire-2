@@ -198,19 +198,31 @@ export function serialiseForm(form: HTMLFormElement): Record<string, any> {
 
     const formData = new FormData(form);
     const data = Object.create(null);
-    const keyed = /(\w+)\[(\w+)]/;
+    const keyed = /([\w\-]+)\[([\w\-]*)\]/;
 
     for (let [key, value] of formData) {
 
-        const matches = key.match(keyed);
+        const [ignore, name, index] = key.match(keyed) || [];
 
-        if (matches?.length) {
+        if (name) {
 
-            if (!Object.hasOwn(data, matches[1])) {
-                data[matches[1]] = Object.create(null);
+            const isRecord = Boolean(index);
+
+            if (!Object.hasOwn(data, name)) {
+
+                data[name] = (
+                    isRecord
+                    ? Object.create(null)
+                    : []
+                );
+
             }
 
-            data[matches[1]][matches[2]] = value;
+            data[name][
+                isRecord
+                ? index
+                : data[name].length
+            ] = value;
 
         } else {
             data[key] = value;

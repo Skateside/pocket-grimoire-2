@@ -282,6 +282,7 @@ export function createInputWatcher(input: IFieldElement) {
 
         set(value) {
 
+            const oldValue = input.value;
             const setResult = set.call(input, value);
 
             input.dispatchEvent(new CustomEvent(INPUT_WATCH_EVENT, {
@@ -289,7 +290,7 @@ export function createInputWatcher(input: IFieldElement) {
                 cancelable: false,
                 detail: {
                     value,
-                    oldValue: input.value,
+                    oldValue,
                 },
             }));
 

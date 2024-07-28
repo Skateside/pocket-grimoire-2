@@ -15,6 +15,9 @@ import {
 import {
     supplant,
 } from "../utilities/strings";
+import {
+    empty,
+} from "../utilities/objects";
 
 type ITeamElements = Record<string, {
     group: HTMLFieldSetElement,
@@ -159,10 +162,11 @@ export default class RoleSelectView extends View<{
             roleCounts,
         } = this;
 
-        Object.values(teams).forEach(({ group, items }) => {
+        Object.values(teams).forEach(({ group, items, counts }) => {
 
             group.hidden = true;
             items.innerHTML = "";
+            empty(counts);
 
         });
 
@@ -231,6 +235,8 @@ export default class RoleSelectView extends View<{
             group.hidden = false;
 
         });
+
+        this.updateGroupCounts();
 
     }
 

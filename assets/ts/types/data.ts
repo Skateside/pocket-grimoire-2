@@ -204,6 +204,12 @@ export type IToggleableElement = {
     placeholder: Comment,
 };
 
+export type IRoleSelectTeamElements = Record<string, {
+    group: HTMLFieldSetElement,
+    legend: HTMLLegendElement,
+    items: HTMLDivElement,
+    counts: Record<string, number>,
+}>;
 
 // -- Deprecated after this ------------------------------------------------- //
 

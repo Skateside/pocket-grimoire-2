@@ -1,6 +1,7 @@
 import type {
     IGameNumbers,
     IScriptByTeam,
+    IRoleSelectTeamElements,
 } from "../types/data";
 import type {
     INumeric,
@@ -19,13 +20,6 @@ import {
     empty,
 } from "../utilities/objects";
 
-type ITeamElements = Record<string, {
-    group: HTMLFieldSetElement,
-    legend: HTMLLegendElement,
-    items: HTMLDivElement,
-    counts: Record<string, number>,
-}>;
-
 const UNKNOWN_MAX = "X";
 
 export default class RoleSelectView extends View<{
@@ -38,7 +32,7 @@ export default class RoleSelectView extends View<{
     protected roleCounts: WeakMap<HTMLInputElement, RangeCount>;
     protected groups: HTMLElement;
     protected legends: Record<string, HTMLElement>;
-    protected teams: ITeamElements;
+    protected teams: IRoleSelectTeamElements;
     protected checkToRange: WeakMap<HTMLInputElement, HTMLInputElement>;
     protected rangeToCheck: WeakMap<HTMLInputElement, HTMLInputElement>;
 
@@ -138,7 +132,7 @@ export default class RoleSelectView extends View<{
 
         this.teams = Array.prototype.reduce.call(
             groups.querySelectorAll(".js--role-select-group--team"),
-            (teams: ITeamElements, element: HTMLFieldSetElement) => {
+            (teams: IRoleSelectTeamElements, element: HTMLFieldSetElement) => {
 
                 teams[element.dataset.id] = {
                     group: element,
@@ -151,7 +145,7 @@ export default class RoleSelectView extends View<{
 
             },
             Object.create(null),
-        ) as ITeamElements;
+        ) as IRoleSelectTeamElements;
 
     }
 

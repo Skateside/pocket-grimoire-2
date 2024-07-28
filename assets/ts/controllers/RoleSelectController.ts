@@ -15,14 +15,13 @@ export default class RoleSelectController extends Controller<RoleSelectModel, Ro
 
         model.on("script-set", (script) => view.drawRoles(script));
         model.on("player-count-update", (count) => {
-            view.updateGroups(model.getNumbers(count));
+            view.setGroupMaxes(model.getNumbers(count));
         });
-        view.on("random-select", () => {
-            model.getRandomPlayers();
-        });
+        view.on("random-select", () => view.tickRoles(model.getRandomRoleIds()));
+        view.on("role-draw", (quantities) => model.processBag(quantities));
 
         view.drawGroups(model.getTexts());
-        view.updateGroups(model.getNumbers(model.getPlayerCount()));
+        view.setGroupMaxes(model.getNumbers(model.getPlayerCount()));
         view.drawRoles(model.getScriptByTeam());
 
     }

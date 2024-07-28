@@ -2,6 +2,9 @@ import type {
     IGameNumbers,
     IScriptByTeam,
 } from "../types/data";
+import type {
+    INumeric,
+} from "../types/utilities";
 import View from "./View";
 import RangeCount from "../classes/UI/RangeCount";
 import {
@@ -13,13 +16,19 @@ import {
     supplant,
 } from "../utilities/strings";
 
-type ITeamElements = Record<string, Record<"group" | "items", HTMLElement>>;
+type ITeamElements = Record<string, {
+    group: HTMLFieldSetElement,
+    legend: HTMLLegendElement,
+    items: HTMLDivElement,
+    counts: Record<string, number>,
+}>;
 
 const UNKNOWN_MAX = "X";
 
 export default class RoleSelectView extends View<{
     "count-update": number,
     "random-select": void,
+    "role-draw": Record<string, INumeric>
 }> {
 
     protected form: HTMLFormElement;
@@ -43,14 +52,14 @@ export default class RoleSelectView extends View<{
     }
 
     addListeners() {
-        
+
         const {
             form,
         } = this;
 
         form.addEventListener("submit", (e) => {
             e.preventDefault();
-            console.log(serialiseForm(form));
+            this.trigger("role-draw", serialiseForm(form).quantity);
         });
 
         form.addEventListener("change", ({ target }) => {
@@ -65,6 +74,12 @@ export default class RoleSelectView extends View<{
 
             const range = this.getRange(checkbox);
             range.value = String(Number(checkbox.checked));
+            this.updateTeamCount(
+                range.dataset.team,
+                range.dataset.role,
+                range.value as INumeric,
+            );
+            this.updateGroupCounts();
 
         });
 
@@ -80,6 +95,12 @@ export default class RoleSelectView extends View<{
 
             const checkbox = this.getCheckbox(range);
             checkbox.checked = Number(range.value) > 0;
+            this.updateTeamCount(
+                range.dataset.team,
+                range.dataset.role,
+                range.value as INumeric,
+            );
+            this.updateGroupCounts();
 
         });
 
@@ -114,11 +135,13 @@ export default class RoleSelectView extends View<{
 
         this.teams = Array.prototype.reduce.call(
             groups.querySelectorAll(".js--role-select-group--team"),
-            (teams: ITeamElements, element: HTMLElement) => {
+            (teams: ITeamElements, element: HTMLFieldSetElement) => {
 
                 teams[element.dataset.id] = {
                     group: element,
+                    legend: findOrDie(".js--role-select-group--legend", element),
                     items: findOrDie(".js--role-select-group--items", element),
+                    counts: Object.create(null),
                 };
 
                 return teams;
@@ -185,6 +208,8 @@ export default class RoleSelectView extends View<{
 
                         element.id = `quantity-${role.id}`;
                         element.name = `quantity[${role.id}]`;
+                        element.dataset.team = team;
+                        element.dataset.role = role.id;
                         roleCounts.set(
                             element,
                             new RangeCount(
@@ -209,17 +234,10 @@ export default class RoleSelectView extends View<{
 
     }
 
-    updateGroups(numbers: IGameNumbers) {
-
-        Object.entries(numbers).forEach(([id, count]) => {
-            this.updateGroup(id, String(count));
-        });
-
-        this.updateGroup("traveler", UNKNOWN_MAX);
-
-    }
-
-    updateGroup(id: string, count: string) {
+    updateGroup(
+        id: string,
+        updates: Partial<Record<'count' | 'group' | 'max', string>>,
+    ) {
 
         const {
             groups,
@@ -231,13 +249,57 @@ export default class RoleSelectView extends View<{
             return;
         }
 
-        legend.dataset.max = count;
+        const {
+            count,
+            group,
+            max,
+        } = Object.assign(legend.dataset, updates);
 
         legend.textContent = supplant(groups.dataset.text, [
-            legend.dataset.group,
-            legend.dataset.count,
-            legend.dataset.max,
+            group,
+            count,
+            max,
         ]);
+        legend.classList.toggle("is-over", Number(count) > Number(max));
+
+    }
+
+    setGroupMaxes(numbers: IGameNumbers) {
+
+        Object.entries(numbers).forEach(([id, count]) => {
+            this.updateGroup(id, { max: String(count) });
+        });
+
+        this.updateGroup("traveler", { max: UNKNOWN_MAX });
+
+    }
+
+    updateTeamCount(id: string, roleId: string, count: INumeric) {
+
+        const {
+            teams,
+        } = this;
+
+        if (!Object.hasOwn(teams,id)) {
+            throw new ReferenceError(`Unrecognised team "${id}"`);
+        }
+
+        teams[id].counts[roleId] = Number(count);
+
+    }
+
+    updateGroupCounts() {
+
+        Object.entries(this.teams).forEach(([id, team]) => {
+
+            const count = String(
+                Object
+                    .values(team.counts)
+                    .reduce((total, count) => total + count, 0)
+            );
+            this.updateGroup(id, { count });
+
+        });
 
     }
 
@@ -278,6 +340,29 @@ export default class RoleSelectView extends View<{
         }
 
         return check;
+
+    }
+
+    tickRoles(roles: string[]) {
+
+        this.form
+            .querySelectorAll<HTMLInputElement>(".js--role-select-item--input")
+            .forEach((range) => {
+
+                const {
+                    role,
+                    team,
+                } = range.dataset;
+                const included = roles.includes(role);
+                const count = Number(included);
+
+                range.value = String(count);
+                this.getCheckbox(range).checked = included;
+                this.updateTeamCount(team, role, count);
+
+            });
+
+        this.updateGroupCounts();
 
     }
 

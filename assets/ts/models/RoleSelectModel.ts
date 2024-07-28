@@ -1,7 +1,11 @@
 import type {
     IScriptByTeam,
     IRole,
+    IGameNumbers,
 } from "../types/data";
+import type {
+    INumeric,
+} from "../types/utilities";
 import Model from "./Model";
 import ScriptModel from "./ScriptModel";
 import {
@@ -11,6 +15,7 @@ import {
 export default class RoleSelectModel extends Model<{
     "script-set": Partial<IScriptByTeam>,
     "player-count-update": number,
+    "roles-randomised": string[],
 }> {
 
     ready() {
@@ -64,15 +69,41 @@ export default class RoleSelectModel extends Model<{
 
     }
 
-    getRandomPlayers() {
+    getRandomRoleIds() {
 
-        const count = this.getPlayerCount();
-        const numbers = this.getNumbers(count);
-        const teams = this.getScriptByTeam();
+        const numbers = this.getNumbers(this.getPlayerCount());
+        const random: string[] = [];
 
-        console.log({ count, numbers, teams });
+        Object.entries(this.getScriptByTeam()).forEach(([team, roles]) => {
 
-        // TODO: Select enough players at random and trigger an event to set them all on the view.
+            const count = numbers[team as keyof IGameNumbers];
+
+            if (!count) {
+                return;
+            }
+
+            random.push(
+                ...shuffle(roles)
+                    .slice(0, count)
+                    .map(({ id }) => id)
+            );
+
+        });
+
+        return random;
+
+    }
+
+    processBag(quantities: Record<string, INumeric>) {
+
+        const quantity = Object.fromEntries(
+            Object.entries(quantities)
+                .map(([id, count]) => [id, Number(count)])
+                .filter(([ignore, count]: [string, number]) => count > 0)
+        );
+
+        console.log({ quantities, quantity });
+        // TODO: Do something with this.
 
     }
 

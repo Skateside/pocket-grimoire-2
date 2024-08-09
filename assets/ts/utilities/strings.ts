@@ -1,6 +1,9 @@
 import {
     unique,
 } from "./arrays";
+import {
+    random,
+} from "./numbers";
 
 /**
  * Takes a string containing placeholders (denoted between `{` and `}`) and
@@ -43,13 +46,10 @@ export function supplant(
  */
 export function randomId(prefix = "") {
 
-    const random = window
-        .crypto
-        .getRandomValues(new Uint32Array(1))[0]
-        .toString(36);
+    const rand = random().toString(16).slice(2);
     const date = Date.now().toString(36);
 
-    return `${prefix}${random}${date}`;
+    return `${prefix}${rand}${date}`;
 
 }
 

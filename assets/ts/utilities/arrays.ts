@@ -1,3 +1,7 @@
+import {
+    random,
+} from "./numbers";
+
 /**
  * Creates an array that's a shuffled version of the given array. The original
  * array is not modified. The shuffling is cryptographically random.
@@ -7,18 +11,18 @@
  */
 export function shuffle<T extends any>(array: T[]) {
 
-    // Schwartzian transform
+    // Fisher-Yates algorithm
 
-    const numbers = window.crypto.getRandomValues(
-        new Uint16Array(array.length)
-    );
+    const clone = [...array];
+    let { length } = clone;
 
-    return Array.from(array, (value, i) => ({
-            value,
-            sort: numbers[i]
-        }))
-        .sort((a, b) => a.sort - b.sort)
-        .map(({ value }) => value);
+    while (length > 1) {
+        length -= 1;
+        const index = Math.floor(random() * length);
+        [clone[index], clone[length]] = [clone[length], clone[index]];
+    }
+
+    return clone;
 
 }
 

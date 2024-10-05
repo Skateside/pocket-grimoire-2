@@ -124,3 +124,4 @@ This is a collection of ideas that would be nice to have but I'm unlikely to do 
     - https://github.com/Skateside/pocket-grimoire/issues/78
 - Mark players who nominated / were nominated.
     - https://github.com/Skateside/pocket-grimoire/issues/106
+- The ability to share the current state of the grimoire for a co-ST?

@@ -30,6 +30,16 @@ export default class RoleSelectModel extends Model<{
 
     }
 
+    expose() {
+
+        return {
+            getRandomRoleIds() {
+                return this.getRandomRoleIds();
+            },
+        }
+
+    }
+
     getTexts() {
 
         const i18n = this.store.getData("i18n");

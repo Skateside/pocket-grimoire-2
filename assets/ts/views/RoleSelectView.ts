@@ -102,7 +102,7 @@ export default class RoleSelectView extends View<{
         });
 
         findOrDie("#role-select-random").addEventListener("click", () => {
-            this.trigger("random-select", null);
+            this.tickRoles(this.request('getRandomRoleIds'))
         });
 
     }
@@ -344,6 +344,18 @@ export default class RoleSelectView extends View<{
     }
 
     tickRoles(roles: string[]) {
+
+        if (
+            !Array.isArray(roles)
+            || !roles.every((role) => typeof role === 'string')
+        ) {
+
+            throw new TypeError(
+                "Expected roles to be an array of strings, given: "
+                + JSON.stringify(roles || null)
+            );
+
+        }
 
         this.form
             .querySelectorAll<HTMLInputElement>(".js--role-select-item--input")

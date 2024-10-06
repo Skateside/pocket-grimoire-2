@@ -17,7 +17,6 @@ export default class RoleSelectController extends Controller<RoleSelectModel, Ro
         model.on("player-count-update", (count) => {
             view.setGroupMaxes(model.getNumbers(count));
         });
-        view.on("random-select", () => view.tickRoles(model.getRandomRoleIds()));
         view.on("role-draw", (quantities) => model.processBag(quantities));
 
         view.drawGroups(model.getTexts());

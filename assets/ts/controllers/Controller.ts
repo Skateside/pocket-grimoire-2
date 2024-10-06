@@ -13,8 +13,18 @@ export default class Controller<M extends Model, V extends View> {
 
     render() {
 
-        this.model.ready();
-        this.view.ready();
+        const {
+            model,
+            view,
+        } = this;
+
+        model.ready();
+        view.ready();
+        view.setRequester((method: keyof M, ...args: any[]) => (
+            typeof model[method] === 'function'
+            ? model[method](...args)
+            : undefined
+        ));
 
     }
 

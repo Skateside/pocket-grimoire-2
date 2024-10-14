@@ -73,6 +73,11 @@ export type IRole = {
     special?: ISpecial[],
 };
 
+export type IRoleDisplay = Pick<IRole, "id" | "team" | "name" | "ability" | "image"> & {
+    isDisabled: boolean,
+    isDuplicate: boolean,
+};
+
 export type IMetaEntry = {
     id: "_meta",
     name: string,
@@ -91,7 +96,7 @@ export type IScripts = Record<string, IScript>;
 
 export type IScriptRoles = (IRole | IMetaEntry)[];
 
-export type IScriptByTeam = Record<ITeam, IRole[]>;
+export type IScriptByTeam<TRole = IRole> = Record<ITeam, TRole[]>;
 
 export type IColours = (
     "blue"

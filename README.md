@@ -14,6 +14,7 @@ This is an unsorted list of things that still need to be done:
 
 - Select roles
 - Show "select multiple"
+    - Show quantity by default for any "bag-duplicate" character.
 - Player selection "bag".
 - Ability for Storyteller to assign a role to a player.
     - https://github.com/Skateside/pocket-grimoire/issues/83
@@ -93,6 +94,10 @@ This is an unsorted list of things that still need to be done:
 - Size of tokens
 - Size of reminders
 
+#### Updates
+
+- Night Order and Jinxes should use IDs rather than names.
+
 ### Design
 
 Do the design
@@ -125,4 +130,3 @@ This is a collection of ideas that would be nice to have but I'm unlikely to do 
 - Mark players who nominated / were nominated.
     - https://github.com/Skateside/pocket-grimoire/issues/106
 - The ability to share the current state of the grimoire for a co-ST?
-- The ability to add custom translations, allowing all languages to be supported.

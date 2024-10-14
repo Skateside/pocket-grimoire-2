@@ -2,6 +2,7 @@ import type {
     IGameNumbers,
     IScriptByTeam,
     IRoleSelectTeamElements,
+    IRoleDisplay,
 } from "../types/data";
 import type {
     INumeric,
@@ -149,7 +150,7 @@ export default class RoleSelectView extends View<{
 
     }
 
-    drawRoles(script: Partial<IScriptByTeam>) {
+    drawRoles(script: Partial<IScriptByTeam<IRoleDisplay>>) {
 
         const {
             teams,
@@ -179,9 +180,14 @@ export default class RoleSelectView extends View<{
                 "#role-select-item-template",
                 roles,
                 (role) => ({
+                    ".js--role-select-item--role"(element) {
+                        element.classList.toggle("is-disabled", role.isDisabled);
+                        element.classList.toggle("is-duplicate", role.isDuplicate);
+                    },
                     ".js--role-select-item--checkbox"(element: HTMLInputElement) {
                         element.id = `role-select-${role.id}`;
                         element.value = role.id;
+                        element.disabled = role.isDisabled;
                     },
                     // TEMP: this is only commented out to prevent 404's in the console.
                     // ".js--role-select--image"(element: HTMLImageElement) {
@@ -192,6 +198,9 @@ export default class RoleSelectView extends View<{
                     },
                     ".js--role-select-item--ability"(element) {
                         element.textContent = role.ability;
+                    },
+                    ".js--role-select-item--count"(element) {
+                        element.hidden = !role.isDuplicate;
                     },
                     ".js--role-select-item--quantity"(element: HTMLLabelElement) {
 
@@ -208,6 +217,7 @@ export default class RoleSelectView extends View<{
                         element.name = `quantity[${role.id}]`;
                         element.dataset.team = team;
                         element.dataset.role = role.id;
+                        element.disabled = role.isDisabled;
                         roleCounts.set(
                             element,
                             new RangeCount(

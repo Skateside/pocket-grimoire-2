@@ -1,5 +1,4 @@
 import Observer from "../classes/Observer";
-// import Model from "../models/Model";
 
 export default class View<EventMap = {}> extends Observer<EventMap> {
 
@@ -17,10 +16,6 @@ export default class View<EventMap = {}> extends Observer<EventMap> {
         this.addListeners();
 
     }
-
-    // setExposed(exposed: ReturnType<Model.prototype.expose>) {
-    //     this.exposed = exposed;
-    // }
 
     request(method: PropertyKey, ...args: any[]): any {
         console.warn("Requester has not been set up");

@@ -2,6 +2,8 @@ import type {
     IScriptByTeam,
     IRole,
     IGameNumbers,
+    ISpecial,
+    IRoleDisplay,
 } from "../types/data";
 import type {
     INumeric,
@@ -13,7 +15,7 @@ import {
 } from "../utilities/arrays";
 
 export default class RoleSelectModel extends Model<{
-    "script-set": Partial<IScriptByTeam>,
+    "script-set": Partial<IScriptByTeam<IRoleDisplay>>,
     "player-count-update": number,
     "roles-randomised": string[],
 }> {
@@ -62,7 +64,7 @@ export default class RoleSelectModel extends Model<{
         return this.store.getData("players").count;
     }
 
-    getScriptByTeam(): Partial<IScriptByTeam> {
+    getScriptByTeam(): Partial<IScriptByTeam<IRoleDisplay>> {
 
         const script = this.store.getData("script");
 
@@ -70,12 +72,47 @@ export default class RoleSelectModel extends Model<{
             return {};
         }
 
-        // Type-casting is needed to get around a ts(2339) that doesn't realise
-        // that we've filtered out the meta entry.
-        return Object.groupBy(
-            script.filter((entry) => ScriptModel.isRole(entry)) as IRole[],
-            ({ team }) => team,
-        );
+        const constructor = this.constructor as typeof RoleSelectModel;
+        const filtered = script.filter((entry) => ScriptModel.isRole(entry));
+        const converted = filtered.map((role) => constructor.convertRole(role));
+
+        return Object.groupBy(converted, ({ team }) => team);
+
+    }
+
+    static getSpecial(
+        role: IRole,
+        [type, name]: [ISpecial["type"], ISpecial["name"]],
+    ) {
+
+        if (!Object.hasOwn(role, "special")) {
+            return null;
+        }
+
+        return role.special.find(({ type: specialType, name: specialName }) => {
+            return specialType === type && specialName === name;
+        }) || null;
+
+    }
+
+    static hasSpecial(
+        role: IRole,
+        [type, name]: [ISpecial["type"], ISpecial["name"]],
+    ) {
+        return Boolean(this.getSpecial(role, [type, name]));
+    }
+
+    static convertRole(role: IRole) {
+
+        return {
+            id: role.id,
+            name: role.name,
+            ability: role.ability,
+            team: role.team,
+            image: role.image,
+            isDisabled: this.hasSpecial(role, ["selection", "bag-disabled"]),
+            isDuplicate: this.hasSpecial(role, ["selection", "bag-duplicate"]),
+        } as IRoleDisplay;
 
     }
 
@@ -93,7 +130,7 @@ export default class RoleSelectModel extends Model<{
             }
 
             random.push(
-                ...shuffle(roles)
+                ...shuffle(roles.filter((role) => !role.isDisabled))
                     .slice(0, count)
                     .map(({ id }) => id)
             );

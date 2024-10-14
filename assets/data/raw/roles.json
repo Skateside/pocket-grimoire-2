@@ -2452,6 +2452,12 @@
         "otherNight": 0,
         "otherNightReminder": "",
         "reminders": [],
+        "special": [
+            {
+                "type": "selection",
+                "name": "bag-duplicate"
+            }
+        ],
         "setup": true,
         "ability": "Nominees die, but may nominate again immediately (on day 3, they must). After day 3, evil wins. [All Minions are Riot]",
         "image": "/build/img/icon/demon/riot.webp"

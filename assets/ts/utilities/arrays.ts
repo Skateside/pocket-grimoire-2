@@ -18,7 +18,7 @@ export function shuffle<T extends any>(array: T[]) {
 
     while (length > 1) {
         length -= 1;
-        const index = Math.floor(random() * length);
+        const index = Math.floor(random() * (length + 1));
         [clone[index], clone[length]] = [clone[length], clone[index]];
     }
 

@@ -58,3 +58,10 @@ export function debounce<T extends (...args: any[]) => any>(
     return debounced as T;
 
 }
+
+/**
+ * A function that takes no arguments and returns nothing.
+ */
+export function noop(...ignore: any[]) {
+    return;
+}

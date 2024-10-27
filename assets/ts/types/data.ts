@@ -60,6 +60,7 @@ export type IRole = {
     team: ITeam,
     name: string,
     ability: string,
+    flavor?: string,
     image?: string | [string] | [string, string] | [string, string, string],
     edition?: string,
     firstNight?: number,
@@ -108,6 +109,13 @@ export type IColours = (
     | "purple"
     | "red"
 );
+
+export type IElementBox = {
+    left: number,
+    top: number,
+    width: number,
+    height: number,
+};
 
 export type ICoordinates = {
     x: number,

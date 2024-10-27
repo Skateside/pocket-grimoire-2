@@ -20,11 +20,11 @@
                 gap: 1rem;
             }
 
-            /*
             .grimoire {
                 border: 2px solid #000;
                 background-color: #ccc;
                 height: 90vh;
+                position: relative;
             }
 
             .seat {
@@ -33,7 +33,18 @@
                 border: 1px dotted blue;
                 background-color: #fff6;
             }
-            */
+
+            .seat--movable {
+                --left: 0;
+                --top: 0;
+                --z-index: 0;
+                cursor: move;
+                position: absolute;
+                left: calc(var(--left) * 1px);
+                top: calc(var(--top) * 1px);
+                z-index: var(--z-index);
+                touch-action: none;
+            }
 
             .dialog {
                 border: none;
@@ -184,9 +195,9 @@
         <!-- <hr>
 
         <details>
-            <summary>Grimoire</summary>
+            <summary> js--grimoire</summary>
             <div>
-                <div class="grimoire js--grimoire--pad">
+                <div class=" js--grimoire js-- js--grimoire--pad">
                 </div>
             </div>
         </details> -->
@@ -281,6 +292,13 @@
 
             </div>
         </details>
+
+        <div class="grimoire js--grimoire">
+
+            <button type="button" class="seat seat--movable js--grimoire--token">
+            </button>
+
+        </div>
 
         <script>
             if (!Object.groupBy) {

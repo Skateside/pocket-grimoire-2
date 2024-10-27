@@ -13,6 +13,8 @@ export default class URL extends InputProcessor<HTMLInputElement> {
 
         return new Promise<IScript>((resolve, reject) => {
 
+            // TODO: Don't fetch() the URL, fetch a PHP proxy to get around CORS.
+
             fetch(this.input.value)
                 // .catch((error) => reject(error.message))
                 .then(

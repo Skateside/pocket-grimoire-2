@@ -16,12 +16,12 @@ export default class App {
     }
 
     addController(
-        controller: Controller<Model, View> | (() => Controller<Model, View>),
+        controller: Controller<Model, View> | ((store: Store) => Controller<Model, View>),
     ) {
 
         this.constrollers.push(
             typeof controller === "function"
-            ? controller()
+            ? controller(this.store)
             : controller
         );
 

@@ -2,7 +2,7 @@ import {
     IElementBox,
 } from "../types/data";
 import View from "./View";
-import Movable from "../classes/Movable";
+// import Movable from "../classes/Movable";
 import {
     findOrDie,
 } from "../utilities/dom";
@@ -32,7 +32,7 @@ export default class GrimoireView extends View<{
             pad,
         } = this;
 
-        pad.addEventListener(Movable.UPDATE_EVENT, () => {});
+        // pad.addEventListener(Movable.UPDATE_EVENT, () => {});
 
         // TODO: Put this into a seperate class.
         // const handler: EventListenerObject = {

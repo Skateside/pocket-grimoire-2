@@ -30,6 +30,20 @@ export default class GrimoireController extends Controller<GrimoireModel, Grimoi
             .setDimensions(view.getPadDimensions())
             .run();
 
+        movable.on("update", ({ element, coords }) => {
+            // model.updateSeat(view.getSeatByElement(element), coords);
+
+            // NOTE: `element` might refer to a seat or a reminder.
+            // const details = view.getDetailsByElement(element);
+            // if (details.seat) { model.updateSeat(seat, coords); }
+            // else if (details.reminder) { model.updateReminder(reminder, coords); }
+
+        });
+
+        // model.on("seat-update", ({ seat, coords }) => {
+        //     view.updateSeat(seat, coords);
+        // });
+
         /*
         movable.on("update", ({ element, left, top, zIndex }) => {
 

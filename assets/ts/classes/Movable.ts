@@ -1,7 +1,8 @@
 import type {
     IElementBox,
-    // ICoordinates,
+    ICoordinates,
 } from "../types/data";
+import Observer from "./Observer";
 import {
     noop,
 } from "../utilities/functions";
@@ -9,7 +10,12 @@ import {
     clamp,
 } from "../utilities/numbers";
 
-export default class Movable {
+export default class Movable extends Observer<{
+    update: {
+        element: HTMLElement,
+        coords: ICoordinates,
+    },
+}> {
 
     protected xOffset: number;
     protected yOffset: number;
@@ -22,11 +28,14 @@ export default class Movable {
     protected zIndex: number;
     protected dragHandler: (event: MouseEvent | TouchEvent) => void;
 
+    // TODO: Replace with an observer.
     static get UPDATE_EVENT() {
         return "movable-update";
     }
 
     constructor() {
+
+        super();
 
         this.left = 0;
         this.top = 0;
@@ -121,8 +130,9 @@ export default class Movable {
 
         this.startDrag(element, event);
 
-        const zIndex = this.advanceZIndex();
-        element.style.setProperty("--z-index", String(zIndex));
+        // const zIndex = this.advanceZIndex();
+        // element.style.setProperty("--z-index", String(zIndex));
+        this.advanceZIndex();
 
         // this.observer.trigger("zIndex", {
         //     zIndex,
@@ -242,13 +252,14 @@ export default class Movable {
 
     moveTo(element: HTMLElement, left: number, top: number, zIndex?: number) {
 
-        element.style.setProperty("--left", String(left));
-        element.style.setProperty("--top", String(top));
 
         if (typeof zIndex !== "number" || Number.isNaN(zIndex)) {
             zIndex = this.zIndex;
         }
 
+        //*
+        element.style.setProperty("--left", String(left));
+        element.style.setProperty("--top", String(top));
         element.style.setProperty("--z-index", String(zIndex));
 
         const {
@@ -264,13 +275,16 @@ export default class Movable {
                 zIndex,
             },
         }));
-
-        // this.observer.trigger("move", {
-        //     element,
-        //     left,
-        //     top,
-        //     zIndex
-        // });
+        /*/
+        this.trigger("update", {
+            element,
+            coords: {
+                x: left,
+                y: top,
+                z: zIndex,
+            },
+        });
+        //*/
 
     }
 

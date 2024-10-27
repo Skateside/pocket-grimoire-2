@@ -25,6 +25,11 @@ export default class App {
             : controller
         );
 
+        // TODO: Pass `store` here, so that a Model will be given a store and
+        // the function doesn't need to know about it.
+        // TODO: Pass an observer to the controller or model/view so that it can
+        // be centrally managed?
+
         return this;
 
     }

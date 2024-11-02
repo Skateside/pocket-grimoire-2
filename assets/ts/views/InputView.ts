@@ -7,9 +7,10 @@ import type {
 import View from "./View";
 import {
     announceInput,
-    optout,
     createInputWatcher,
     INPUT_WATCH_EVENT,
+    lookup,
+    optout,
 } from "../utilities/dom";
 import {
     debounce,
@@ -19,7 +20,7 @@ const SELECTOR = "input:not([type=\"hidden\"]),select,textarea";
 
 export default class InputView extends View<{
     "input-update": IInputRecord,
-    "inputs-removed": void,
+    // "inputs-removed": void,
 }> {
 
     static identify(input: IFieldElement) {
@@ -50,11 +51,21 @@ export default class InputView extends View<{
 
     static getValue(input: IFieldElement) {
 
-        return (
-            input.type === "checkbox"
-            ? (input as HTMLInputElement).checked
-            : input.value
-        );
+        const isChecked = (input as HTMLInputElement).checked;
+
+        if (input.type === "checkbox") {
+            return isChecked;
+        }
+
+        if (input.type === "radio" && !isChecked) {
+
+            return input.form
+                ?.querySelector<HTMLInputElement>(`[name="${input.name}"]:checked`)
+                ?.value ?? undefined;
+
+        }
+
+        return input.value;
 
     }
 
@@ -121,24 +132,41 @@ export default class InputView extends View<{
 
         this.createWatchers(body);
 
-        const triggerInputsRemoved = debounce(() => {
-            this.trigger("inputs-removed", null);
+        const checkInputsRemoved = debounce(() => {
+            this.confirmData(this.request("getValues"));
         });
 
         const observer = new MutationObserver((records) => {
 
             records.forEach(({ addedNodes, removedNodes }) => {
 
+                // If we have added any inputs, create watchers for them.
+
                 addedNodes.forEach((node) => {
 
-                    if (node.nodeType === Node.ELEMENT_NODE) {
+                    if (
+                        node.nodeType === Node.ELEMENT_NODE
+                        && lookup(SELECTOR, [node] as Element[])
+                    ) {
                         this.createWatchers(node as HTMLElement);
                     }
 
                 });
 
-                if (removedNodes.length) {
-                    triggerInputsRemoved();
+                // If we have removed any inputs, check to see if we need to
+                // update the store by removing stale input references.
+
+                const removedElements = [
+                    ...removedNodes
+                ].filter(({ nodeType }) => {
+                    return nodeType === Node.ELEMENT_NODE;
+                }) as Element[];
+
+                if (
+                    removedElements.length
+                    && lookup(SELECTOR, removedElements)
+                ) {
+                    checkInputsRemoved();
                 }
 
             });

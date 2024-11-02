@@ -1,5 +1,6 @@
 import App from "./classes/App";
 import Store from "./classes/Store";
+import Observer from "./classes/Observer";
 // import GlobalModel from "./models/GlobalModel";
 // import RepositoryModel from "./models/RepositoryModel";
 import PlayersModel from "./models/PlayersModel";
@@ -32,18 +33,24 @@ import GrimoireController from "./controllers/GrimoireController";
 // import global from "./utilities/global";
 import Movable from "./classes/Movable";
 
-const app = new App(new Store());
+const app = new App();
 app
-    .addMVC(PlayersModel, PlayersView, PlayersController)
-    .addMVC(ScriptModel, ScriptView, ScriptController)
-    .addMVC(NightOrderModel, NightOrderView, NightOrderController)
-    .addMVC(InfoModel, InfoView, InfoController)
-    .addMVC(RoleSelectModel, RoleSelectView, RoleSelectController)
-    .addMVC(InputModel, InputView, InputController)
-    .addController((store) => {
+    .setStore(new Store())
+    .setObserverFactory(<TEventMap = {}>(id: string, parent?: Observer) => {
+        const observer = Observer.createWithId<TEventMap>(id);
+        parent?.adopt(observer);
+        return observer;
+    })
+    .addMVC("player", PlayersModel, PlayersView, PlayersController)
+    .addMVC("script", ScriptModel, ScriptView, ScriptController)
+    .addMVC("night-order", NightOrderModel, NightOrderView, NightOrderController)
+    .addMVC("info", InfoModel, InfoView, InfoController)
+    .addMVC("role-select", RoleSelectModel, RoleSelectView, RoleSelectController)
+    .addMVC("input", InputModel, InputView, InputController)
+    .addController("grimoire", () => {
 
         const controller = new GrimoireController(
-            new GrimoireModel(store),
+            new GrimoireModel(),
             new GrimoireView(),
         );
 

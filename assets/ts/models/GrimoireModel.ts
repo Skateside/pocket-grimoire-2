@@ -1,6 +1,6 @@
 import Model from "./Model";
 
-export default class ScriptModel extends Model<{
+export default class GrimoireModel extends Model<{
 }> {
 
     // ready() {

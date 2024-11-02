@@ -1,5 +1,6 @@
 import {
     IFieldElement,
+    IIdentifyLookup,
 } from "../types/utilities";
 import {
     memoise,
@@ -24,7 +25,11 @@ import {
  * id; // "anonymous-0"
  * div; // <div id="anonymous-0">Lorem ipsum</div>
  */
-export function identify(element: Element | null, prefix = "anonymous-") {
+export function identify(
+    element: Element | null,
+    prefix = "anonymous-",
+    lookup: IIdentifyLookup = (id) => document.getElementById(id),
+) {
 
     if (!element) {
         return "";
@@ -39,7 +44,7 @@ export function identify(element: Element | null, prefix = "anonymous-") {
 
         do {
             id = randomId(prefix);
-        } while (document.getElementById(id));
+        } while (lookup(id));
 
         element.id = id;
 
@@ -368,5 +373,81 @@ export function optout(element: HTMLElement, features: string) {
     }
 
     return outs.every((out) => list.includes(out));
+
+}
+
+/**
+ * Gets the parents of the given element.
+ *
+ * @param element Element whose parents should be returned.
+ * @returns Array of parents, which might be empty.
+ */
+export function getParents(element: Element | null): Element[] {
+
+    return (
+        element?.parentElement
+        ? [element.parentElement, ...getParents(element)]
+        : []
+    );
+
+}
+
+/**
+ * A function which takes an array of elements and a CSS selector; it finds any
+ * element within the given array (or a child of any element in the array) that
+ * matches the given selector.
+ *
+ * @param selector Selector identifying the element to look for.
+ * @param elements Array of elements to search through (and their children).
+ * @returns Element with the matching ID, or `null` if there are no matches.
+ */
+export function lookup(selector: string, elements: Element[]): Element | null {
+
+    for (const element of elements) {
+
+        if (element.matches(selector)) {
+            return element;
+        }
+
+        const child = lookup(selector, [...element.children]);
+
+        if (child) {
+            return child;
+        }
+
+    }
+
+    return null;
+
+}
+
+/**
+ * Creates an HTML element, based on the information that's been given.
+ *
+ * @param nodeName The element to create.
+ * @param attributes Optional attributes for the element.
+ * @param children Optional children of the element.
+ * @returns Created element.
+ */
+export function create<K extends keyof HTMLElementTagNameMap>(
+    nodeName: K,
+    attributes?: Record<string, string>,
+    children?: (Node | string)[],
+): HTMLElementTagNameMap[K];
+export function create(
+    nodeName: string,
+    attributes: Record<string, string> = {},
+    children: (Node | string)[] = [],
+): HTMLElement {
+
+    const element = document.createElement(nodeName);
+
+    Object
+        .entries(attributes)
+        .forEach(([name, value]) => element.setAttribute(name, value));
+
+    children.forEach((child) => element.append(child));
+
+    return element;
 
 }

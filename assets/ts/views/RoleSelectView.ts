@@ -103,7 +103,7 @@ export default class RoleSelectView extends View<{
         });
 
         findOrDie("#role-select-random").addEventListener("click", () => {
-            this.tickRoles(this.request('getRandomRoleIds'))
+            this.tickRoles(this.request("getRandomRoleIds"))
         });
 
     }
@@ -246,7 +246,7 @@ export default class RoleSelectView extends View<{
 
     updateGroup(
         id: string,
-        updates: Partial<Record<'count' | 'group' | 'max', string>>,
+        updates: Partial<Record<"count" | "group" | "max", string>>,
     ) {
 
         const {
@@ -357,7 +357,7 @@ export default class RoleSelectView extends View<{
 
         if (
             !Array.isArray(roles)
-            || !roles.every((role) => typeof role === 'string')
+            || !roles.every((role) => typeof role === "string")
         ) {
 
             throw new TypeError(

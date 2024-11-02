@@ -1,18 +1,57 @@
 import {
-    ObserverHandler,
+    IObservable,
     ObserverConverted,
+    ObserverHandler,
 } from "../types/classes";
+import {
+    create,
+    getParents,
+    identify,
+    lookup,
+} from "../utilities/dom";
 
-export default class Observer<TEventMap = {}> {
+export default class Observer<TEventMap = {}> implements IObservable<TEventMap> {
 
-    protected observerElement: HTMLElement;
-    protected observerMap: WeakMap<ObserverHandler, ObserverConverted>;
+    protected element: HTMLElement;
+    protected map: WeakMap<ObserverHandler, ObserverConverted>;
 
-    constructor() {
+    static identify(element: HTMLElement) {
 
-        this.observerElement = document.createElement("div");
-        this.observerMap = new WeakMap();
+        return identify(
+            element,
+            "observer-",
+            (id: string) => lookup(`#${id}`, getParents(element)),
+        );
 
+    }
+
+    static create<TEventMap = {}>(element: HTMLElement = document.createElement("div")) {
+        return new this<TEventMap>(element);
+    }
+
+    static createWithId<TEventMap = {}>(id?: string) {
+
+        const attributes: { id?: string } = {};
+
+        if (typeof id === "string") {
+            attributes.id = id;
+        }
+
+        return this.create<TEventMap>(create("div", attributes));
+
+    }
+
+    constructor(element: HTMLElement = document.createElement("div")) {
+
+        this.element = element;
+        this.map = new WeakMap();
+
+        (this.constructor as typeof Observer).identify(this.element);
+
+    }
+
+    getElement() {
+        return this.element;
     }
 
     protected convertObserverHandler(
@@ -23,7 +62,7 @@ export default class Observer<TEventMap = {}> {
         const converted: ObserverConverted = (
             ({ detail }: CustomEvent) => handler(detail)
         ) as EventListener;
-        this.observerMap.set(handler, converted);
+        this.map.set(handler, converted);
 
         return converted;
 
@@ -33,7 +72,7 @@ export default class Observer<TEventMap = {}> {
         handler: ObserverHandler,
     ): ObserverConverted {
 
-        const unconverted = this.observerMap.get(handler);
+        const unconverted = this.map.get(handler);
 
         return unconverted || handler;
 
@@ -49,7 +88,7 @@ export default class Observer<TEventMap = {}> {
         )
     ) {
 
-        this.observerElement.dispatchEvent(
+        this.element.dispatchEvent(
             new CustomEvent<TEventMap[K]>(eventName as string, {
                 bubbles: false,
                 cancelable: false,
@@ -64,9 +103,9 @@ export default class Observer<TEventMap = {}> {
         detail: TEventMap[K]
     ) {
 
-        this.observerElement.dispatchEvent(
+        this.element.dispatchEvent(
             new CustomEvent<TEventMap[K]>(eventName as string, {
-                bubbles: false,
+                bubbles: true,
                 cancelable: false,
                 detail,
             })
@@ -79,7 +118,7 @@ export default class Observer<TEventMap = {}> {
         handler: ObserverHandler<TEventMap[K]>,
     ) {
 
-        this.observerElement.addEventListener(
+        this.element.addEventListener(
             eventName as string,
             this.convertObserverHandler(handler),
         );
@@ -91,11 +130,27 @@ export default class Observer<TEventMap = {}> {
         handler: ObserverHandler<TEventMap[K]>,
     ) {
 
-        this.observerElement.removeEventListener(
+        this.element.removeEventListener(
             eventName as string,
             this.unconvertObserverHandler(handler),
         );
 
     }
+
+    adopt(observer: Observer) {
+        this.element.append(observer.getElement());
+    }
+
+    // createSubObserver<TEventMap = {}>(element: HTMLElement = document.createElement("div")) {
+
+    //     const {
+    //         element: parent,
+    //     } = this;
+    //     const constructor = this.constructor as typeof Observer;
+
+    //     parent.append(element);
+    //     return new constructor<TEventMap>(element);
+
+    // }
 
 }

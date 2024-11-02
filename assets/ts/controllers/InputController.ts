@@ -6,13 +6,14 @@ export default class InputController extends Controller<InputModel, InputView> {
 
     render() {
 
+        super.render();
+
         const {
             model,
             view,
         } = this;
 
         view.on("input-update", (data) => model.update(data));
-        view.on("inputs-removed", () => view.confirmData(model.getValues()));
 
         view.populate(model.getValues());
         view.watchInputs();

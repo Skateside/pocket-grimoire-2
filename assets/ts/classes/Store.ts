@@ -9,6 +9,8 @@ import type {
 } from "../types/data";
 import type {
     IStoreEntries,
+    IObservable,
+    ObserverHandler,
 } from "../types/classes";
 import Observer from "./Observer";
 import StoreEntry from "./StoreEntry/StoreEntry";
@@ -20,17 +22,16 @@ import {
 import defaultSettings from "../data/settings";
 import gameData from "../data/game";
 
-export default class Store extends Observer<IStoreEvents> {
+export default class Store implements IObservable<IStoreEvents> {
 
     static get KEY() {
         return "pg";
     }
 
     protected store: IStoreEntries;
+    protected observer: Observer<IStoreEvents>;
 
     constructor() {
-
-        super();
 
         this.store = {
             // Default settings for the application.
@@ -57,6 +58,32 @@ export default class Store extends Observer<IStoreEvents> {
             // reminders: new Unsavable<IStore["reminders"]>([]),
         };
 
+    }
+
+    setObserver(observer: Observer<IStoreEvents>) {
+        this.observer = observer;
+        return this;
+    }
+
+    on<K extends keyof IStoreEvents>(
+        eventName: K,
+        handler: ObserverHandler<IStoreEvents[K]>,
+    ): void {
+        return this.observer.on(eventName, handler);
+    }
+
+    off<K extends keyof IStoreEvents>(
+        eventName: K,
+        handler: ObserverHandler<IStoreEvents[K]>,
+    ): void {
+        return this.observer.off(eventName, handler);
+    }
+
+    trigger<K extends keyof IStoreEvents>(
+        eventName: K,
+        detail: IStoreEvents[K],
+    ): void {
+        return this.observer.trigger(eventName, detail);
     }
 
     ready() {

@@ -6,6 +6,23 @@ import type {
 export type ObserverHandler<T extends any = any> = (detail: T) => void;
 export type ObserverConverted = (event: Event) => void;
 
+export type IObservable<TEventMap = {}> = {
+
+    trigger<K extends keyof TEventMap>(
+        eventName: K,
+        detail: TEventMap[K]
+    ): void,
+    on<K extends keyof TEventMap>(
+        eventName: K,
+        handler: ObserverHandler<TEventMap[K]>,
+    ): void,
+    off<K extends keyof TEventMap>(
+        eventName: K,
+        handler: ObserverHandler<TEventMap[K]>,
+    ): void,
+
+}
+
 export type IScriptValidatorCheck = {
     id: string,
     test: (roles: IRole[], params?: any[]) => boolean,

@@ -11,6 +11,14 @@ export default class Controller<M extends Model, V extends View> {
         this.view = view;
     }
 
+    getModel() {
+        return this.model;
+    }
+
+    getView() {
+        return this.view;
+    }
+
     render() {
 
         const {
@@ -18,13 +26,13 @@ export default class Controller<M extends Model, V extends View> {
             view,
         } = this;
 
-        model.ready();
-        view.ready();
         view.setRequester((method: keyof M, ...args: any[]) => (
             typeof model[method] === 'function'
             ? model[method](...args)
             : undefined
         ));
+        model.ready();
+        view.ready();
 
     }
 

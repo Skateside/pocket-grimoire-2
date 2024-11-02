@@ -9,23 +9,11 @@ export type IObjectDiffEntry<T extends any = any> = {
     type: "remove",
 };
 
-// export type IObjectDiff<T extends any = any> = ArrayOrRecord<IObjectDiffEntry<T>>;
 export type IObjectDiff<T extends any = any> = Record<PropertyKey, IObjectDiffEntry<T>>;
-
-// export type IObjectDiff<T extends any = any> = Record<string, {
-//     value: T,
-//     type: "new" | "update",
-// } | {
-//     type: "remove",
-// }> | ({
-//     value: T,
-//     type: "new" | "update",
-// } | {
-//     type: "remove",
-// })[];
 
 export type IFieldElement = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
+export type IIdentifyLookup = (id: string) => Element | null;
 
 // -- Deprecated after this ------------------------------------------------- //
 

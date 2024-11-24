@@ -8,6 +8,10 @@ import type {
     INumeric,
 } from "../types/utilities";
 import View from "./View";
+import {
+    StrangeRolesError,
+    UnrecognisedTeamError,
+} from "../errors/errors";
 import RangeCount from "../classes/UI/RangeCount";
 import {
     findOrDie,
@@ -291,7 +295,7 @@ export default class RoleSelectView extends View<{
         } = this;
 
         if (!Object.hasOwn(teams,id)) {
-            throw new ReferenceError(`Unrecognised team "${id}"`);
+            throw new UnrecognisedTeamError(id);
         }
 
         teams[id].counts[roleId] = Number(count);
@@ -359,12 +363,7 @@ export default class RoleSelectView extends View<{
             !Array.isArray(roles)
             || !roles.every((role) => typeof role === "string")
         ) {
-
-            throw new TypeError(
-                "Expected roles to be an array of strings, given: "
-                + JSON.stringify(roles || null)
-            );
-
+            throw new StrangeRolesError(JSON.stringify(roles ?? null));
         }
 
         this.form

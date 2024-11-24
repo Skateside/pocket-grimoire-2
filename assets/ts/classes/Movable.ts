@@ -2,7 +2,6 @@ import type {
     IElementBox,
     ICoordinates,
 } from "../types/data";
-import Observer from "./Observer";
 import {
     noop,
 } from "../utilities/functions";
@@ -10,48 +9,46 @@ import {
     clamp,
 } from "../utilities/numbers";
 
-export default class Movable extends Observer<{
-    update: {
-        element: HTMLElement,
-        coords: ICoordinates,
-    },
-}> {
+export default class Movable {
 
     protected xOffset: number;
     protected yOffset: number;
-    protected left: number;
-    protected top: number;
+    protected x: number;
+    protected y: number;
+    protected z: number;
     protected width: number;
     protected height: number;
     protected selector: string;
-    // protected isDragging: boolean;
-    protected zIndex: number;
+    protected isDragging: boolean;
     protected dragHandler: (event: MouseEvent | TouchEvent) => void;
+    protected onComplete: () => void;
 
-    // TODO: Replace with an observer.
     static get UPDATE_EVENT() {
         return "movable-update";
     }
 
+    static get CLICK_EVENT() {
+        return "movable-click";
+    }
+
     constructor() {
 
-        super();
-
-        this.left = 0;
-        this.top = 0;
+        this.x = 0;
+        this.y = 0;
+        this.z = 0;
         this.width = 0;
         this.height = 0;
         this.selector = "*";
-        // this.isDragging = false;
-        this.zIndex = 0;
+        this.isDragging = false;
         this.dragHandler = noop;
+        this.onComplete = noop;
 
     }
 
     setDimensions({ left, top, width, height }: IElementBox) {
 
-        this.left = left;
-        this.top = top;
+        this.x = left;
+        this.y = top;
         this.width = width;
         this.height = height;
 
@@ -67,19 +64,19 @@ export default class Movable extends Observer<{
 
     }
 
-    setZIndex(zIndex: number) {
+    setZ(z: number) {
 
-        this.zIndex = zIndex;
+        this.z = z;
 
         return this;
 
     }
 
-    advanceZIndex() {
+    advanceZ() {
 
-        this.zIndex += 1;
+        this.z += 1;
 
-        return this.zIndex;
+        return this.z;
 
     }
 
@@ -98,6 +95,8 @@ export default class Movable extends Observer<{
         document.addEventListener("mouseup", handler);
         document.addEventListener("touchend", handler);
         document.addEventListener("contextmenu", handler);
+        document.addEventListener("click", handler);
+        // TODO: scroll
 
     }
 
@@ -116,6 +115,10 @@ export default class Movable extends Observer<{
             this.stop();
             break;
 
+        case "click":
+            this.checkClick(event as PointerEvent);
+            break;
+
         }
 
     }
@@ -129,15 +132,6 @@ export default class Movable extends Observer<{
         }
 
         this.startDrag(element, event);
-
-        // const zIndex = this.advanceZIndex();
-        // element.style.setProperty("--z-index", String(zIndex));
-        this.advanceZIndex();
-
-        // this.observer.trigger("zIndex", {
-        //     zIndex,
-        //     element: token
-        // });
 
     }
 
@@ -154,6 +148,9 @@ export default class Movable extends Observer<{
 
         this.endDragging();
         this.dragHandler = (event) => this.dragObject(element, event);
+        this.onComplete = () => this.announcePosition(element);
+
+        element.style.setProperty("--z", String(this.advanceZ()));
 
         if (event instanceof MouseEvent) {
 
@@ -162,8 +159,8 @@ export default class Movable extends Observer<{
                 clientY,
             } = event;
 
-            this.xOffset = clientX - left + this.left;
-            this.yOffset = clientY - top + this.top;
+            this.xOffset = clientX - left + this.x;
+            this.yOffset = clientY - top + this.y;
             window.addEventListener("mousemove", this.dragHandler);
 
         } else if (event instanceof TouchEvent) {
@@ -176,8 +173,8 @@ export default class Movable extends Observer<{
                 return;
             }
 
-            this.xOffset = targetTouches[0].clientX - left + this.left;
-            this.yOffset = targetTouches[0].clientY - top + this.top;
+            this.xOffset = targetTouches[0].clientX - left + this.x;
+            this.yOffset = targetTouches[0].clientY - top + this.y;
             window.addEventListener("touchmove", this.dragHandler, {
                 passive: false
             });
@@ -192,16 +189,21 @@ export default class Movable extends Observer<{
             return;
         }
 
+        this.onComplete();
         window.removeEventListener("mousemove", this.dragHandler);
         window.removeEventListener("touchmove", this.dragHandler);
         this.dragHandler = noop;
+        this.onComplete = noop;
 
         // The order of events is mousedown -> mouseup -> click. This means
         // that we need to delay the resetting of `this.isDragging` so that
         // the handler attached to the click event listener doesn't trigger
         // after dragging. This only seems to be an issue on desktop, mobile
         // seems to be fine.
-        // window.requestAnimationFrame(() => this.isDragging = false);
+        // We have to wait for `requestAnimationFrame` because
+        // `Promise.resolve().then()` is too fast and dragging will look like
+        // clicking.
+        window.requestAnimationFrame(() => this.isDragging = false);
 
     }
 
@@ -225,7 +227,7 @@ export default class Movable extends Observer<{
 
             leftValue = clientX - this.xOffset;
             topValue = clientY - this.yOffset;
-            // this.isDragging = true;
+            this.isDragging = true;
 
         } else if (event instanceof TouchEvent) {
 
@@ -244,23 +246,28 @@ export default class Movable extends Observer<{
 
         this.moveTo(
             element,
-            clamp(0, leftValue, this.width - width),
-            clamp(0, topValue, this.height - height),
+            {
+                x: clamp(0, leftValue, this.width - width),
+                y: clamp(0, topValue, this.height - height),
+            },
         );
 
     }
 
-    moveTo(element: HTMLElement, left: number, top: number, zIndex?: number) {
+    moveTo(element: HTMLElement, { x, y, z }: ICoordinates) {
 
 
-        if (typeof zIndex !== "number" || Number.isNaN(zIndex)) {
-            zIndex = this.zIndex;
+        if (typeof z !== "number" || Number.isNaN(z)) {
+            z = this.z;
         }
 
-        //*
-        element.style.setProperty("--left", String(left));
-        element.style.setProperty("--top", String(top));
-        element.style.setProperty("--z-index", String(zIndex));
+        element.style.setProperty("--x", String(x));
+        element.style.setProperty("--y", String(y));
+        element.style.setProperty("--z", String(z));
+
+    }
+
+    announcePosition(element: HTMLElement) {
 
         const {
             UPDATE_EVENT,
@@ -270,32 +277,31 @@ export default class Movable extends Observer<{
             bubbles: true,
             cancelable: false,
             detail: {
-                left,
-                top,
-                zIndex,
+                x: Number(element.style.getPropertyValue("--x")),
+                y: Number(element.style.getPropertyValue("--y")),
+                z: Number(element.style.getPropertyValue("--z")),
             },
         }));
-        /*/
-        this.trigger("update", {
-            element,
-            coords: {
-                x: left,
-                y: top,
-                z: zIndex,
-            },
-        });
-        //*/
 
     }
 
-    // getPosition(element: HTMLElement): ICoordinates {
+    checkClick(event: PointerEvent) {
 
-    //     return {
-    //         x: Number(element.style.getPropertyValue("--left")) || 0,
-    //         y: Number(element.style.getPropertyValue("--top")) || 0,
-    //         z: Number(element.style.getPropertyValue("--z-index")) || 0,
-    //     };
+        const element = (event.target as HTMLElement).closest<HTMLElement>(this.selector);
 
-    // }
+        if (!element || this.isDragging) {
+            return;
+        }
+
+        const {
+            CLICK_EVENT,
+        } = (this.constructor as typeof Movable);
+
+        element.dispatchEvent(new CustomEvent(CLICK_EVENT, {
+            bubbles: true,
+            cancelable: false,
+        }));
+
+    }
 
 }

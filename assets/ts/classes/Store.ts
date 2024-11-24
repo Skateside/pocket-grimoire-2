@@ -17,6 +17,11 @@ import StoreEntry from "./StoreEntry/StoreEntry";
 import Unsavable from "./StoreEntry/Unsavable";
 import Info from "./StoreEntry/Info";
 import {
+    NonNumericError,
+    OutOfRangePlayerCountError,
+    UnrecognisedRoleError,
+} from "../errors/errors";
+import {
     update,
 } from "../utilities/objects";
 import defaultSettings from "../data/settings";
@@ -54,6 +59,8 @@ export default class Store implements IObservable<IStoreEvents> {
             infos: new Info<IStore["infos"]>([]),
             // A record of CSS selectors to values for the inputs.
             inputs: new StoreEntry<IStore["inputs"]>({}),
+            // Position of anything that can be moved around.
+            moveables: new StoreEntry<IStore["moveables"]>([]),
             // seats: new Unsavable<IStore["seats"]>([]),
             // reminders: new Unsavable<IStore["reminders"]>([]),
         };
@@ -237,15 +244,11 @@ export default class Store implements IObservable<IStoreEvents> {
         let playerCount = Math.floor(players as number);
 
         if (Number.isNaN(playerCount)) {
-            throw new TypeError(`Unrecognised player count type: ${players}`);
+            throw new NonNumericError(JSON.stringify(players ?? null));
         }
 
         if (playerCount < 5 || playerCount > 20) {
-
-            throw new RangeError(
-                `Player count must be between 5 and 20 - ${playerCount} given`
-            );
-
+            throw new OutOfRangePlayerCountError(String(playerCount));
         }
 
         if (playerCount > 15) {
@@ -274,7 +277,7 @@ export default class Store implements IObservable<IStoreEvents> {
         const augments = this.store.augments.getData();
 
         if (!Object.hasOwn(roles, id) && !Object.hasOwn(augments, id)) {
-            throw new ReferenceError(`Unable to identify role with ID "${id}"`);
+            throw new UnrecognisedRoleError(id);
         }
 
         const role = structuredClone(roles[id] || {}) as IRole;

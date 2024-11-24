@@ -26,11 +26,19 @@ export default class Controller<M extends Model, V extends View> {
             view,
         } = this;
 
-        view.setRequester((method: keyof M, ...args: any[]) => (
-            typeof model[method] === 'function'
-            ? model[method](...args)
-            : undefined
-        ));
+        view.setRequester((method: keyof M, ...args: any[]) => {
+
+            if (typeof model[method] === "function") {
+                return model[method](...args);
+            }
+
+            console.warn(
+                "Unknown method \"%s\" on model %o - returning undefined.",
+                method,
+                model,
+            );
+
+        });
         model.ready();
         view.ready();
 

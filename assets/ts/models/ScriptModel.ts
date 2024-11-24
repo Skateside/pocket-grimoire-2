@@ -1,13 +1,16 @@
-import Model from "./Model";
-import Store from "../classes/Store";
-import ScriptValidator from "../classes/ScriptValidator";
-import {
+import type {
     IRole,
     INights,
     IScript,
     IMetaEntry,
     IMinimumRole,
 } from "../types/data";
+import Model from "./Model";
+import Store from "../classes/Store";
+import ScriptValidator from "../classes/ScriptValidator";
+import {
+    UnrecognisedScriptError,
+} from "../errors/errors";
 
 export default class ScriptModel extends Model<{
     "script-error": string,
@@ -211,7 +214,7 @@ export default class ScriptModel extends Model<{
         const scripts = this.store.getData("scripts");
 
         if (!Object.hasOwn(scripts, id)) {
-            throw new ReferenceError(`Unrecognised script ID "${id}"`);
+            throw new UnrecognisedScriptError(id);
         }
 
         this.setScript(scripts[id]);

@@ -4,6 +4,9 @@ import type {
 } from "../types/data";
 import View from "./View";
 import {
+    NoActiveFieldError,
+} from "../errors/errors";
+import {
     findOrDie,
     renderTemplateMany,
 } from "../utilities/dom";
@@ -144,7 +147,7 @@ export default class ScriptView extends View<{
         const field = Object.values(fields).find((field) => field.isActive());
 
         if (!field) {
-            throw new Error(error);
+            throw new NoActiveFieldError(error);
         }
 
         field.setCustomValidity(error);

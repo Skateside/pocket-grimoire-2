@@ -27,22 +27,30 @@
                 position: relative;
             }
 
-            .seat {
+            .seat,
+            .reminder {
                 width: 4rem;
                 height: 4rem;
                 border: 1px dotted blue;
                 background-color: #fff6;
             }
 
-            .seat--movable {
-                --left: 0;
-                --top: 0;
-                --z-index: 0;
+            .reminder {
+                width: 3rem;
+                height: 3rem;
+                border-color: green;
+                border-style: dashed;
+            }
+
+            .movable {
+                --x: 0;
+                --y: 0;
+                --z: 0;
                 cursor: move;
                 position: absolute;
-                left: calc(var(--left) * 1px);
-                top: calc(var(--top) * 1px);
-                z-index: var(--z-index);
+                left: calc(var(--x) * 1px);
+                top: calc(var(--y) * 1px);
+                z-index: var(--z);
                 touch-action: none;
             }
 
@@ -295,7 +303,10 @@
 
         <div class="grimoire js--grimoire">
 
-            <button type="button" class="seat seat--movable js--grimoire--token">
+            <!-- TEMP seats -->
+            <button type="button" class="seat movable js--grimoire--token" data-type="seat" data-index="0">
+            </button>
+            <button type="button" class="reminder movable js--grimoire--token" data-type="reminder" data-index="1">
             </button>
 
         </div>

@@ -3,6 +3,10 @@ import {
     IIdentifyLookup,
 } from "../types/utilities";
 import {
+    CannotFindElementError,
+    MissingRootError,
+} from "../errors/errors";
+import {
     memoise,
 } from "./functions";
 import {
@@ -57,7 +61,7 @@ export function identify(
 /**
  * Finds the element which matches the given CSS selector, optionally limited to
  * being a child of the given `root`. If the element is not found, a
- * `ReferenceError` is thrown.
+ * `CannotFindElementError` is thrown.
  *
  * @param selector CSS selector to identify the element.
  * @param root Optional root element. Defaults to `document`.
@@ -69,17 +73,13 @@ export function findOrDie<T extends HTMLElement>(
 ) {
 
     if (!root) {
-        throw new TypeError("Cannot look up element - root is missing");
+        throw new MissingRootError();
     }
 
     const element = root.querySelector<T>(selector);
 
     if (!element) {
-
-        throw new ReferenceError(
-            `Cannot find element matching selector "${selector}"`
-        );
-
+        throw new CannotFindElementError(selector);
     }
 
     return element;

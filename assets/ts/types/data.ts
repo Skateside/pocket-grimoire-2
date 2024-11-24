@@ -15,6 +15,8 @@ export type IJinx = {
 
 // Note: Official schema uses "traveler" so I should use it, too.
 // https://github.com/ThePandemoniumInstitute/botc-release/blob/main/script-schema.json
+// Official app will update to "traveller".
+// https://discord.com/channels/569683781800296501/708509594758152203/1309157337679925289
 export type ICoreTeam = "townsfolk" | "outsider" | "minion" | "demon";
 export type IPlayTeam = ICoreTeam | "traveler";
 export type ITeam = IPlayTeam | "fabled";
@@ -141,6 +143,10 @@ export type IGameNumbersCollection = Record<number, IGameNumbers>;
 //     coords: ICoordinates,
 // };
 
+export type IMovable = ICoordinates & {
+    id: string,
+};
+
 export type Ii18nKeys = (
     "grouptownsfolk"
     | "groupoutsider"
@@ -176,6 +182,7 @@ export type IStore = {
     scripts: IScripts,
     infos: IInfoToken[],
     inputs: IInputRecord,
+    moveables: IMovable[],
     // seats: ISeat[],
     // reminders: IReminder[],
 };

@@ -1,13 +1,22 @@
 import {
     IElementBox,
+    ICoordinates,
 } from "../types/data";
 import View from "./View";
-// import Movable from "../classes/Movable";
+import Movable from "../classes/Movable";
 import {
     findOrDie,
 } from "../utilities/dom";
+// import {
+//     debounce,
+// } from "../utilities/functions";
 
 export default class GrimoireView extends View<{
+    move: Required<ICoordinates> & {
+        id: string,
+        type: "seat" | "reminder",
+    },
+    resize: IElementBox,
 }> {
 
     protected pad: HTMLElement;
@@ -15,6 +24,13 @@ export default class GrimoireView extends View<{
     discoverElements() {
 
         this.pad = findOrDie(".js--grimoire");
+
+    }
+
+    getElementById(id: string): HTMLElement | null {
+
+        const item = this.getItemSelector();
+        return this.pad.querySelector<HTMLElement>(`${item}[data-index="${id}"]`);
 
     }
 
@@ -26,81 +42,42 @@ export default class GrimoireView extends View<{
         return this.pad.getBoundingClientRect();
     }
 
+    getMovableType(element: HTMLElement): "seat" | "reminder" {
+        return element.dataset.type as ("seat" | "reminder");
+    }
+
     addListeners() {
 
         const {
             pad,
         } = this;
 
-        // pad.addEventListener(Movable.UPDATE_EVENT, () => {});
+        pad.addEventListener(
+            Movable.UPDATE_EVENT,
+            ({ target, detail }: CustomEvent<Required<ICoordinates>>) => {
 
-        // TODO: Put this into a seperate class.
-        // const handler: EventListenerObject = {
-        //     handleEvent: this.handleEvent.bind(this),
-        // };
+                const type = this.getMovableType(target as HTMLElement);
+                const id = (target as HTMLElement).dataset.index;
 
-        // document.addEventListener("mousedown", handler);
-        // document.addEventListener("touchstart", handler);
-        // document.addEventListener("mouseup", handler);
-        // document.addEventListener("touchend", handler);
-        // document.addEventListener("contextmenu", handler);
-        // document.addEventListener("click", handler);
-        // window.addEventListener("resize", handler);
-        // window.addEventListener("scroll", handler);
+                this.trigger("move", {
+                    ...detail,
+                    type,
+                    id,
+                });
+
+            },
+        );
+
+        pad.addEventListener(Movable.CLICK_EVENT, ({ target }) => {
+// TODO: do something here
+console.log({ event: Movable.CLICK_EVENT, target });
+        });
+
+        // NOTE: Limited support - might need to listen to scroll in a bugfix.
+        document.addEventListener("scrollend", () => {
+            this.trigger("resize", this.getPadDimensions());
+        });
 
     }
-
-    // handleEvent(event: Event) {
-
-    //     switch (event.type) {
-
-    //     case "mousedown":
-    //     case "touchstart":
-    //         this.handleInteractStart(event);
-    //         break;
-
-    //     case "mouseup":
-    //     case "touchend":
-    //     case "contextmenu":
-    //         this.handleInteractEnd(event);
-    //         break;
-
-    //     // case "click":
-    //     //     this.handleInteract(event);
-    //     //     break;
-
-    //     // case "resize":
-    //     //     this.onResize(e);
-    //     //     break;
-
-    //     // case "scroll":
-    //     //     scollHandler(e);
-    //     //     break;
-
-    //     }
-
-    // }
-
-    // handleInteractStart(event: Event) {
-
-    //     const seat = (event.target as HTMLElement).closest(".seat");
-
-    //     if (!seat) {
-    //         return;
-    //     }
-
-    //     this.startDrag(seat);
-
-    // }
-
-    // handleInteractEnd(event: Event) {
-    // }
-
-    // // handleInteract(event: Event) {
-    // // }
-
-    // startDrag(seat: Element) {
-
-    // }
 
 }

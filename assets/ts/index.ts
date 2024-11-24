@@ -32,6 +32,9 @@ import GrimoireController from "./controllers/GrimoireController";
 // import RoleSelectController from "./controllers/RoleSelectController";
 // import global from "./utilities/global";
 import Movable from "./classes/Movable";
+import {
+    PocketGrimoireError,
+} from "./errors/errors";
 
 const app = new App();
 app
@@ -58,7 +61,25 @@ app
 
         return controller;
 
-    })
-    .run();
+    });
+    // .run();
+
+try {
+    app.run();
+} catch (error) {
+
+    const exception = error as PocketGrimoireError;
+
+    // This will always be `true` for one of our errors. If we got an error we
+    // don't recognise, just pass it through to the browser.
+    if (!exception.isPGError) {
+        throw exception;
+    }
+
+    // TODO: Process the error correctly - see if it's possible to recover from
+    // any of them.
+    console.error(exception);
+
+}
 
 console.log({ app });
